@@ -281,14 +281,6 @@ const Hero = () => (
         />
       </div>
     </div>
-
-    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
-      <div className="w-2.5 h-2.5 rounded-full bg-[#F5F0E6]"></div>
-      <div className="w-2.5 h-2.5 rounded-full bg-[#A0A0A0]"></div>
-      <div className="w-2.5 h-2.5 rounded-full bg-[#A0A0A0]"></div>
-      <div className="w-2.5 h-2.5 rounded-full bg-[#A0A0A0]"></div>
-      <div className="w-2.5 h-2.5 rounded-full bg-[#A0A0A0]"></div>
-    </div>
   </section>
 );
 
