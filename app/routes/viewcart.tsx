@@ -4,7 +4,7 @@ import type { Route } from "./+types/home";
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "The Better Desserts" },
-    { name: "description", content: "Welcome to The Better Desserts!" },
+    { name: "description", content: "View your cart" },
     { icon: "/favicon.ico" },
   ];
 }

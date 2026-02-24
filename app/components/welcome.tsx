@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import {
   Search,
   ShoppingBag,
@@ -6,7 +6,6 @@ import {
   X,
   Menu,
   ArrowRight,
-  CheckCircle,
   LogOut,
   ChevronRight,
   Plus,
@@ -15,7 +14,6 @@ import {
   Sparkles,
   Clock,
   Gift,
-  ChevronLeft,
   Package,
   Heart,
   Truck,
@@ -30,25 +28,15 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
-import {
-  getFirestore,
-  collection,
-  doc,
-  setDoc,
-  getDoc,
-  onSnapshot,
-} from "firebase/firestore";
+import { getFirestore, doc, setDoc, onSnapshot } from "firebase/firestore";
 import { firebaseConfig } from "~/utils/firebase";
 import { getAnalytics } from "firebase/analytics";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
-// --- Firebase Configuration & Initialization ---
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
