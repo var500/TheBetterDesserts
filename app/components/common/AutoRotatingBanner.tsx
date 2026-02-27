@@ -1,7 +1,12 @@
 import React from "react";
 
 export default function AutoRotatingBanner() {
-  const phrases = ["Palm Oil Free", "Refined Sugar Free", "Refined Flour Free"];
+  const phrases = [
+    "Palm Oil Free",
+    "100% Eggless",
+    "Refined Sugar Free",
+    "Refined Flour Free",
+  ];
 
   const repeatCount = Array.from({ length: 3 }, (_, i) => i);
 
