@@ -31,12 +31,19 @@ import {
 import { getFirestore, doc, setDoc, onSnapshot } from "firebase/firestore";
 import { firebaseConfig } from "~/utils/firebase";
 import { getAnalytics } from "firebase/analytics";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import AutoRotatingBanner from "./common/AutoRotatingBanner";
+import { Navbar } from "./common/Navbar";
+import { Hero } from "./welcome/Hero";
+import { FeaturesBanner } from "./welcome/FeaturesBanner";
+import { ShopCategories } from "./welcome/ShopCategories";
+import { SweetnessSlider } from "./welcome/Slider";
+import Bestseller from "./welcome/Bestseller";
+import Footer from "./common/Footer";
+import { ReviewsSection } from "./common/ReviewsSection";
+import { NewsletterSection } from "./common/NewsLetterSection";
+import BirthdayModal from "./promotional/BirthdayModal";
+import LocationSelector from "./welcome/CitySlabs";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -47,354 +54,7 @@ if (typeof window !== "undefined") {
 const db = getFirestore(app);
 const appId = typeof __app_id !== "undefined" ? __app_id : "better-desserts";
 
-// --- Mock Data ---
-const PRODUCTS = [
-  {
-    id: 1,
-    name: "Chocolate Mud Pie",
-    category: "Strawberry Menu",
-    price: 1700,
-    image:
-      "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80&w=400",
-  },
-  {
-    id: 2,
-    name: "Small Strawberry Box",
-    category: "Strawberry Menu",
-    price: 1150,
-    image:
-      "https://plus.unsplash.com/premium_photo-1713447395823-2e0b40b75a89?q=80&w=982&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=400",
-  },
-  {
-    id: 3,
-    name: "Small Brownie Box",
-    category: "Strawberry Menu",
-    price: 1289,
-    image:
-      "https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=400",
-  },
-  {
-    id: 4,
-    name: "Brownie Box",
-    category: "Strawberry Menu",
-    price: 1999,
-    image:
-      "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=400",
-  },
-  {
-    id: 5,
-    name: "Nutella + Puddle",
-    category: "Strawberry Menu",
-    price: 1050,
-    image:
-      "https://images.unsplash.com/photo-1579372781878-662497650396?auto=format&fit=crop&q=80&w=400",
-  },
-  {
-    id: 6,
-    name: "Dubai Surprise",
-    category: "Strawberry Menu",
-    price: 1850,
-    image:
-      "https://images.unsplash.com/photo-1511018556340-d16986a1c194?auto=format&fit=crop&q=80&w=400",
-  },
-  {
-    id: 7,
-    name: "Only Strawberry Box",
-    category: "Strawberry Menu",
-    price: 1950,
-    image:
-      "https://images.unsplash.com/photo-1464960726309-198270f274a4?auto=format&fit=crop&q=80&w=400",
-  },
-  {
-    id: 8,
-    name: "Cereal Box",
-    category: "Strawberry Menu",
-    price: 1950,
-    image:
-      "https://images.unsplash.com/photo-1519340241574-2dec39624824?auto=format&fit=crop&q=80&w=400",
-  },
-];
-
-const CATEGORIES = [
-  "Cookie Cakes",
-  "Bundt Cakes",
-  "Decadent Cakes",
-  "Stuffed Cookies",
-  "Dessert Containers",
-  "Gifting",
-];
-
-const SHOP_CARDS = [
-  {
-    id: 1,
-    title: "COOKIES",
-    desc: "Choose your indulgence: Box of 5/6/12 Cookies (Available PAN-India)",
-    img: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 2,
-    title: "CAKES",
-    desc: "20+ designs, rich chocolate & seasonal specials.",
-    img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 3,
-    title: "COOKIE CAKES & PIES",
-    desc: "Giant cookie cakes & pies with Nutella, Lotus Biscoff, and more.",
-    img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 4,
-    title: "BUNDT CAKES",
-    desc: "Orchid Antioxidant Beauty Face Oil",
-    img: "https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 5,
-    title: "GIFTING",
-    desc: "Sweetness, Thoughtfully Curated",
-    img: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?auto=format&fit=crop&q=80&w=800",
-  },
-  {
-    id: 6,
-    title: "DESSERT CONTAINERS",
-    desc: "Elegant jars filled with creamy layers and luscious flavors",
-    img: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&q=80&w=800",
-  },
-];
-
-const SLIDER_IMAGES = [
-  "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=400",
-];
-
-const REVIEWS = [
-  "https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&q=80&w=400",
-  "https://images.unsplash.com/photo-1550617931-e17a7b70dce2?auto=format&fit=crop&q=80&w=400",
-];
-
 // --- Components ---
-
-const Navbar = ({ cartCount, onOpenCart, onOpenSearch, user, onAuthClick }) => (
-  <nav className="fixed top-0 left-0 right-0 z-50 bg-[#F5F0E6] h-20 px-4 md:px-8 flex items-center justify-between">
-    <div className="flex items-center gap-6">
-      <Menu className="w-6 h-6 md:hidden cursor-pointer text-[#1A243F]" />
-      <div className="hidden md:flex gap-6 text-sm font-medium tracking-wide text-[#1A243F]">
-        <a href="#" className="hover:text-gray-500 transition-colors">
-          Home
-        </a>
-        <a href="#" className="hover:text-gray-500 transition-colors">
-          Shop
-        </a>
-        <a href="#" className="hover:text-gray-500 transition-colors">
-          Gifting
-        </a>
-      </div>
-    </div>
-
-    <div className=" text-2xl font-serif text-[#1A243F] leading-[1.1] flex flex-col items-center md:items-start">
-      <div className="flex items-baseline gap-1">
-        <span className="text-sm">The</span>
-        <span className="font-bold">Better</span>
-      </div>
-      <div className="font-bold tracking-widest">Desserts</div>
-    </div>
-
-    <div className="flex items-center gap-4 text-[#1A243F]">
-      <Search
-        className="w-5 h-5 cursor-pointer hover:text-gray-500 transition-colors"
-        onClick={onOpenSearch}
-      />
-      <div
-        className="relative cursor-pointer hover:text-gray-500 transition-colors"
-        onClick={onAuthClick}
-      >
-        <User className={`w-5 h-5 ${user ? "text-green-600" : ""}`} />
-        {user && (
-          <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full border border-white"></div>
-        )}
-      </div>
-      <div
-        className="relative cursor-pointer hover:text-gray-500 transition-colors"
-        onClick={onOpenCart}
-      >
-        <ShoppingBag className="w-5 h-5" />
-        {cartCount > 0 && (
-          <span className="absolute -top-2 -right-2 bg-[#1A243F] text-[#F5F0E6] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-            {cartCount}
-          </span>
-        )}
-      </div>
-    </div>
-  </nav>
-);
-
-const Hero = () => (
-  <section className="mt-20 relative h-[85vh] min-h-212.5 bg-[#1A243F] overflow-hidden flex flex-col md:flex-row items-center w-full">
-    {/* Wave SVG matching the cream background of the navbar */}
-    <div className="absolute top-0 left-0 w-full z-0 leading-none">
-      <svg
-        viewBox="0 0 1440 200"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-auto"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0,0 L1440,0 L1440,50 C1150,150 1000,-50 700,80 C400,210 200,60 0,120 Z"
-          fill="#F5F0E6"
-        />
-      </svg>
-    </div>
-
-    <div className="relative z-10 w-full h-full flex flex-col md:flex-row max-w-7xl mx-auto px-4 md:px-8 pt-24 pb-12">
-      <div className="w-full md:w-1/2 h-full flex flex-col justify-center">
-        <h1 className="text-[4.5rem] md:text-[8rem] lg:text-[10rem] font-black text-[#A0A0A0] leading-[0.8] tracking-tighter flex flex-col">
-          <span>THE</span>
-          <span>BETTER</span>
-          <span>DESSERTS</span>
-        </h1>
-      </div>
-      <div className="w-full md:w-1/2 h-full flex items-center justify-center relative mt-8 md:mt-0">
-        <img
-          src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=987&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=400"
-          alt="Chocolate Dessert"
-          className="w-96 h-100 object-cover absolute md:-right-10 rounded-2xl shadow-2xl rotate-[-5deg] md:rotate-0"
-        />
-      </div>
-    </div>
-  </section>
-);
-
-const FeaturesBanner = () => (
-  <section className="bg-[#F5F0E6] py-16 px-4 md:px-8 border-b border-gray-200">
-    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-[#1A243F]">
-      <div className="flex flex-col items-center">
-        <Sparkles className="w-10 h-10 mb-4 text-[#1A243F]" />
-        <h3 className="font-serif italic text-xl font-bold mb-2">
-          Exquisite & Eggless
-        </h3>
-        <p className="text-sm text-gray-600 max-w-xs">
-          Every creation is 100% eggless, crafted for all to indulge without
-          limits.
-        </p>
-      </div>
-      <div className="flex flex-col items-center">
-        <Clock className="w-10 h-10 mb-4 text-[#1A243F]" />
-        <h3 className="font-serif italic text-xl font-bold mb-2">
-          Freshly Baked, Never Stored
-        </h3>
-        <p className="text-sm text-gray-600 max-w-xs">
-          Made to order in small batches - because true indulgence can't wait.
-        </p>
-      </div>
-      <div className="flex flex-col items-center">
-        <Gift className="w-10 h-10 mb-4 text-[#1A243F]" />
-        <h3 className="font-serif italic text-xl font-bold mb-2">
-          Nationwide Gifting & Delivery
-        </h3>
-        <p className="text-sm text-gray-600 max-w-xs">
-          From our studio to every corner of India, elegantly packed and
-          delivered.
-        </p>
-      </div>
-    </div>
-  </section>
-);
-
-const ShopCategories = () => (
-  <section className="bg-white">
-    <div className="grid grid-cols-1 md:grid-cols-3 w-full">
-      {SHOP_CARDS.map((card) => (
-        <div
-          key={card.id}
-          className="relative aspect-[4/4] md:aspect-[4/5] group overflow-hidden bg-gray-100 flex flex-col justify-end p-8 text-center border-[0.5px] border-white cursor-pointer"
-        >
-          <img
-            src={card.img}
-            alt={card.title}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A243F]/90 via-[#1A243F]/20 to-transparent"></div>
-          <div className="relative z-10 flex flex-col items-center translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-            <h3 className="text-2xl font-black text-[#F5F0E6] mb-2 tracking-wide uppercase">
-              {card.title}
-            </h3>
-            <p className="text-[#F5F0E6] text-sm mb-6 opacity-90 max-w-xs">
-              {card.desc}
-            </p>
-            <button className="bg-white text-[#1A243F] px-8 py-3 rounded-full font-bold text-xs tracking-widest uppercase hover:bg-[#F5F0E6] transition-colors">
-              Shop Now
-            </button>
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-);
-
-const SweetnessSlider = () => {
-  const extendedImages = [
-    ...SLIDER_IMAGES.map((img, i) => ({ id: `set1-${i}`, src: img })),
-    ...SLIDER_IMAGES.map((img, i) => ({ id: `set2-${i}`, src: img })),
-    ...SLIDER_IMAGES.map((img, i) => ({ id: `set3-${i}`, src: img })),
-    ...SLIDER_IMAGES.map((img, i) => ({ id: `set4-${i}`, src: img })), // Extra buffer for ultra-wide screens
-  ];
-  return (
-    <section className="py-24 bg-[#F5F0E6] overflow-hidden text-center">
-      <h2 className="text-[#1A243F] font-serif italic text-3xl md:text-4xl mb-2">
-        Watch the
-      </h2>
-      <h3 className="text-[#1A243F] font-black text-2xl md:text-3xl tracking-widest uppercase mb-12">
-        Sweetness Unfold!
-      </h3>
-
-      <div className="px-4 w-full mx-auto">
-        <Swiper
-          modules={[Navigation]}
-          spaceBetween={20}
-          centeredSlides={true}
-          loop={true}
-          watchSlidesProgress={true}
-          navigation={true}
-          pagination={{ clickable: true }}
-          slidesPerView={1}
-          breakpoints={{
-            640: { slidesPerView: 3 },
-            1024: { slidesPerView: 5 },
-          }}
-          className="pb-12 "
-        >
-          {extendedImages.map((item) => (
-            <SwiperSlide key={item.id}>
-              {({ isActive }) => (
-                <div
-                  className={`rounded-2xl overflow-hidden aspect-3/4 shadow-sm border border-gray-100 bg-white transition-all duration-500 ease-out ${
-                    isActive
-                      ? "scale-100 opacity-100"
-                      : "scale-[0.85] opacity-50"
-                  }`}
-                >
-                  <img
-                    src={item.src}
-                    alt="Dessert interaction"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    </section>
-  );
-};
 
 const GiftingPromo = () => (
   <section className="py-24 bg-[#F5F0E6] text-center px-4 border-t border-gray-200">
@@ -436,7 +96,7 @@ const WhyChooseGifting = () => (
         <h3 className="font-serif italic text-xl font-bold mb-3">
           Premium Packaging
         </h3>
-        <p className="text-sm text-gray-600 max-w-[250px]">
+        <p className="text-sm text-gray-600 max-w-62.5">
           Elegant boxes designed to impress from the moment they're received.
         </p>
       </div>
@@ -445,7 +105,7 @@ const WhyChooseGifting = () => (
         <h3 className="font-serif italic text-xl font-bold mb-3">
           Personalization Options
         </h3>
-        <p className="text-sm text-gray-600 max-w-[250px]">
+        <p className="text-sm text-gray-600 max-w-62.5">
           Custom notes, brand logos, and flavor assortments tailored for your
           event.
         </p>
@@ -455,7 +115,7 @@ const WhyChooseGifting = () => (
         <h3 className="font-serif italic text-xl font-bold mb-3">
           Wide Range of Desserts
         </h3>
-        <p className="text-sm text-gray-600 max-w-[250px]">
+        <p className="text-sm text-gray-600 max-w-62.5">
           From stuffed cookies to cakes, puddings, and hampers - curated for
           every celebration.
         </p>
@@ -465,7 +125,7 @@ const WhyChooseGifting = () => (
         <h3 className="font-serif italic text-xl font-bold mb-3">
           Bulk Orders, Delivery
         </h3>
-        <p className="text-sm text-gray-600 max-w-[250px]">
+        <p className="text-sm text-gray-600 max-w-62.5">
           Perfect for corporate teams, wedding guests, or festive gifting across
           India.
         </p>
@@ -474,86 +134,13 @@ const WhyChooseGifting = () => (
   </section>
 );
 
-const ReviewsSection = () => (
-  <section className="py-20 bg-gray-50 px-4 md:px-8 text-center border-t border-gray-200">
-    <h2 className="text-[#1A243F] font-black text-2xl md:text-3xl tracking-wide uppercase mb-6">
-      Warning: These Reviews May Cause Cravings
-    </h2>
-    <p className="text-gray-600 mb-12 max-w-3xl mx-auto text-sm md:text-base leading-relaxed">
-      We asked our customers what they think - and let's just say the responses
-      were as sweet as our cookies. From flavor fanatics to dessert
-      connoisseurs, everyone's got a favorite. Ready to find yours?
-    </p>
-    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4">
-      {REVIEWS.map((img, idx) => (
-        <div
-          key={idx}
-          className="aspect-square bg-white shadow-sm border border-gray-100 p-2 overflow-hidden rounded-lg"
-        >
-          <img
-            src={img}
-            alt="Customer Review"
-            className="w-full h-full object-cover rounded-md"
-          />
-        </div>
-      ))}
-    </div>
-  </section>
-);
-
-const NewsletterSection = () => (
-  <section className="py-24 bg-[#E8C265] text-center px-4">
-    <div className="max-w-3xl mx-auto">
-      <h2 className="text-[#1A243F] font-serif italic text-4xl md:text-5xl font-bold mb-4">
-        Join The Club
-      </h2>
-      <p className="text-[#1A243F] mb-10 font-medium">
-        Unlock offers, seasonal menus & freshly baked launches before anyone
-        else
-      </p>
-      <div className="flex flex-col md:flex-row gap-4 justify-center items-center max-w-lg mx-auto">
-        <input
-          type="email"
-          placeholder="EMAIL"
-          className="w-full md:w-auto flex-1 px-6 py-4 rounded-md bg-white text-[#1A243F] outline-none font-bold placeholder-gray-400 border border-transparent focus:border-[#1A243F]"
-        />
-        <button className="w-full md:w-auto bg-[#1A243F] text-white px-8 py-4 rounded-md font-bold tracking-widest uppercase hover:bg-opacity-90 transition-colors">
-          Subscribe
-        </button>
-      </div>
-    </div>
-  </section>
-);
-
-const ProductCard = ({ product, onAddToCart }) => (
-  <div className="group flex flex-col cursor-pointer">
-    <div className="relative overflow-hidden aspect-square mb-3 rounded-lg bg-gray-100">
-      <img
-        src={product.image}
-        alt={product.name}
-        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-      />
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onAddToCart(product);
-        }}
-        className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm text-[#1A243F] py-2 rounded-md font-bold text-xs opacity-0 translate-y-4 transition-all group-hover:opacity-100 group-hover:translate-y-0"
-      >
-        QUICK ADD
-      </button>
-    </div>
-    <div className="text-xs text-gray-400 uppercase tracking-widest mb-1">
-      {product.category}
-    </div>
-    <h3 className="text-sm font-bold text-gray-800 mb-1">{product.name}</h3>
-    <div className="text-sm font-semibold text-[#1A243F]">
-      RS. {product.price.toLocaleString()}
-    </div>
-  </div>
-);
-
-const SearchOverlay = ({ isOpen, onClose }) => {
+const SearchOverlay = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-[100] bg-[#F5F0E6] animate-in fade-in duration-300 flex flex-col">
@@ -690,7 +277,17 @@ const CartSidebar = ({
   );
 };
 
-const AuthModal = ({ isOpen, onClose, user, onSignOut }) => {
+const AuthModal = ({
+  isOpen,
+  onClose,
+  user,
+  onSignOut,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  user: any;
+  onSignOut: () => void;
+}) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-100 flex items-center justify-center px-4">
@@ -765,6 +362,25 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isOpenBirthdayModal, setIsOpenBirthdayModal] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+
+  const handleLocationCapture = (locationId: string) => {
+    console.log("Captured Location:", locationId);
+    setSelectedRegion(locationId);
+  };
+
+  const handleCloseBirthdayModal = () => {
+    setIsOpenBirthdayModal(false);
+  };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (window.localStorage.getItem("birthdayPromo")) return;
+      setIsOpenBirthdayModal(true);
+    }, 5000);
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   // Initialize Auth
   useEffect(() => {
@@ -877,6 +493,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#F5F0E6] text-[#1A243F] font-sans selection:bg-[#1A243F] selection:text-[#F5F0E6]">
+      <AutoRotatingBanner />
       <Navbar
         cartCount={cart.reduce((s, i) => s + i.quantity, 0)}
         onOpenCart={() => setIsCartOpen(true)}
@@ -886,33 +503,19 @@ export default function App() {
       />
 
       <main className="pb-0">
+        <BirthdayModal
+          isOpen={isOpenBirthdayModal}
+          onClose={handleCloseBirthdayModal}
+        />
         <Hero />
+        {!selectedRegion ? (
+          <LocationSelector onSelectLocation={handleLocationCapture} />
+        ) : null}
         <FeaturesBanner />
         <ShopCategories />
         <SweetnessSlider />
 
-        <div className="bg-white py-24 px-4 md:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-[#1A243F] font-serif italic text-2xl md:text-3xl mb-2">
-                Our
-              </h2>
-              <h3 className="text-[#1A243F] font-black text-3xl tracking-widest uppercase">
-                Bestsellers
-              </h3>
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10 md:gap-x-8 md:gap-y-12">
-              {PRODUCTS.slice(0, 4).map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={addToCart}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+        <Bestseller addToCart={addToCart} />
 
         <GiftingPromo />
         <WhyChooseGifting />
@@ -920,75 +523,7 @@ export default function App() {
         <NewsletterSection />
       </main>
 
-      <footer className="bg-[#1A243F] text-[#F5F0E6] pt-20 pb-10">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="text-3xl md:text-5xl font-serif leading-[1.1] mb-16 flex flex-col">
-            <div className="flex items-baseline gap-2">
-              <span className="text-xl md:text-3xl">The</span>
-              <span className="font-bold">Better</span>
-            </div>
-            <div className="font-bold tracking-widest">Desserts</div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-sm">
-            <div className="space-y-4">
-              <h4 className="font-bold uppercase tracking-widest text-xs mb-6 text-[#A0A0A0]">
-                Links
-              </h4>
-              {["Home", "Shop", "Cookies", "About", "Contact"].map((link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="block text-gray-300 hover:text-white transition-colors"
-                >
-                  {link}
-                </a>
-              ))}
-            </div>
-            <div className="space-y-4">
-              <h4 className="font-bold uppercase tracking-widest text-xs mb-6 text-[#A0A0A0]">
-                Categories
-              </h4>
-              {CATEGORIES.slice(0, 5).map((link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="block text-gray-300 hover:text-white transition-colors"
-                >
-                  {link}
-                </a>
-              ))}
-            </div>
-            <div className="space-y-4">
-              <h4 className="font-bold uppercase tracking-widest text-xs mb-6 text-[#A0A0A0]">
-                Customer Service
-              </h4>
-              {[
-                "Shipping & Delivery",
-                "Return and Refunds",
-                "Privacy Policies",
-              ].map((link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="block text-gray-300 hover:text-white transition-colors"
-                >
-                  {link}
-                </a>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-20 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em]">
-            <span>© 2026 THE BETTER DESSERTS. ALL RIGHTS RESERVED.</span>
-            <div className="flex gap-4">
-              <div className="w-8 h-5 bg-gray-700 rounded"></div>
-              <div className="w-8 h-5 bg-gray-700 rounded"></div>
-              <div className="w-8 h-5 bg-gray-700 rounded"></div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       {/* Overlays */}
       <SearchOverlay

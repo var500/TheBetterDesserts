@@ -1,4 +1,4 @@
-import Welcome from "~/components/welcome";
+import Welcome from "~/components/Welcome";
 import type { Route } from "./+types/home";
 
 export function meta({}: Route.MetaArgs) {
