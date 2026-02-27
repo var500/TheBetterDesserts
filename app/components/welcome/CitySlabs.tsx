@@ -12,17 +12,17 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
       id: "gurgaon",
       label: "GURGAON",
       // Note: If using Next.js/Vite, you typically drop "/public" and just use "/cities/..."
-      bgUrl: "/public/cities/cyber-city.png",
+      bgUrl: "/cities/cyber-city.png",
     },
     {
       id: "delhi-ncr",
       label: "DELHI / NCR",
-      bgUrl: "/public/cities/india-gate.png",
+      bgUrl: "/cities/india-gate.png",
     },
     {
       id: "pan-india",
       label: "PAN INDIA",
-      bgUrl: "/public/cities/bengaluru.png",
+      bgUrl: "/cities/bengaluru.png",
     },
   ];
 
