@@ -10,7 +10,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product, onAddToCart }: ProductCardProps) => (
-  <div className="group flex flex-col cursor-pointer">
+  <div className="group flex flex-col ">
     <div className="relative overflow-hidden aspect-square mb-3 rounded-lg bg-gray-100">
       <img
         src={product.image}
@@ -22,7 +22,7 @@ export const ProductCard = ({ product, onAddToCart }: ProductCardProps) => (
           e.stopPropagation();
           onAddToCart(product);
         }}
-        className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm text-[#1A243F] py-2 rounded-md font-bold text-xs opacity-0 translate-y-4 transition-all group-hover:opacity-100 group-hover:translate-y-0"
+        className="cursor-pointer absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm text-[#1A243F] py-2 rounded-md font-bold text-xs opacity-0 translate-y-4 transition-all group-hover:opacity-100 group-hover:translate-y-0"
       >
         QUICK ADD
       </button>

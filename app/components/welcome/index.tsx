@@ -41,9 +41,12 @@ import { SweetnessSlider } from "../welcome/Slider";
 import Bestseller from "../welcome/Bestseller";
 import Footer from "../common/Footer";
 import { ReviewsSection } from "../common/ReviewsSection";
-import { NewsletterSection } from "../common/NewsLetterSection";
+
 import BirthdayModal from "../promotional/BirthdayModal";
 import LocationSelector from "../welcome/CitySlabs";
+import SignatureProduct from "./SIgnatureProduct";
+import { GiftingPromo } from "../promotional/Gifting";
+import { WhyChooseGifting } from "../promotional/GiftingMvp";
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -53,86 +56,6 @@ if (typeof window !== "undefined") {
 }
 const db = getFirestore(app);
 const appId = typeof __app_id !== "undefined" ? __app_id : "better-desserts";
-
-// --- Components ---
-
-const GiftingPromo = () => (
-  <section className="py-24 bg-[#F5F0E6] text-center px-4 border-t border-gray-200">
-    <div className="max-w-4xl mx-auto">
-      <h2 className="text-[#1A243F] font-black text-3xl md:text-5xl tracking-tight uppercase mb-4">
-        Gifting with The Better Desserts
-      </h2>
-      <p className="text-[#1A243F] font-bold tracking-widest text-sm md:text-base uppercase mb-8">
-        Every Bite, A Memory. Every Box, A Celebration.
-      </p>
-      <p className="text-gray-600 mb-4 max-w-3xl mx-auto leading-relaxed text-sm md:text-base">
-        At The Better Desserts, we believe gifting should be more than just
-        giving — it should be an experience. Our desserts are crafted to
-        delight, wrapped in elegant packaging, and personalized to make every
-        occasion unforgettable.
-      </p>
-      <p className="text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed text-sm md:text-base">
-        Whether it's{" "}
-        <strong className="text-[#1A243F]">
-          corporate gifting, festive hampers, birthdays, or weddings
-        </strong>
-        , we create indulgent boxes that leave a lasting impression.
-      </p>
-      <button className="bg-[#1A243F] text-[#F5F0E6] px-10 py-4 rounded-full font-bold text-xs tracking-widest uppercase hover:bg-opacity-90 transition-colors">
-        More Info
-      </button>
-    </div>
-  </section>
-);
-
-const WhyChooseGifting = () => (
-  <section className="py-20 bg-white px-4 md:px-8">
-    <h2 className="text-center text-[#1A243F] font-black text-2xl md:text-3xl tracking-wide uppercase mb-16">
-      Why Choose Us For Gifting
-    </h2>
-    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 text-center text-[#1A243F]">
-      <div className="flex flex-col items-center">
-        <Heart className="w-12 h-12 mb-4 text-[#1A243F]" />
-        <h3 className="font-serif italic text-xl font-bold mb-3">
-          Premium Packaging
-        </h3>
-        <p className="text-sm text-gray-600 max-w-62.5">
-          Elegant boxes designed to impress from the moment they're received.
-        </p>
-      </div>
-      <div className="flex flex-col items-center">
-        <Star className="w-12 h-12 mb-4 text-[#1A243F]" />
-        <h3 className="font-serif italic text-xl font-bold mb-3">
-          Personalization Options
-        </h3>
-        <p className="text-sm text-gray-600 max-w-62.5">
-          Custom notes, brand logos, and flavor assortments tailored for your
-          event.
-        </p>
-      </div>
-      <div className="flex flex-col items-center">
-        <Package className="w-12 h-12 mb-4 text-[#1A243F]" />
-        <h3 className="font-serif italic text-xl font-bold mb-3">
-          Wide Range of Desserts
-        </h3>
-        <p className="text-sm text-gray-600 max-w-62.5">
-          From stuffed cookies to cakes, puddings, and hampers - curated for
-          every celebration.
-        </p>
-      </div>
-      <div className="flex flex-col items-center">
-        <Truck className="w-12 h-12 mb-4 text-[#1A243F]" />
-        <h3 className="font-serif italic text-xl font-bold mb-3">
-          Bulk Orders, Delivery
-        </h3>
-        <p className="text-sm text-gray-600 max-w-62.5">
-          Perfect for corporate teams, wedding guests, or festive gifting across
-          India.
-        </p>
-      </div>
-    </div>
-  </section>
-);
 
 const SearchOverlay = ({
   isOpen,
@@ -512,15 +435,14 @@ export default function App() {
           <LocationSelector onSelectLocation={handleLocationCapture} />
         ) : null}
         <FeaturesBanner />
-        <ShopCategories />
-        <SweetnessSlider />
-
+        <SignatureProduct />
         <Bestseller addToCart={addToCart} />
+        {/* <ShopCategories /> */}
+        <SweetnessSlider />
 
         <GiftingPromo />
         <WhyChooseGifting />
         <ReviewsSection />
-        <NewsletterSection />
       </main>
 
       <Footer />

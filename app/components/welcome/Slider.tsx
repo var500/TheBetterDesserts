@@ -22,7 +22,7 @@ export const SweetnessSlider = () => {
     ...SLIDER_IMAGES.map((img, i) => ({ id: `set4-${i}`, src: img })),
   ];
   return (
-    <section className="py-24 bg-[#F5F0E6] overflow-hidden text-center">
+    <section className="py-24 bg-white overflow-hidden text-center">
       <h2 className="text-[#1A243F] font-serif italic text-3xl md:text-4xl mb-2">
         Watch the
       </h2>
@@ -45,6 +45,13 @@ export const SweetnessSlider = () => {
             1024: { slidesPerView: 5 },
           }}
           className="pb-12 "
+          style={
+            {
+              "--swiper-navigation-color": "#1A243F",
+
+              "--swiper-navigation-size": "2rem",
+            } as React.CSSProperties
+          }
         >
           {extendedImages.map((item) => (
             <SwiperSlide key={item.id}>

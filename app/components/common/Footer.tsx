@@ -1,3 +1,6 @@
+import { Instagram } from "lucide-react";
+import { Link } from "react-router";
+
 const CATEGORIES = [
   "Cookie Cakes",
   "Bundt Cakes",
@@ -52,28 +55,30 @@ export default function Footer() {
             <h4 className="font-bold uppercase tracking-widest text-xs mb-6 text-[#A0A0A0]">
               Customer Service
             </h4>
-            {[
-              "Shipping & Delivery",
-              "Return and Refunds",
-              "Privacy Policies",
-            ].map((link) => (
-              <a
-                key={link}
-                href="#"
-                className="block text-gray-300 hover:text-white transition-colors"
-              >
-                {link}
-              </a>
-            ))}
+            {["Shipping & Delivery", "Refund Policy", "Privacy Policies"].map(
+              (link) => (
+                <a
+                  key={link}
+                  href="#"
+                  className="block text-gray-300 hover:text-white transition-colors"
+                >
+                  {link}
+                </a>
+              ),
+            )}
           </div>
         </div>
 
         <div className="mt-20 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em]">
           <span>© 2026 THE BETTER DESSERTS. ALL RIGHTS RESERVED.</span>
-          <div className="flex gap-4">
-            <div className="w-8 h-5 bg-gray-700 rounded"></div>
-            <div className="w-8 h-5 bg-gray-700 rounded"></div>
-            <div className="w-8 h-5 bg-gray-700 rounded"></div>
+          <div className="flex items-center flex-row gap-4">
+            <Link
+              target="_blank"
+              to="https://www.instagram.com/thebetterdesserts/"
+            >
+              <Instagram className="w-6 h-6 text-[#F5F0E6] hover:text-gray-300 transition-colors cursor-pointer" />
+            </Link>
+            Follow on Instagram
           </div>
         </div>
       </div>

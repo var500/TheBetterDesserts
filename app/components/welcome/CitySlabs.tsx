@@ -27,8 +27,8 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
   ];
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-12 md:py-20 flex flex-col justify-center min-h-[80vh]">
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair text-center font-bold text-gray-800 mb-8 md:mb-16">
+    <section className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 pt-12 md:pt-20 flex flex-col justify-center min-h-[80vh]">
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair text-center font-bold text-gray-800 mb-8 md:mb-20">
         Where should we deliver?
       </h1>
 
@@ -39,7 +39,7 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
             key={loc.id}
             onClick={() => onSelectLocation(loc.id)}
             // Standardized heights using arbitrary values to ensure it fits the screen
-            className="relative h-64 md:h-100 lg:h-125 w-full rounded-3xl overflow-hidden cursor-pointer group shadow-xl hover:shadow-2xl transition-all duration-300"
+            className="relative h-64 md:h-100 w-full rounded-3xl overflow-hidden cursor-pointer group shadow-xl hover:shadow-2xl transition-all duration-300"
           >
             <div
               className="absolute inset-0 bg-cover transition-transform duration-1000 ease-out group-hover:scale-110"

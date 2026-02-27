@@ -17,7 +17,6 @@ export const Hero = () => {
         className="w-full h-full"
         style={
           {
-            "--swiper-navigation-color": "#F5F0E6",
             "--swiper-pagination-color": "#F5F0E6",
             "--swiper-navigation-size": "2rem",
           } as React.CSSProperties

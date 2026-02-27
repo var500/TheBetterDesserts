@@ -67,9 +67,13 @@ const PRODUCTS = [
   },
 ];
 
-export default function Bestseller({ addToCart }) {
+export default function Bestseller({
+  addToCart,
+}: {
+  addToCart: (product: any) => void;
+}) {
   return (
-    <div className="bg-white py-24 px-4 md:px-8">
+    <div className=" py-32 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-[#1A243F] font-serif italic text-2xl md:text-3xl mb-2">
