@@ -6,7 +6,10 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 export const GiftingPromo = () => (
-  <section className="py-24 bg-[#F5F0E6] px-6 md:px-12 border-t border-gray-200">
+  <section
+    id="gifting-promo"
+    className="h-screen justify-center flex flex-col bg-[#F5F0E6] px-6 md:px-12 border-t border-gray-200"
+  >
     <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       {/* LEFT SIDE: SWIPER CONTAINER */}
       <div className="relative flex justify-center">

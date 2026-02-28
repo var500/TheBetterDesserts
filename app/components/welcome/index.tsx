@@ -4,39 +4,18 @@ import {
   ShoppingBag,
   User,
   X,
-  Menu,
   ArrowRight,
   LogOut,
   ChevronRight,
   Plus,
   Minus,
   Trash2,
-  Sparkles,
-  Clock,
-  Gift,
-  Package,
-  Heart,
-  Truck,
-  Star,
 } from "lucide-react";
-import { initializeApp } from "firebase/app";
-
-import {
-  getAuth,
-  signInAnonymously,
-  signInWithCustomToken,
-  onAuthStateChanged,
-  signOut,
-} from "firebase/auth";
-import { getFirestore, doc, setDoc, onSnapshot } from "firebase/firestore";
-import { firebaseConfig } from "~/utils/firebase";
-import { getAnalytics } from "firebase/analytics";
 
 import AutoRotatingBanner from "../common/AutoRotatingBanner";
 import { Navbar } from "../common/Navbar";
 import { Hero } from "../welcome/Hero";
 import { FeaturesBanner } from "../welcome/FeaturesBanner";
-import { ShopCategories } from "../welcome/ShopCategories";
 import { SweetnessSlider } from "../welcome/Slider";
 import Bestseller from "../welcome/Bestseller";
 import Footer from "../common/Footer";
@@ -48,15 +27,6 @@ import SignatureProduct from "./SIgnatureProduct";
 import { GiftingPromo } from "../promotional/Gifting";
 import { WhyChooseGifting } from "../promotional/GiftingMvp";
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-let analytics;
-if (typeof window !== "undefined") {
-  analytics = getAnalytics(app);
-}
-const db = getFirestore(app);
-const appId = typeof __app_id !== "undefined" ? __app_id : "better-desserts";
-
 const SearchOverlay = ({
   isOpen,
   onClose,
@@ -66,7 +36,7 @@ const SearchOverlay = ({
 }) => {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-[100] bg-[#F5F0E6] animate-in fade-in duration-300 flex flex-col">
+    <div className="fixed inset-0 z-100 bg-[#F5F0E6] animate-in fade-in duration-300 flex flex-col">
       <div className="h-20 border-b border-gray-300 flex items-center px-8 bg-white">
         <Search className="w-5 h-5 text-gray-400 mr-4" />
         <input
@@ -97,6 +67,15 @@ const SearchOverlay = ({
   );
 };
 
+interface CartSidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+  cart: cartItem[];
+  updateQuantity: (id: string, delta: number) => void;
+  removeFromCart: (id: string) => void;
+  user: any;
+}
+
 const CartSidebar = ({
   isOpen,
   onClose,
@@ -104,12 +83,12 @@ const CartSidebar = ({
   updateQuantity,
   removeFromCart,
   user,
-}) => {
+}: CartSidebarProps) => {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 z-[100] flex justify-end">
+    <div className="fixed inset-0 z-100 flex justify-end">
       <div
         className="absolute inset-0 bg-black/40 backdrop-blur-sm"
         onClick={onClose}
@@ -138,7 +117,7 @@ const CartSidebar = ({
               </button>
             </div>
           ) : (
-            cart.map((item) => (
+            cart.map((item: cartItem) => (
               <div key={item.id} className="flex gap-4">
                 <img
                   src={item.image}
@@ -260,10 +239,7 @@ const AuthModal = ({
             <p className="text-gray-500 text-sm">
               Save your address and track orders easily.
             </p>
-            <button
-              onClick={() => signInAnonymously(auth)}
-              className="w-full bg-[#1A243F] text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-opacity-90 transition-all flex items-center justify-center gap-2"
-            >
+            <button className="w-full bg-[#1A243F] text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-opacity-90 transition-all flex items-center justify-center gap-2">
               Continue as Guest <ArrowRight className="w-4 h-4" />
             </button>
             <p className="text-[10px] text-gray-400 uppercase tracking-widest">
@@ -278,13 +254,21 @@ const AuthModal = ({
 
 // --- Main App Component ---
 
+interface cartItem {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+}
+
 export default function App() {
   const [user, setUser] = useState(null);
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState<cartItem[]>([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+
   const [isOpenBirthdayModal, setIsOpenBirthdayModal] = useState(false);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
 
@@ -305,76 +289,14 @@ export default function App() {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  // Initialize Auth
-  useEffect(() => {
-    const initAuth = async () => {
-      try {
-        if (
-          typeof __initial_auth_token !== "undefined" &&
-          __initial_auth_token
-        ) {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          // We wait for user interaction to sign in for a better flow,
-          // but we check if session exists
-        }
-      } catch (err) {
-        console.error("Auth error", err);
-      }
-    };
-    initAuth();
-    const unsubscribe = onAuthStateChanged(auth, (u) => {
-      setUser(u);
-      if (u) setIsAuthOpen(false);
-    });
-    setIsMounted(true);
-    return () => unsubscribe();
-  }, []);
-
-  // Sync Cart with Firestore
-  useEffect(() => {
-    if (!user) return;
-    const cartDocRef = doc(
-      db,
-      "artifacts",
-      appId,
-      "users",
-      user.uid,
-      "user_data",
-      "cart",
-    );
-
-    const unsubscribe = onSnapshot(
-      cartDocRef,
-      (snapshot) => {
-        if (snapshot.exists()) {
-          setCart(snapshot.data().items || []);
-        }
-      },
-      (error) => console.error("Firestore Error:", error),
-    );
-
-    return () => unsubscribe();
-  }, [user]);
-
-  const updateFirestoreCart = async (newCart) => {
+  const updateCart = async (newCart: cartItem[]) => {
     if (!user) {
-      setCart(newCart); // Local state for guests
+      setCart(newCart);
       return;
     }
-    const cartDocRef = doc(
-      db,
-      "artifacts",
-      appId,
-      "users",
-      user.uid,
-      "user_data",
-      "cart",
-    );
-    await setDoc(cartDocRef, { items: newCart }, { merge: true });
   };
 
-  const addToCart = (product) => {
+  const addToCart = (product: cartItem) => {
     const existing = cart.find((item) => item.id === product.id);
     let newCart;
     if (existing) {
@@ -386,11 +308,11 @@ export default function App() {
     } else {
       newCart = [...cart, { ...product, quantity: 1 }];
     }
-    updateFirestoreCart(newCart);
+    updateCart(newCart);
     setIsCartOpen(true);
   };
 
-  const updateQuantity = (id, delta) => {
+  const updateQuantity = (id: string, delta: number) => {
     const newCart = cart.map((item) => {
       if (item.id === id) {
         const q = Math.max(1, item.quantity + delta);
@@ -398,21 +320,18 @@ export default function App() {
       }
       return item;
     });
-    updateFirestoreCart(newCart);
+    updateCart(newCart);
   };
 
-  const removeFromCart = (id) => {
+  const removeFromCart = (id: string) => {
     const newCart = cart.filter((item) => item.id !== id);
-    updateFirestoreCart(newCart);
+    updateCart(newCart);
   };
 
   const handleSignOut = async () => {
-    await signOut(auth);
-    setCart([]); // Clear local cart view
+    setCart([]);
     setIsAuthOpen(false);
   };
-
-  if (!isMounted) return null;
 
   return (
     <div className="min-h-screen bg-[#F5F0E6] text-[#1A243F] font-sans selection:bg-[#1A243F] selection:text-[#F5F0E6]">

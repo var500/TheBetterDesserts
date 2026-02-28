@@ -11,7 +11,10 @@ export default function AutoRotatingBanner() {
   const repeatCount = Array.from({ length: 3 }, (_, i) => i);
 
   return (
-    <div className="flex w-full py-2 overflow-hidden bg-amber-100/50 border-y border-amber-200">
+    <div
+      id="home"
+      className="flex w-full py-2 overflow-hidden bg-amber-100/50 border-y border-amber-200"
+    >
       <div className="flex w-max animate-infinite-scroll">
         {[1, 2].map((groupIndex) => (
           <div key={groupIndex} className="flex shrink-0 items-center">
