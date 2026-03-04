@@ -15,7 +15,7 @@ export const Hero = () => {
       <Swiper
         slidesPerView={1}
         pagination={{ clickable: true }}
-        modules={[Pagination]}
+        modules={[Pagination, Autoplay]}
         loop={true}
         autoplay={{ delay: 4000, disableOnInteraction: false }}
         className="w-full h-full"
