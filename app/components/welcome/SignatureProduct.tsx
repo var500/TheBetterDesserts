@@ -47,7 +47,7 @@ export default function SignatureProduct() {
             variant="primary"
             className="text-sm md:text-base tracking-[0.2em] uppercase text-primary-dark/70 mb-4 font-bold"
           >
-            Our Masterpiece
+            Chef's Creation
           </Text>
 
           <Text
@@ -77,10 +77,9 @@ export default function SignatureProduct() {
               </span>
             </Button>
 
-            <div className="flex flex-col">
-              <span className="text-sm text-gray-500 line-through">₹1,299</span>
-              <span className="text-2xl font-bold text-primary-dark">₹999</span>
-            </div>
+            <span className="text-2xl font-bold text-primary-dark">
+              ₹599 (Pack of 3)
+            </span>
           </div>
         </div>
       </div>

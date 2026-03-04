@@ -15,7 +15,7 @@ export const Hero = () => {
       <Swiper
         slidesPerView={1}
         pagination={{ clickable: true }}
-        modules={[Pagination, Autoplay]}
+        modules={[Pagination]}
         loop={true}
         autoplay={{ delay: 4000, disableOnInteraction: false }}
         className="w-full h-full"
@@ -44,12 +44,6 @@ export const Hero = () => {
         <SwiperSlide>
           <div className="bg-primary-dark flex flex-col md:flex-row items-center justify-center w-full h-full pt-4 md:pt-0 px-12 md:px-24 gap-10">
             <div className="w-full flex flex-col justify-center text-[#F5F0E6]">
-              <Text
-                as={"span"}
-                className="mb-2 text-sm md:text-lg tracking-[0.2em] uppercase opacity-80"
-              >
-                Our Promise
-              </Text>
               <Text as={"h2"} className="text-2xl md:text-6xl leading-tight">
                 What makes us
               </Text>
@@ -60,7 +54,7 @@ export const Hero = () => {
 
               <ul className="text-lg font-satoshi md:text-2xl space-y-2 md:space-y-4 font-light">
                 <li className="flex items-center gap-3">
-                  <span className="text-green-400">✖</span> No White Sugar
+                  <span className="text-red-400">✖</span> No White Sugar
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-red-400">✖</span> No Maida (Refined
@@ -68,7 +62,7 @@ export const Hero = () => {
                 </li>
 
                 <li className="flex items-center gap-3">
-                  <span className="text-green-400">✖</span>No Palm Oil
+                  <span className="text-red-400">✖</span>No Palm Oil
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-green-400">✔</span> 100% Eggless
@@ -175,7 +169,7 @@ export const Hero = () => {
                 as={"h2"}
                 className="text-4xl md:text-7xl font-playfair md:mb-6  leading-none"
               >
-                Branch
+                Brand
               </Text>
               <br />
               <Text
@@ -196,7 +190,7 @@ export const Hero = () => {
                   className: "w-fit h-10 mx-auto md:mx-0",
                 })}
               >
-                Visit Our Branch
+                Visit Us
               </Link>
             </div>
           </div>
