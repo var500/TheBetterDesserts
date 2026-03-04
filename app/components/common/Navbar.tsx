@@ -92,11 +92,7 @@ export const Navbar = ({
               : "opacity-0 pointer-events-none"
           }`}
         >
-          <div className="flex items-baseline gap-1">
-            <span className="text-sm">The</span>
-            <span className="font-bold">Better</span>
-          </div>
-          <div className="font-bold tracking-widest">Desserts</div>
+          <img src="/brand/logo.png" className="object-contain max-h-8" />
         </Text>
 
         {/* Right Section: Icons */}
@@ -153,13 +149,7 @@ export const Navbar = ({
             variant="secondary"
             className="text-xl text-primary-dark leading-tight flex flex-col"
           >
-            <div className="flex items-baseline gap-1">
-              <span className="text-xs">The</span>
-              <span className="font-bold">Better</span>
-            </div>
-            <div className="font-bold tracking-widest text-[10px]">
-              Desserts
-            </div>
+            <img src="/brand/logo.png" className="object-contain max-h-8" />
           </Text>
 
           {/* Close Button (I used a raw SVG here just in case you don't have Icons.Close defined yet!) */}
