@@ -1,4 +1,5 @@
 import { Icons } from "../icons";
+import { Text } from "../ui/text"; // Make sure this path is correct
 import type { cartItem, CartSidebarProps } from "./types";
 
 export const CartSidebar = ({
@@ -12,90 +13,152 @@ export const CartSidebar = ({
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   if (!isOpen) return null;
+
   return (
-    <div className="fixed inset-0 z-100 flex justify-end">
+    // FIX 1: Changed z-100 to z-[100] to ensure it sits on top of the z-50 Navbar
+    <div className="fixed inset-0 z-[100] flex justify-end">
+      {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-[#1A243F]/40 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="relative w-full max-w-md bg-white h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-300">
-        <div className="p-6 border-b flex items-center justify-between">
-          <h2 className="text-xl font-bold flex items-center gap-2 text-[#1A243F]">
-            YOUR BAG{" "}
-            <span className="text-gray-500 text-sm">({cart.length})</span>
-          </h2>
-          <Icons.X className="w-6 h-6 cursor-pointer" onClick={onClose} />
+
+      {/* Sidebar Drawer */}
+      <div className="relative w-full max-w-md bg-[#F5F0E6] h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-300">
+        {/* Header */}
+        <div className="p-6 border-b border-[#1A243F]/10 flex items-center justify-between bg-white">
+          <Text
+            as="h2"
+            variant="primary"
+            className="text-lg font-bold flex items-center gap-2 text-[#1A243F] tracking-widest uppercase"
+          >
+            Your Bag
+            <span className="text-gray-400 text-sm font-normal">
+              ({cart.length})
+            </span>
+          </Text>
+          <Icons.X
+            className="w-6 h-6 text-[#1A243F] cursor-pointer hover:text-gray-500 transition-colors"
+            onClick={onClose}
+          />
         </div>
 
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
+        {/* Cart Items Area */}
+        <div className="flex-1 overflow-y-auto p-6 bg-white">
           {cart.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-4">
-              <Icons.ShoppingBag className="w-12 h-12 opacity-20" />
-              <p className="font-serif italic text-[#1A243F]">
+            // Empty State
+            <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-6 pt-20">
+              <Icons.ShoppingBag className="w-16 h-16 opacity-20 text-[#1A243F]" />
+              <Text
+                as="p"
+                variant="secondary"
+                className="text-2xl text-[#1A243F]"
+              >
                 Your bag is empty
-              </p>
+              </Text>
               <button
                 onClick={onClose}
-                className="text-[#1A243F] text-sm font-bold border-b border-[#1A243F]"
+                className="text-[#1A243F] text-xs uppercase tracking-widest font-bold border-b border-[#1A243F] pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors"
               >
-                Start Shopping
+                <Text as="span" variant="primary">
+                  Start Shopping
+                </Text>
               </button>
             </div>
           ) : (
-            cart.map((item: cartItem) => (
-              <div key={item.id} className="flex gap-4">
-                <img
-                  src={item.image}
-                  className="w-20 h-20 object-cover rounded"
-                  alt={item.name}
-                />
-                <div className="flex-1">
-                  <div className="flex justify-between items-start mb-1">
-                    <h4 className="text-sm font-bold text-gray-800">
-                      {item.name}
-                    </h4>
-                    <Icons.Trash2
-                      className="w-4 h-4 text-gray-300 cursor-pointer hover:text-red-500"
-                      onClick={() => removeFromCart(item.id)}
+            // Filled State
+            <div className="space-y-6">
+              {cart.map((item: cartItem) => (
+                <div key={item.id} className="flex gap-4 group">
+                  <div className="w-24 h-24 rounded-lg overflow-hidden border border-gray-100 shrink-0">
+                    <img
+                      src={item.image}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      alt={item.name}
                     />
                   </div>
-                  <p className="text-[#1A243F] text-xs font-semibold mb-3">
-                    RS. {item.price.toLocaleString()}
-                  </p>
-                  <div className="flex items-center border border-gray-100 rounded-md w-max">
-                    <button
-                      className="p-1 hover:bg-gray-50"
-                      onClick={() => updateQuantity(item.id, -1)}
+
+                  <div className="flex-1 flex flex-col justify-center">
+                    <div className="flex justify-between items-start mb-1">
+                      <Text
+                        as="h4"
+                        variant="primary"
+                        className="text-sm font-bold text-[#1A243F] pr-4"
+                      >
+                        {item.name}
+                      </Text>
+                      <Icons.Trash2
+                        className="w-4 h-4 text-gray-300 cursor-pointer hover:text-red-500 transition-colors shrink-0 mt-0.5"
+                        onClick={() => removeFromCart(item.id)}
+                      />
+                    </div>
+
+                    <Text
+                      as="p"
+                      variant="primary"
+                      className="text-[#1A243F]/70 text-sm mb-4"
                     >
-                      <Icons.Minus className="w-3 h-3" />
-                    </button>
-                    <span className="px-3 py-1 text-xs font-bold">
-                      {item.quantity}
-                    </span>
-                    <button
-                      className="p-1 hover:bg-gray-50"
-                      onClick={() => updateQuantity(item.id, 1)}
-                    >
-                      <Icons.Plus className="w-3 h-3" />
-                    </button>
+                      Rs. {item.price.toLocaleString()}
+                    </Text>
+
+                    {/* Quantity Selector */}
+                    <div className="flex items-center border border-[#1A243F]/20 rounded-full w-max overflow-hidden">
+                      <button
+                        className="px-3 py-1 text-[#1A243F] hover:bg-[#F5F0E6] transition-colors"
+                        onClick={() => updateQuantity(item.id, -1)}
+                      >
+                        <Icons.Minus className="w-3 h-3" />
+                      </button>
+                      <Text
+                        as="span"
+                        variant="primary"
+                        className="px-2 py-1 text-xs font-bold text-[#1A243F] w-6 text-center"
+                      >
+                        {item.quantity}
+                      </Text>
+                      <button
+                        className="px-3 py-1 text-[#1A243F] hover:bg-[#F5F0E6] transition-colors"
+                        onClick={() => updateQuantity(item.id, 1)}
+                      >
+                        <Icons.Plus className="w-3 h-3" />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
 
+        {/* Footer / Checkout Section */}
         {cart.length > 0 && (
-          <div className="p-6 border-t bg-gray-50">
+          <div className="p-6 border-t border-[#1A243F]/10 bg-[#F5F0E6]">
             <div className="flex justify-between mb-4 font-bold text-lg text-[#1A243F]">
-              <span>Total</span>
-              <span>RS. {total.toLocaleString()}</span>
+              <Text as="span" variant="primary">
+                Total
+              </Text>
+              <Text as="span" variant="primary">
+                Rs. {total.toLocaleString()}
+              </Text>
             </div>
-            <p className="text-[10px] text-gray-400 mb-6 uppercase tracking-wider text-center">
+
+            <Text
+              as="p"
+              variant="primary"
+              className="text-[10px] text-[#1A243F]/60 mb-6 uppercase tracking-wider text-center"
+            >
               Shipping & taxes calculated at checkout
-            </p>
-            <button className="w-full bg-[#1A243F] text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
-              CHECKOUT <Icons.ArrowRight className="w-4 h-4" />
+            </Text>
+
+            <button className="group w-full bg-[#1A243F] text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-black transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:-translate-y-1">
+              <Text
+                as="span"
+                variant="primary"
+                className="text-xs tracking-widest uppercase"
+              >
+                Checkout
+              </Text>
+              <Icons.ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </button>
           </div>
         )}

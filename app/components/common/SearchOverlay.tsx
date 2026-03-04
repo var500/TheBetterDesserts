@@ -1,4 +1,5 @@
 import { Icons } from "../icons";
+import { Text } from "../ui/text";
 
 export const SearchOverlay = ({
   isOpen,
@@ -8,31 +9,51 @@ export const SearchOverlay = ({
   onClose: () => void;
 }) => {
   if (!isOpen) return null;
+
   return (
-    <div className="fixed inset-0 z-100 bg-[#F5F0E6] animate-in fade-in duration-300 flex flex-col">
-      <div className="h-20 border-b border-gray-300 flex items-center px-8 bg-white">
+    // FIX 1: Changed z-100 to z-[100] so it safely covers the z-50 Navbar
+    <div className="fixed inset-0 z-[100] bg-[#F5F0E6] animate-in fade-in duration-300 flex flex-col">
+      {/* Search Header */}
+      <div className="h-20 border-b border-[#1A243F]/10 flex items-center px-4 md:px-8 bg-white">
         <Icons.Search className="w-5 h-5 text-gray-400 mr-4" />
+
+        {/* FIX 2: Added explicit text color and placeholder color, updated to use Satoshi font */}
         <input
           autoFocus
           type="text"
           placeholder="Find a product..."
-          className="flex-1 outline-none text-xl font-serif italic bg-transparent"
+          className="flex-1 outline-none text-xl md:text-2xl font-satoshi text-[#1A243F] placeholder:text-gray-400 bg-transparent"
         />
+
+        {/* FIX 3: Gave the close button a default resting color (text-gray-400) */}
         <Icons.X
-          className="w-6 h-6 cursor-pointer hover:text-[#1A243F] transition-colors"
+          className="w-8 h-8 p-1 text-gray-400 cursor-pointer hover:text-[#1A243F] transition-colors"
           onClick={onClose}
         />
       </div>
-      <div className="p-8 flex-1 flex flex-col items-center justify-center text-gray-400">
-        <p className="text-lg font-serif italic text-[#1A243F]">Top Sellers</p>
-        <div className="flex flex-wrap gap-4 mt-8 justify-center opacity-80">
+
+      {/* Suggestions Body */}
+      <div className="p-8 flex-1 flex flex-col items-center pt-24">
+        {/* Using Frista font for the heading */}
+        <Text
+          as="p"
+          variant="secondary"
+          className="text-3xl text-[#1A243F] mb-8"
+        >
+          Top Sellers
+        </Text>
+
+        <div className="flex flex-wrap gap-4 justify-center">
           {["Cookie Cakes", "Brownies", "Dubai Surprise"].map((tag) => (
-            <span
+            <button
               key={tag}
-              className="border border-gray-300 text-[#1A243F] px-4 py-1 rounded-full text-xs"
+              // Upgraded these spans to interactive buttons with hover states
+              className="border border-[#1A243F]/20 text-[#1A243F] hover:bg-[#1A243F] hover:text-[#F5F0E6] transition-colors duration-300 px-6 py-2 rounded-full text-xs tracking-widest uppercase font-bold cursor-pointer"
             >
-              {tag}
-            </span>
+              <Text as="span" variant="primary">
+                {tag}
+              </Text>
+            </button>
           ))}
         </div>
       </div>
