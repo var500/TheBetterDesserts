@@ -2,9 +2,9 @@ import { Icons } from "../icons";
 
 export const WhyChooseGifting = () => (
   <section className="py-20 bg-white px-4 md:px-8">
-    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 text-center text-[#1A243F]">
+    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 text-center text-primary-dark">
       <div className="flex flex-col items-center">
-        <Icons.Heart className="w-12 h-12 mb-4 text-[#1A243F]" />
+        <Icons.Heart className="w-12 h-12 mb-4 text-primary-dark" />
         <h3 className="font-serif italic text-xl font-bold mb-3">
           Premium Packaging
         </h3>
@@ -13,7 +13,7 @@ export const WhyChooseGifting = () => (
         </p>
       </div>
       <div className="flex flex-col items-center">
-        <Icons.Star className="w-12 h-12 mb-4 text-[#1A243F]" />
+        <Icons.Star className="w-12 h-12 mb-4 text-primary-dark" />
         <h3 className="font-serif italic text-xl font-bold mb-3">
           Personalization Options
         </h3>
@@ -23,7 +23,7 @@ export const WhyChooseGifting = () => (
         </p>
       </div>
       <div className="flex flex-col items-center">
-        <Icons.Package className="w-12 h-12 mb-4 text-[#1A243F]" />
+        <Icons.Package className="w-12 h-12 mb-4 text-primary-dark" />
         <h3 className="font-serif italic text-xl font-bold mb-3">
           Wide Range of Desserts
         </h3>
@@ -33,7 +33,7 @@ export const WhyChooseGifting = () => (
         </p>
       </div>
       <div className="flex flex-col items-center">
-        <Icons.Truck className="w-12 h-12 mb-4 text-[#1A243F]" />
+        <Icons.Truck className="w-12 h-12 mb-4 text-primary-dark" />
         <h3 className="font-serif italic text-xl font-bold mb-3">
           Bulk Orders, Delivery
         </h3>

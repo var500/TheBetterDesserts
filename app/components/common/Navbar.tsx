@@ -52,10 +52,10 @@ export const Navbar = ({
         {/* Left Section: Menu & Links */}
         <div className="flex items-center gap-6 flex-1">
           <Icons.Menu
-            className="w-6 h-6 md:hidden cursor-pointer text-[#1A243F]"
+            className="w-6 h-6 md:hidden cursor-pointer text-primary-dark"
             onClick={() => setIsMobileMenuOpen(true)}
           />
-          <div className="hidden md:flex gap-6 text-sm font-medium tracking-wide text-[#1A243F]">
+          <div className="hidden md:flex gap-6 text-sm font-medium tracking-wide text-primary-dark">
             <a href="/about" className="hover:text-gray-500 transition-colors">
               <Text as="span" variant="primary">
                 Our Story
@@ -86,7 +86,7 @@ export const Navbar = ({
         <Text
           as="div"
           variant="secondary"
-          className={`text-2xl text-[#1A243F] leading-[1.1] flex flex-col items-center flex-1 transition-opacity duration-500 ease-in-out ${
+          className={`text-2xl text-primary-dark leading-[1.1] flex flex-col items-center flex-1 transition-opacity duration-500 ease-in-out ${
             isScrolled
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 pointer-events-none"
@@ -100,7 +100,7 @@ export const Navbar = ({
         </Text>
 
         {/* Right Section: Icons */}
-        <div className="flex items-center gap-4 text-[#1A243F] flex-1 justify-end">
+        <div className="flex items-center gap-4 text-primary-dark flex-1 justify-end">
           <Icons.Search
             className="w-5 h-5 cursor-pointer hover:text-gray-500 transition-colors"
             onClick={onOpenSearch}
@@ -120,7 +120,7 @@ export const Navbar = ({
           >
             <Icons.ShoppingBag className="w-5 h-5" />
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-[#1A243F] text-[#F5F0E6] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+              <span className="absolute -top-2 -right-2 bg-primary-dark text-[#F5F0E6] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
                 <Text as="span" variant="primary">
                   {cartCount}
                 </Text>
@@ -134,7 +134,7 @@ export const Navbar = ({
 
       {/* Overlay Backdrop */}
       <div
-        className={`fixed inset-0 bg-[#1A243F]/40 backdrop-blur-sm z-50 md:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-primary-dark/40 backdrop-blur-sm z-50 md:hidden transition-opacity duration-300 ${
           isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsMobileMenuOpen(false)}
@@ -147,11 +147,11 @@ export const Navbar = ({
         }`}
       >
         {/* Drawer Header */}
-        <div className="h-20 px-6 flex items-center justify-between border-b border-[#1A243F]/10">
+        <div className="h-20 px-6 flex items-center justify-between border-b border-primary-dark/10">
           <Text
             as="div"
             variant="secondary"
-            className="text-xl text-[#1A243F] leading-tight flex flex-col"
+            className="text-xl text-primary-dark leading-tight flex flex-col"
           >
             <div className="flex items-baseline gap-1">
               <span className="text-xs">The</span>
@@ -165,7 +165,7 @@ export const Navbar = ({
           {/* Close Button (I used a raw SVG here just in case you don't have Icons.Close defined yet!) */}
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="p-2 -mr-2 text-[#1A243F] hover:text-gray-500 transition-colors cursor-pointer"
+            className="p-2 -mr-2 text-primary-dark hover:text-gray-500 transition-colors cursor-pointer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -196,7 +196,7 @@ export const Navbar = ({
               key={link.name}
               href={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-2xl text-[#1A243F] hover:text-gray-500 transition-colors border-b border-[#1A243F]/5 pb-4"
+              className="text-2xl text-primary-dark hover:text-gray-500 transition-colors border-b border-primary-dark/5 pb-4"
             >
               <Text as="span" variant="primary">
                 {link.name}
@@ -206,7 +206,7 @@ export const Navbar = ({
         </div>
 
         {/* Drawer Bottom Action */}
-        <div className="mt-auto p-6 bg-[#1A243F] text-[#F5F0E6]">
+        <div className="mt-auto p-6 bg-primary-dark text-[#F5F0E6]">
           <Text as="p" variant="primary" className="text-sm opacity-80 mb-4">
             Craving something specific?
           </Text>
@@ -215,7 +215,7 @@ export const Navbar = ({
               setIsMobileMenuOpen(false);
               onOpenSearch();
             }}
-            className="w-full py-4 border border-[#F5F0E6] hover:bg-[#F5F0E6] hover:text-[#1A243F] transition-colors duration-300 uppercase tracking-widest text-xs font-bold rounded-sm"
+            className="w-full py-4 border border-[#F5F0E6] hover:bg-[#F5F0E6] hover:text-primary-dark transition-colors duration-300 uppercase tracking-widest text-xs font-bold rounded-sm"
           >
             <Text as="span" variant="primary">
               Search Desserts

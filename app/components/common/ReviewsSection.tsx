@@ -7,7 +7,7 @@ const REVIEWS = [
 
 export const ReviewsSection = () => (
   <section className="py-20 bg-gray-50 px-4 md:px-8 text-center border-t border-gray-200">
-    <h2 className="text-[#1A243F] font-black text-2xl md:text-3xl tracking-wide uppercase mb-6">
+    <h2 className="text-primary-dark font-black text-2xl md:text-3xl tracking-wide uppercase mb-6">
       Warning: These Reviews May Cause Cravings
     </h2>
     <p className="text-gray-600 mb-12 max-w-3xl mx-auto text-sm md:text-base leading-relaxed">

@@ -23,10 +23,10 @@ export const SweetnessSlider = () => {
   ];
   return (
     <section className="py-24 bg-white overflow-hidden text-center">
-      <h2 className="text-[#1A243F] font-serif italic text-3xl md:text-4xl mb-2">
+      <h2 className="text-primary-dark font-serif italic text-3xl md:text-4xl mb-2">
         Watch the
       </h2>
-      <h3 className="text-[#1A243F] font-black text-2xl md:text-3xl tracking-widest uppercase mb-12">
+      <h3 className="text-primary-dark font-black text-2xl md:text-3xl tracking-widest uppercase mb-12">
         Sweetness Unfold!
       </h3>
 

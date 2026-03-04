@@ -65,7 +65,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F0E6] text-[#1A243F] font-sans selection:bg-[#1A243F] selection:text-[#F5F0E6]">
+    <div className="min-h-screen bg-[#F5F0E6] text-primary-dark font-sans selection:bg-primary-dark selection:text-[#F5F0E6]">
       <main className="pb-0">
         <BirthdayModal
           isOpen={isOpenBirthdayModal}

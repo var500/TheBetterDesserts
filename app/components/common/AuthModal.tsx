@@ -28,11 +28,11 @@ export const AuthModal = ({
 
         {user ? (
           <div className="text-center space-y-6">
-            <div className="w-20 h-20 bg-[#F5F0E6] rounded-full flex items-center justify-center mx-auto text-[#1A243F]">
+            <div className="w-20 h-20 bg-[#F5F0E6] rounded-full flex items-center justify-center mx-auto text-primary-dark">
               <Icons.User className="w-10 h-10" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-[#1A243F]">
+              <h2 className="text-2xl font-bold text-primary-dark">
                 Welcome Back!
               </h2>
               <p className="text-gray-500 text-sm mt-1">
@@ -41,7 +41,7 @@ export const AuthModal = ({
               </p>
             </div>
             <div className="space-y-3">
-              <button className="w-full py-3 px-6 border border-gray-200 rounded-full font-bold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 text-[#1A243F]">
+              <button className="w-full py-3 px-6 border border-gray-200 rounded-full font-bold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 text-primary-dark">
                 Order History <Icons.ChevronRight className="w-4 h-4" />
               </button>
               <button
@@ -54,13 +54,13 @@ export const AuthModal = ({
           </div>
         ) : (
           <div className="text-center space-y-6">
-            <h2 className="text-2xl font-bold font-serif italic text-[#1A243F]">
+            <h2 className="text-2xl font-bold font-serif italic text-primary-dark">
               Join the Club
             </h2>
             <p className="text-gray-500 text-sm">
               Save your address and track orders easily.
             </p>
-            <button className="w-full bg-[#1A243F] text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-opacity-90 transition-all flex items-center justify-center gap-2">
+            <button className="w-full bg-primary-dark text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-opacity-90 transition-all flex items-center justify-center gap-2">
               Continue as Guest <Icons.ArrowRight className="w-4 h-4" />
             </button>
             <p className="text-[10px] text-gray-400 uppercase tracking-widest">

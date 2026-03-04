@@ -3,7 +3,7 @@ import { Text } from "../ui/text";
 
 export default function BetterIngredients() {
   return (
-    <section className="bg-[#1A243F] py-24 px-4 md:px-8">
+    <section className="bg-primary-dark py-24 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16 max-w-3xl mx-auto">
           <Text

@@ -13,19 +13,9 @@ const CATEGORIES = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#1A243F] text-[#F5F0E6] pt-20 pb-10">
+    <footer className="bg-primary-dark text-[#F5F0E6] pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <Text
-          as="div"
-          variant="secondary"
-          className="text-4xl md:text-6xl leading-[1.1] mb-16 flex flex-col"
-        >
-          <div className="flex items-baseline gap-2">
-            <span className="text-2xl md:text-4xl">The</span>
-            <span>Better</span>
-          </div>
-          <div className="tracking-wide">Desserts</div>
-        </Text>
+        <img src="/brand/betterDesserts.jpeg" className="h-40 w-68 -mx-12" />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-sm">
           <div className="space-y-4">

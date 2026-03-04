@@ -24,7 +24,7 @@ export default function AutoRotatingBanner() {
   const repeatCount = Array.from({ length: 3 }, (_, i) => i);
 
   return (
-    <div className=" bg-[#F5F0E6] text-[#1A243F] font-sans selection:bg-[#1A243F] selection:text-[#F5F0E6]">
+    <div className=" bg-[#F5F0E6] text-primary-dark font-sans selection:bg-primary-dark selection:text-[#F5F0E6]">
       <div
         id="home"
         className="flex w-full py-2 overflow-hidden bg-amber-100/50 border-y border-amber-200"

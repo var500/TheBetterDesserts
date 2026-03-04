@@ -12,7 +12,7 @@ export const GiftingPromo = () => (
   >
     <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
       <div className="relative flex justify-center w-full">
-        <div className="absolute -top-6 left-4 md:left-12 w-24 h-24 border-t-2 border-l-2 border-[#1A243F]/20 hidden md:block" />
+        <div className="absolute -top-6 left-4 md:left-12 w-24 h-24 border-t-2 border-l-2 border-primary-dark/20 hidden md:block" />
 
         <div className="px-4 w-full max-w-70 sm:max-w-sm mx-auto relative">
           <Swiper
@@ -54,29 +54,29 @@ export const GiftingPromo = () => (
       </div>
 
       <div className="flex flex-col items-start text-left">
-        <span className="text-[#1A243F]/60 font-bold tracking-[0.2em] text-xs md:text-sm uppercase mb-4">
+        <span className="text-primary-dark/60 font-bold tracking-[0.2em] text-xs md:text-sm uppercase mb-4">
           Bespoke Gifting
         </span>
 
-        <h2 className="text-[#1A243F] font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase leading-[1.1] md:leading-[0.9] mb-6">
+        <h2 className="text-primary-dark font-black text-4xl md:text-5xl lg:text-6xl tracking-tight uppercase leading-[1.1] md:leading-[0.9] mb-6">
           Send Something, <br />
-          <span className="text-[#1A243F] italic">Better</span>
+          <span className="text-primary-dark italic">Better</span>
         </h2>
 
         <p className="text-gray-700 mb-6 text-base md:text-lg leading-relaxed">
           Whether it’s{" "}
-          <strong className="text-[#1A243F]">
+          <strong className="text-primary-dark">
             corporate gifting, festive hampers, or weddings
           </strong>
           , we create indulgent baskets designed to leave a lasting impression.
         </p>
 
-        <p className="text-gray-500 mb-8 md:mb-10 text-sm md:text-base leading-relaxed italic border-l-2 border-[#1A243F]/20 pl-4">
+        <p className="text-gray-500 mb-8 md:mb-10 text-sm md:text-base leading-relaxed italic border-l-2 border-primary-dark/20 pl-4">
           "At The Better Desserts, we believe gifting should be more than just
           giving — it should be an experience."
         </p>
 
-        <button className="group flex items-center justify-center w-full sm:w-auto gap-4 bg-[#1A243F] text-[#F5F0E6] px-8 md:px-12 py-4 md:py-5 rounded-full font-bold text-xs tracking-widest uppercase hover:bg-black transition-all">
+        <button className="group flex items-center justify-center w-full sm:w-auto gap-4 bg-primary-dark text-[#F5F0E6] px-8 md:px-12 py-4 md:py-5 rounded-full font-bold text-xs tracking-widest uppercase hover:bg-black transition-all">
           Explore the Collection
           <span className="group-hover:translate-x-2 transition-transform">
             →

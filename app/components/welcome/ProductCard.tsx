@@ -22,7 +22,7 @@ export const ProductCard = ({ product, onAddToCart }: ProductCardProps) => (
           e.stopPropagation();
           onAddToCart(product);
         }}
-        className="cursor-pointer absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm text-[#1A243F] py-2 rounded-md font-bold text-xs opacity-0 translate-y-4 transition-all group-hover:opacity-100 group-hover:translate-y-0"
+        className="cursor-pointer absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm text-primary-dark py-2 rounded-md font-bold text-xs opacity-0 translate-y-4 transition-all group-hover:opacity-100 group-hover:translate-y-0"
       >
         QUICK ADD
       </button>
@@ -31,7 +31,7 @@ export const ProductCard = ({ product, onAddToCart }: ProductCardProps) => (
       {product.category}
     </div>
     <h3 className="text-sm font-bold text-gray-800 mb-1">{product.name}</h3>
-    <div className="text-sm font-semibold text-[#1A243F]">
+    <div className="text-sm font-semibold text-primary-dark">
       RS. {product.price.toLocaleString()}
     </div>
   </div>

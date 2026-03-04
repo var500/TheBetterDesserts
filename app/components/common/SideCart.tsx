@@ -19,18 +19,18 @@ export const CartSidebar = ({
     <div className="fixed inset-0 z-[100] flex justify-end">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-[#1A243F]/40 backdrop-blur-sm"
+        className="absolute inset-0 bg-primary-dark/40 backdrop-blur-sm"
         onClick={onClose}
       />
 
       {/* Sidebar Drawer */}
       <div className="relative w-full max-w-md bg-[#F5F0E6] h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-300">
         {/* Header */}
-        <div className="p-6 border-b border-[#1A243F]/10 flex items-center justify-between bg-white">
+        <div className="p-6 border-b border-primary-dark/10 flex items-center justify-between bg-white">
           <Text
             as="h2"
             variant="primary"
-            className="text-lg font-bold flex items-center gap-2 text-[#1A243F] tracking-widest uppercase"
+            className="text-lg font-bold flex items-center gap-2 text-primary-dark tracking-widest uppercase"
           >
             Your Bag
             <span className="text-gray-400 text-sm font-normal">
@@ -38,7 +38,7 @@ export const CartSidebar = ({
             </span>
           </Text>
           <Icons.X
-            className="w-6 h-6 text-[#1A243F] cursor-pointer hover:text-gray-500 transition-colors"
+            className="w-6 h-6 text-primary-dark cursor-pointer hover:text-gray-500 transition-colors"
             onClick={onClose}
           />
         </div>
@@ -48,17 +48,17 @@ export const CartSidebar = ({
           {cart.length === 0 ? (
             // Empty State
             <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-6 pt-20">
-              <Icons.ShoppingBag className="w-16 h-16 opacity-20 text-[#1A243F]" />
+              <Icons.ShoppingBag className="w-16 h-16 opacity-20 text-primary-dark" />
               <Text
                 as="p"
                 variant="secondary"
-                className="text-2xl text-[#1A243F]"
+                className="text-2xl text-primary-dark"
               >
                 Your bag is empty
               </Text>
               <button
                 onClick={onClose}
-                className="text-[#1A243F] text-xs uppercase tracking-widest font-bold border-b border-[#1A243F] pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors"
+                className="text-primary-dark text-xs uppercase tracking-widest font-bold border-b border-primary-dark pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors"
               >
                 <Text as="span" variant="primary">
                   Start Shopping
@@ -83,7 +83,7 @@ export const CartSidebar = ({
                       <Text
                         as="h4"
                         variant="primary"
-                        className="text-sm font-bold text-[#1A243F] pr-4"
+                        className="text-sm font-bold text-primary-dark pr-4"
                       >
                         {item.name}
                       </Text>
@@ -96,15 +96,15 @@ export const CartSidebar = ({
                     <Text
                       as="p"
                       variant="primary"
-                      className="text-[#1A243F]/70 text-sm mb-4"
+                      className="text-primary-dark/70 text-sm mb-4"
                     >
                       Rs. {item.price.toLocaleString()}
                     </Text>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center border border-[#1A243F]/20 rounded-full w-max overflow-hidden">
+                    <div className="flex items-center border border-primary-dark/20 rounded-full w-max overflow-hidden">
                       <button
-                        className="px-3 py-1 text-[#1A243F] hover:bg-[#F5F0E6] transition-colors"
+                        className="px-3 py-1 text-primary-dark hover:bg-[#F5F0E6] transition-colors"
                         onClick={() => updateQuantity(item.id, -1)}
                       >
                         <Icons.Minus className="w-3 h-3" />
@@ -112,12 +112,12 @@ export const CartSidebar = ({
                       <Text
                         as="span"
                         variant="primary"
-                        className="px-2 py-1 text-xs font-bold text-[#1A243F] w-6 text-center"
+                        className="px-2 py-1 text-xs font-bold text-primary-dark w-6 text-center"
                       >
                         {item.quantity}
                       </Text>
                       <button
-                        className="px-3 py-1 text-[#1A243F] hover:bg-[#F5F0E6] transition-colors"
+                        className="px-3 py-1 text-primary-dark hover:bg-[#F5F0E6] transition-colors"
                         onClick={() => updateQuantity(item.id, 1)}
                       >
                         <Icons.Plus className="w-3 h-3" />
@@ -132,8 +132,8 @@ export const CartSidebar = ({
 
         {/* Footer / Checkout Section */}
         {cart.length > 0 && (
-          <div className="p-6 border-t border-[#1A243F]/10 bg-[#F5F0E6]">
-            <div className="flex justify-between mb-4 font-bold text-lg text-[#1A243F]">
+          <div className="p-6 border-t border-primary-dark/10 bg-[#F5F0E6]">
+            <div className="flex justify-between mb-4 font-bold text-lg text-primary-dark">
               <Text as="span" variant="primary">
                 Total
               </Text>
@@ -145,12 +145,12 @@ export const CartSidebar = ({
             <Text
               as="p"
               variant="primary"
-              className="text-[10px] text-[#1A243F]/60 mb-6 uppercase tracking-wider text-center"
+              className="text-[10px] text-primary-dark/60 mb-6 uppercase tracking-wider text-center"
             >
               Shipping & taxes calculated at checkout
             </Text>
 
-            <button className="group w-full bg-[#1A243F] text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-black transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:-translate-y-1">
+            <button className="group w-full bg-primary-dark text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-black transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:-translate-y-1">
               <Text
                 as="span"
                 variant="primary"
