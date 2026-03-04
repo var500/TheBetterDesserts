@@ -1,11 +1,24 @@
 import React from "react";
+import { Icons } from "../icons";
 
 export default function AutoRotatingBanner() {
   const phrases = [
-    "Palm Oil Free",
-    "100% Eggless",
-    "Refined Sugar Free",
-    "Refined Flour Free",
+    {
+      message: "Palm Oil Free",
+      icon: <Icons.PalmTree className="w-4 h-4 text-amber-800 " />,
+    },
+    {
+      message: "100% Eggless",
+      icon: <Icons.Egg className="w-4 h-4 text-amber-800 " />,
+    },
+    {
+      message: "Refined Sugar Free",
+      icon: <Icons.Box className="w-4 h-4 text-amber-800 " />,
+    },
+    {
+      message: "Refined Flour Free",
+      icon: <Icons.wheatOff className="w-4 h-4 text-amber-800 " />,
+    },
   ];
 
   const repeatCount = Array.from({ length: 3 }, (_, i) => i);
@@ -22,10 +35,14 @@ export default function AutoRotatingBanner() {
               {repeatCount.map((repeatIndex) => (
                 <React.Fragment key={repeatIndex}>
                   {phrases.map((phrase, phraseIndex) => (
-                    <div key={phraseIndex} className="flex items-center">
-                      <span className="mx-20 text-sm font-semibold tracking-wider text-amber-900 uppercase whitespace-nowrap">
-                        {phrase}
+                    <div key={phraseIndex} className="flex items-center mx-20">
+                      <span className=" text-sm mx-2 font-semibold tracking-wider text-amber-900 uppercase whitespace-nowrap">
+                        {phrase.message}
                       </span>
+                      <div className="relative flex justify-center items-center">
+                        <Icons.Ban className="w-6 h-6 text-amber-800 absolute " />
+                        {phrase.icon}
+                      </div>
                     </div>
                   ))}
                 </React.Fragment>

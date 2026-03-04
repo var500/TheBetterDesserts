@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Menu, Search, ShoppingBag, User } from "lucide-react";
+import { Icons } from "../icons";
 
 interface NavbarProps {
   cartCount: number;
@@ -41,7 +41,7 @@ export const Navbar = ({
     <nav className="sticky top-0 left-0 right-0 z-50 bg-[#F5F0E6] h-20 px-4 md:px-8 flex items-center justify-between transition-all duration-300">
       {/* Left Section: Menu & Links */}
       <div className="flex items-center gap-6 flex-1">
-        <Menu className="w-6 h-6 md:hidden cursor-pointer text-[#1A243F]" />
+        <Icons.Menu className="w-6 h-6 md:hidden cursor-pointer text-[#1A243F]" />
         <div className="hidden md:flex gap-6 text-sm font-medium tracking-wide text-[#1A243F]">
           <a href="/about" className="hover:text-gray-500 transition-colors">
             Our Story
@@ -78,7 +78,7 @@ export const Navbar = ({
 
       {/* Right Section: Icons */}
       <div className="flex items-center gap-4 text-[#1A243F] flex-1 justify-end">
-        <Search
+        <Icons.Search
           className="w-5 h-5 cursor-pointer hover:text-gray-500 transition-colors"
           onClick={onOpenSearch}
         />
@@ -86,7 +86,7 @@ export const Navbar = ({
           className="relative cursor-pointer hover:text-gray-500 transition-colors"
           onClick={onAuthClick}
         >
-          <User className={`w-5 h-5 ${user ? "text-green-600" : ""}`} />
+          <Icons.User className={`w-5 h-5 ${user ? "text-green-600" : ""}`} />
           {user && (
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full border border-white"></div>
           )}
@@ -95,7 +95,7 @@ export const Navbar = ({
           className="relative cursor-pointer hover:text-gray-500 transition-colors"
           onClick={onOpenCart}
         >
-          <ShoppingBag className="w-5 h-5" />
+          <Icons.ShoppingBag className="w-5 h-5" />
           {cartCount > 0 && (
             <span className="absolute -top-2 -right-2 bg-[#1A243F] text-[#F5F0E6] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
               {cartCount}

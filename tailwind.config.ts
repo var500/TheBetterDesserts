@@ -5,18 +5,20 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        frista: ["Frista", "ui-serif", "serif"],
+        satoshi: ["Satoshi", "ui-sans-serif", "system-ui", "sans-serif"],
         playfair: ["Playfair Display", "ui-serif", "serif"],
         serif: ["ui-serif", "Georgia", "serif"],
         sans: ["ui-sans-serif", "-apple-system", "system-ui", "sans-serif"],
       },
       colors: {
         primary: {
-          dark: "#1A243F",
+          dark: "#212844",
           light: "#F5F0E6",
         },
         dessert: {
           cream: "#F5F0E6",
-          navy: "#1A243F",
+          navy: "#212844",
         },
       },
       spacing: {

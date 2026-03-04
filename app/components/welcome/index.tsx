@@ -1,29 +1,15 @@
 import { useState, useEffect } from "react";
-import {
-  Search,
-  ShoppingBag,
-  User,
-  X,
-  ArrowRight,
-  LogOut,
-  ChevronRight,
-  Plus,
-  Minus,
-  Trash2,
-} from "lucide-react";
 
-import AutoRotatingBanner from "../common/AutoRotatingBanner";
-import { Navbar } from "../common/Navbar";
 import { Hero } from "../welcome/Hero";
 import { FeaturesBanner } from "../welcome/FeaturesBanner";
 import { SweetnessSlider } from "../welcome/Slider";
 import Bestseller from "../welcome/Bestseller";
-import Footer from "../common/Footer";
+
 import { ReviewsSection } from "../common/ReviewsSection";
 
 import BirthdayModal from "../promotional/BirthdayModal";
 import LocationSelector from "../welcome/CitySlabs";
-import SignatureProduct from "./SIgnatureProduct";
+import SignatureProduct from "./SignatureProduct";
 import { GiftingPromo } from "../promotional/Gifting";
 import { WhyChooseGifting } from "../promotional/GiftingMvp";
 import type { cartItem } from "../common/types";
@@ -91,10 +77,8 @@ export default function App() {
         <FeaturesBanner />
         <SignatureProduct />
         <Bestseller addToCart={addToCart} />
-        {/* <ShopCategories /> */}
         <GiftingPromo />
         <SweetnessSlider />
-
         <WhyChooseGifting />
         <ReviewsSection />
       </main>

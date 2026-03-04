@@ -1,4 +1,4 @@
-import { Search, X } from "lucide-react";
+import { Icons } from "../icons";
 
 export const SearchOverlay = ({
   isOpen,
@@ -11,14 +11,14 @@ export const SearchOverlay = ({
   return (
     <div className="fixed inset-0 z-100 bg-[#F5F0E6] animate-in fade-in duration-300 flex flex-col">
       <div className="h-20 border-b border-gray-300 flex items-center px-8 bg-white">
-        <Search className="w-5 h-5 text-gray-400 mr-4" />
+        <Icons.Search className="w-5 h-5 text-gray-400 mr-4" />
         <input
           autoFocus
           type="text"
           placeholder="Find a product..."
           className="flex-1 outline-none text-xl font-serif italic bg-transparent"
         />
-        <X
+        <Icons.X
           className="w-6 h-6 cursor-pointer hover:text-[#1A243F] transition-colors"
           onClick={onClose}
         />

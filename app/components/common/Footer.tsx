@@ -1,5 +1,5 @@
-import { Instagram } from "lucide-react";
 import { Link } from "react-router";
+import { Icons } from "../icons";
 
 const CATEGORIES = [
   "Cookie Cakes",
@@ -76,7 +76,7 @@ export default function Footer() {
               target="_blank"
               to="https://www.instagram.com/thebetterdesserts/"
             >
-              <Instagram className="w-6 h-6 text-[#F5F0E6] hover:text-gray-300 transition-colors cursor-pointer" />
+              <Icons.instagram className="w-6 h-6 text-white hover:text-gray-300 transition-colors cursor-pointer" />
             </Link>
             Follow on Instagram
           </div>

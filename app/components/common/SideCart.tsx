@@ -1,4 +1,4 @@
-import { ArrowRight, Minus, Plus, ShoppingBag, Trash2, X } from "lucide-react";
+import { Icons } from "../icons";
 import type { cartItem, CartSidebarProps } from "./types";
 
 export const CartSidebar = ({
@@ -24,13 +24,13 @@ export const CartSidebar = ({
             YOUR BAG{" "}
             <span className="text-gray-500 text-sm">({cart.length})</span>
           </h2>
-          <X className="w-6 h-6 cursor-pointer" onClick={onClose} />
+          <Icons.X className="w-6 h-6 cursor-pointer" onClick={onClose} />
         </div>
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {cart.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-4">
-              <ShoppingBag className="w-12 h-12 opacity-20" />
+              <Icons.ShoppingBag className="w-12 h-12 opacity-20" />
               <p className="font-serif italic text-[#1A243F]">
                 Your bag is empty
               </p>
@@ -54,7 +54,7 @@ export const CartSidebar = ({
                     <h4 className="text-sm font-bold text-gray-800">
                       {item.name}
                     </h4>
-                    <Trash2
+                    <Icons.Trash2
                       className="w-4 h-4 text-gray-300 cursor-pointer hover:text-red-500"
                       onClick={() => removeFromCart(item.id)}
                     />
@@ -67,7 +67,7 @@ export const CartSidebar = ({
                       className="p-1 hover:bg-gray-50"
                       onClick={() => updateQuantity(item.id, -1)}
                     >
-                      <Minus className="w-3 h-3" />
+                      <Icons.Minus className="w-3 h-3" />
                     </button>
                     <span className="px-3 py-1 text-xs font-bold">
                       {item.quantity}
@@ -76,7 +76,7 @@ export const CartSidebar = ({
                       className="p-1 hover:bg-gray-50"
                       onClick={() => updateQuantity(item.id, 1)}
                     >
-                      <Plus className="w-3 h-3" />
+                      <Icons.Plus className="w-3 h-3" />
                     </button>
                   </div>
                 </div>
@@ -95,7 +95,7 @@ export const CartSidebar = ({
               Shipping & taxes calculated at checkout
             </p>
             <button className="w-full bg-[#1A243F] text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-opacity-90 transition-colors flex items-center justify-center gap-2">
-              CHECKOUT <ArrowRight className="w-4 h-4" />
+              CHECKOUT <Icons.ArrowRight className="w-4 h-4" />
             </button>
           </div>
         )}
