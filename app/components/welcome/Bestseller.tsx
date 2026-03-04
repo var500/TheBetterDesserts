@@ -1,3 +1,4 @@
+import { Button } from "../ui/button";
 import { ProductCard } from "./ProductCard";
 
 const PRODUCTS = [
@@ -73,13 +74,13 @@ export default function Bestseller({
   addToCart: (product: any) => void;
 }) {
   return (
-    <div className=" py-32 px-4 md:px-8">
+    <div className=" py-32 px-4 md:px-8 flex flex-col items-center gap-12">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-[#1A243F] font-serif italic text-2xl md:text-3xl mb-2">
+          <h2 className="text-primary-dark font-serif italic text-2xl md:text-3xl mb-2">
             Our
           </h2>
-          <h3 className="text-[#1A243F] font-black text-3xl tracking-widest uppercase">
+          <h3 className="text-primary-dark font-black text-3xl tracking-widest uppercase">
             Bestsellers
           </h3>
         </div>
@@ -94,6 +95,7 @@ export default function Bestseller({
           ))}
         </div>
       </div>
+      <Button>View More</Button>
     </div>
   );
 }

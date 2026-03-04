@@ -29,7 +29,7 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
   return (
     <section className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 pt-12 md:pt-20 flex flex-col justify-center min-h-[80vh]">
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair text-center font-bold text-gray-800 mb-8 md:mb-20">
-        Where should we deliver?
+        Select your Delivery Destination
       </h1>
 
       {/* Changed to a Grid layout: 1 column on mobile, 3 columns on desktop */}

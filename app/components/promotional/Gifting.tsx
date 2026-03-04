@@ -62,9 +62,9 @@ export const GiftingPromo = () => (
           Bespoke Gifting
         </span>
 
-        <h2 className="text-[#1A243F] font-black text-4xl md:text-6xl tracking-tight uppercase leading-[0.9] mb-6">
-          Every Bite, <br />
-          <span className="text-gray-400 italic">A Memory.</span>
+        <h2 className="text-[#1A243F] font-black text-4xl md:text-6xl  tracking-tight uppercase leading-[0.9] mb-6">
+          Send Something, <br />
+          <span className="text-[#1A243F] italic">Better</span>
         </h2>
 
         <p className="text-gray-700 mb-6 text-lg leading-relaxed">
@@ -72,7 +72,7 @@ export const GiftingPromo = () => (
           <strong className="text-[#1A243F]">
             corporate gifting, festive hampers, or weddings
           </strong>
-          , we create indulgent boxes designed to leave a lasting impression.
+          , we create indulgent baskets designed to leave a lasting impression.
         </p>
 
         <p className="text-gray-500 mb-10 leading-relaxed italic border-l-2 border-[#1A243F]/10 pl-4">

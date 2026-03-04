@@ -23,15 +23,6 @@ export const Hero = () => {
         }
       >
         <SwiperSlide className="relative overflow-hidden bg-[#0A203F]">
-          <div className="absolute inset-0 z-0 pointer-events-none">
-            <img
-              src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&q=80&w=1920"
-              alt="Gourmet Dessert Overlay"
-              className="w-full h-full object-cover opacity-40 mix-blend-overlay scale-110 animate-[pulse_10s_ease-in-out_infinite_alternate]"
-            />
-            <div className="absolute inset-0 bg-linear-to-b from-[#0A203F]/70 via-[#0A203F]/50 to-[#0A203F]/90" />
-          </div>
-
           <div className="relative z-10 flex items-center justify-center w-full h-full px-6 text-center select-none">
             <h1 className="text-[5rem] md:text-[8rem] lg:text-[11rem] font-playfair text-[#F5F0E6] leading-[0.9] tracking-tight drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
               <span className="text-[3rem] md:text-[5rem] lg:text-[7rem] mr-4 opacity-90 italic">

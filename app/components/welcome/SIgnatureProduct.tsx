@@ -1,3 +1,5 @@
+import { Button } from "../ui/button";
+
 export default function SignatureProduct() {
   return (
     <div className="bg-white h-screen  flex justify-center px-4 md:px-8">
@@ -20,14 +22,7 @@ export default function SignatureProduct() {
           </h2>
 
           {/* Theme-matching Buy Now Button */}
-          <button className="bg-[#1A243F] cursor-pointer text-white px-10 py-4 font-black tracking-widest uppercase text-sm md:text-base hover:bg-opacity-90 hover:-translate-y-1 transition-all duration-300 shadow-lg">
-            Buy Now
-          </button>
-
-          {/* PAN India Text */}
-          <p className="text-[#1A243F] font-medium text-sm md:text-base tracking-[0.2em] uppercase mt-6 opacity-70">
-            Available PAN India
-          </p>
+          <Button>Shop Now</Button>
         </div>
       </div>
     </div>

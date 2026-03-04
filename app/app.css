@@ -9,6 +9,8 @@
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
+@config "../tailwind.config.ts";
+
 @theme {
   --animate-infinite-scroll: infinite-scroll 30s linear infinite;
 }

@@ -43,14 +43,17 @@ export const Navbar = ({
       <div className="flex items-center gap-6 flex-1">
         <Menu className="w-6 h-6 md:hidden cursor-pointer text-[#1A243F]" />
         <div className="hidden md:flex gap-6 text-sm font-medium tracking-wide text-[#1A243F]">
-          <a href="#home" className="hover:text-gray-500 transition-colors">
+          <a href="/about" className="hover:text-gray-500 transition-colors">
+            Our Story
+          </a>
+          <a href="/#home" className="hover:text-gray-500 transition-colors">
             Home
           </a>
-          <a href="#" className="hover:text-gray-500 transition-colors">
+          <a href="/shop" className="hover:text-gray-500 transition-colors">
             Shop
           </a>
           <a
-            href="#gifting-promo"
+            href="/#gifting-promo"
             className="hover:text-gray-500 transition-colors"
           >
             Gifting

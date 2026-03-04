@@ -92,9 +92,9 @@ export default function App() {
         <SignatureProduct />
         <Bestseller addToCart={addToCart} />
         {/* <ShopCategories /> */}
+        <GiftingPromo />
         <SweetnessSlider />
 
-        <GiftingPromo />
         <WhyChooseGifting />
         <ReviewsSection />
       </main>
