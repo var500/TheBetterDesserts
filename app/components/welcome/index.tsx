@@ -12,8 +12,9 @@ import LocationSelector from "../welcome/CitySlabs";
 import SignatureProduct from "./SignatureProduct";
 import { GiftingPromo } from "../promotional/Gifting";
 import { WhyChooseGifting } from "../promotional/GiftingMvp";
-import type { cartItem } from "../common/types";
+import type { cartItem } from "~/common/types";
 import BetterIngredients from "./Ingredients";
+import { useCityStore } from "~/store/useCityStore";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -22,12 +23,7 @@ export default function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const [isOpenBirthdayModal, setIsOpenBirthdayModal] = useState(false);
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-
-  const handleLocationCapture = (locationId: string) => {
-    console.log("Captured Location:", locationId);
-    setSelectedRegion(locationId);
-  };
+  const selectedCityId = useCityStore((state) => state.selectedCityId);
 
   const handleCloseBirthdayModal = () => {
     setIsOpenBirthdayModal(false);
@@ -72,13 +68,10 @@ export default function App() {
           onClose={handleCloseBirthdayModal}
         />
         <Hero />
-        {!selectedRegion ? (
-          <LocationSelector onSelectLocation={handleLocationCapture} />
-        ) : null}
+        {!selectedCityId ? <LocationSelector /> : null}
         <FeaturesBanner />
         <SignatureProduct />
-        <Bestseller addToCart={addToCart} />
-        {/* Better for you Ingredients content */}
+        <Bestseller />
         <BetterIngredients />
         <GiftingPromo />
         <SweetnessSlider />

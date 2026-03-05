@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Text } from "../ui/text";
+import { Button } from "../ui/button";
+import { Icons } from "../icons";
 
 export const BirthdayModal = ({
   isOpen,
@@ -20,7 +23,7 @@ export const BirthdayModal = ({
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [submitted, onClose]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,51 +31,56 @@ export const BirthdayModal = ({
       "birthdayPromo",
       JSON.stringify({ email, dob }),
     );
-    console.log("Submitting:", { email, dob });
     setSubmitted(true);
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative animate-fade-in-up">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md bg-black/20">
+      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90%] overflow-hidden relative animate-fade-in-up border border-primary-dark/10">
         <button
           onClick={onClose}
-          className="cursor-pointer absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition-colors text-2xl leading-none"
+          className="cursor-pointer absolute top-4 right-4 text-primary-dark/40 hover:text-primary-dark transition-colors"
           aria-label="Close modal"
         >
-          &times;
+          <Icons.X size={24} />
         </button>
+
         <div className="p-8">
           {/* Header */}
-          <div className="text-center mb-6">
-            <span className="text-4xl block mb-3">🎁</span>
-            <h2 className="text-2xl font-extrabold text-gray-900 mb-2">
+          <div className="text-center mb-8">
+            <span className="text-4xl block mb-4">🎁</span>
+            <Text
+              as="h2"
+              className="text-3xl font-frista text-primary-dark leading-tight mb-3"
+            >
               Make Your Birthday Month Even Better!
-            </h2>
-            <p className="text-gray-600 text-sm">
+            </Text>
+            <Text
+              as="p"
+              className="text-primary-dark/70 font-satoshi text-sm md:text-base font-light"
+            >
               Share your birthday and email to receive an exclusive discount
               code valid for your entire birthday month.
-            </p>
+            </Text>
           </div>
 
           {/* Form / Success State */}
           {!submitted ? (
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-6">
               {/* Email Input */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-semibold text-gray-700 mb-1"
+              <div className="space-y-2">
+                <Text
+                  as="span"
+                  className="block text-xs font-bold uppercase tracking-wider text-primary-dark/60 font-satoshi"
                 >
                   Email Address
-                </label>
+                </Text>
                 <input
                   type="email"
-                  id="email"
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none transition-all shadow-sm"
+                  className="w-full px-4 py-3 bg-white/50 border border-primary-dark/10 rounded-xl focus:ring-2 focus:ring-primary-dark focus:border-transparent outline-none transition-all font-satoshi"
                   placeholder="name@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -80,48 +88,50 @@ export const BirthdayModal = ({
               </div>
 
               {/* DOB Input */}
-              <div>
-                <label
-                  htmlFor="dob"
-                  className="block text-sm font-semibold text-gray-700 mb-1"
+              <div className="space-y-2">
+                <Text
+                  as="span"
+                  className="block text-xs font-bold uppercase tracking-wider text-primary-dark/60 font-satoshi"
                 >
                   Date of Birth
-                </label>
+                </Text>
                 <input
                   type="date"
-                  id="dob"
                   required
-                  max={today} // Native browser validation to prevent future dates
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 outline-none transition-all shadow-sm text-gray-700"
+                  max={today}
+                  className="w-full px-4 py-3 bg-white/50 border border-primary-dark/10 rounded-xl focus:ring-2 focus:ring-primary-dark focus:border-transparent outline-none transition-all font-satoshi text-primary-dark"
                   value={dob}
                   onChange={(e) => setDob(e.target.value)}
                 />
               </div>
 
               {/* Submit Button */}
-              <button
+              <Button
                 type="submit"
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-lg transition-colors duration-200 mt-2 shadow-md hover:shadow-lg"
+                variant="default"
+                className="w-full h-12 text-lg font-satoshi font-medium"
               >
                 Get My Birthday Treat
-              </button>
+              </Button>
 
               {/* Anti-Exploit Microcopy */}
-              <div className="bg-gray-50 p-3 rounded-md mt-4 border border-gray-100">
-                <p className="text-xs text-gray-500 leading-relaxed text-center">
+              <div className="bg-primary-dark/5 p-4 rounded-xl border border-primary-dark/5">
+                <Text
+                  as="p"
+                  className="text-[10px] text-primary-dark/50 leading-relaxed text-center font-satoshi"
+                >
                   *To ensure fairness, dates of birth cannot be changed once
                   submitted. Sign-ups during your birthday month will activate
-                  the following year. Codes are securely tied to your email
-                  address.
-                </p>
+                  the following year.
+                </Text>
               </div>
             </form>
           ) : (
             /* Success Message */
-            <div className="text-center py-6 animate-fade-in">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="text-center py-10 animate-fade-in flex flex-col items-center">
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
                 <svg
-                  className="w-8 h-8 text-green-600"
+                  className="w-10 h-10 text-green-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -131,16 +141,21 @@ export const BirthdayModal = ({
                     strokeLinejoin="round"
                     strokeWidth="2"
                     d="M5 13l4 4L19 7"
-                  ></path>
+                  />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">
+              <Text
+                as="h3"
+                className="text-2xl font-frista text-primary-dark mb-2"
+              >
                 You're on the list!
-              </h3>
-              <p className="text-gray-600">
-                Keep an eye on your inbox. We'll send you a verification link
-                shortly to confirm your email.
-              </p>
+              </Text>
+              <Text
+                as="p"
+                className="text-primary-dark/70 font-satoshi font-light"
+              >
+                Keep an eye on your inbox. We'll send your treat shortly.
+              </Text>
             </div>
           )}
         </div>

@@ -5,20 +5,18 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { Text } from "../ui/text";
 
-// We no longer need the thumb images here
 const REELS_DATA = [
-  { id: "DOqFC0nge65" },
-  { id: "DO5IzMtAbRx" },
-  { id: "DPBpWpcgURM" },
-  { id: "DPWfNPMga4O" },
-  { id: "DPappVygeon" },
-  { id: "DPi7qP1k3UA" },
+  { id: "DTx04qcAVuo" },
+  { id: "DT25Afggf6k" },
+  { id: "DT5fwTDgXRe" },
+  { id: "DT770jeASaq" },
 ];
 
 export const SweetnessSlider = () => {
-  // We still use this to know which video the user is interacting with
-  const [playingUid, setPlayingUid] = useState<string | null>(null);
+  // We use this just to force React to reload/pause the previous iframe
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   const extendedReels = [
     ...REELS_DATA.map((item, i) => ({ uid: `set1-${i}`, ...item })),
@@ -28,13 +26,21 @@ export const SweetnessSlider = () => {
   ];
 
   return (
-    <section className="py-24 bg-white overflow-hidden text-center">
-      <h2 className="text-[#1A243F] font-serif italic text-3xl md:text-4xl mb-2">
+    <section className="pt-24 bg-white overflow-hidden text-center">
+      <Text
+        as={"h3"}
+        variant={"secondary"}
+        className="text-[#1A243F] italic text-3xl md:text-5xl mb-2"
+      >
         Watch the
-      </h2>
-      <h3 className="text-[#1A243F] font-black text-2xl md:text-3xl tracking-widest uppercase mb-12">
+      </Text>
+      <Text
+        as={"h3"}
+        variant={"secondary"}
+        className="text-[#1A243F] font-black text-2xl md:text-5xl tracking-widest uppercase mb-12"
+      >
         Sweetness Unfold!
-      </h3>
+      </Text>
 
       <div className="px-4 w-full mx-auto">
         <Swiper
@@ -50,8 +56,8 @@ export const SweetnessSlider = () => {
             640: { slidesPerView: 3 },
             1024: { slidesPerView: 5 },
           }}
-          // Reset interaction when swiping
-          onSlideChange={() => setPlayingUid(null)}
+          // Track the active slide to pause off-screen videos
+          onSlideChange={(swiper) => setActiveSlideIndex(swiper.realIndex)}
           className="pb-12"
           style={
             {
@@ -60,40 +66,37 @@ export const SweetnessSlider = () => {
             } as React.CSSProperties
           }
         >
-          {extendedReels.map((item) => (
+          {extendedReels.map((item, index) => (
             <SwiperSlide key={item.uid}>
-              {({ isActive }) => {
-                const isInteracting = isActive && playingUid === item.uid;
-
-                return (
+              {({ isActive }) => (
+                <div
+                  className={`relative rounded-2xl overflow-hidden shadow-sm border border-gray-100 bg-white transition-all duration-500 ease-out h-100 w-full ${
+                    isActive
+                      ? "scale-100 opacity-100"
+                      : "scale-[0.85] opacity-50"
+                  }`}
+                >
+                  {/* If the slide is NOT active, we use pointer-events-none so the user can grab it to swipe.
+                    If the slide IS active, pointer events are enabled, allowing 1-click play (but disabling center swiping).
+                  */}
                   <div
-                    className={`relative rounded-2xl overflow-hidden shadow-sm border border-gray-100 bg-white transition-all duration-500 ease-out h-110 w-full ${
-                      isActive
-                        ? "scale-100 opacity-100"
-                        : "scale-[0.85] opacity-50"
-                    }`}
+                    className={`w-full h-full ${isActive ? "pointer-events-auto" : "pointer-events-none"}`}
                   >
-                    {/* ALWAYS render the iframe now */}
                     <iframe
+                      // Changing the key forces the iframe to reload and stop playing when it's no longer active
+                      key={`${item.uid}-${isActive ? "active" : "idle"}`}
                       src={`https://www.instagram.com/p/${item.id}/embed`}
-                      className="w-full h-full border-none outline-none"
+                      className="w-full h-full border-none outline-none bg-white"
                       scrolling="no"
                       allowTransparency={true}
                       allow="encrypted-media"
                       title={`Instagram Reel ${item.id}`}
                     />
-
-                    {/* The Invisible Swipe Shield */}
-                    {/* It sits on top of the iframe to allow swiping, until clicked */}
-                    {!isInteracting && (
-                      <div
-                        className="absolute inset-0 z-10 bg-transparent cursor-pointer"
-                        onClick={() => isActive && setPlayingUid(item.uid)}
-                      />
-                    )}
                   </div>
-                );
-              }}
+
+                  {/* We no longer need the transparent shield div! */}
+                </div>
+              )}
             </SwiperSlide>
           ))}
         </Swiper>

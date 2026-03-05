@@ -1,22 +1,23 @@
 import { Icons } from "../icons";
-import { Text } from "../ui/text"; // Make sure this path is correct
-import type { cartItem, CartSidebarProps } from "./types";
+import { Text } from "../ui/text";
+import type { cartItem } from "~/common/types";
+import { useCartStore } from "~/store/cartStore"; // Adjust path as needed
 
-export const CartSidebar = ({
-  isOpen,
-  onClose,
-  cart,
-  updateQuantity,
-  removeFromCart,
-  user,
-}: CartSidebarProps) => {
+// No more props!
+export const CartSidebar = () => {
+  // Pull everything directly from global state
+  const { cart, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart } =
+    useCartStore();
+
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  if (!isOpen) return null;
+  // Use the global state flag instead of the old isOpen prop
+  if (!isCartOpen) return null;
+
+  const onClose = () => setIsCartOpen(false);
 
   return (
-    // FIX 1: Changed z-100 to z-[100] to ensure it sits on top of the z-50 Navbar
-    <div className="fixed inset-0 z-[100] flex justify-end">
+    <div className="fixed inset-0 z-100 flex justify-end">
       {/* Backdrop */}
       <div
         className="absolute inset-0 bg-primary-dark/40 backdrop-blur-sm"
@@ -89,7 +90,7 @@ export const CartSidebar = ({
                       </Text>
                       <Icons.Trash2
                         className="w-4 h-4 text-gray-300 cursor-pointer hover:text-red-500 transition-colors shrink-0 mt-0.5"
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(item.id)} // Now uses global action
                       />
                     </div>
 
@@ -105,7 +106,7 @@ export const CartSidebar = ({
                     <div className="flex items-center border border-primary-dark/20 rounded-full w-max overflow-hidden">
                       <button
                         className="px-3 py-1 text-primary-dark hover:bg-[#F5F0E6] transition-colors"
-                        onClick={() => updateQuantity(item.id, -1)}
+                        onClick={() => updateQuantity(item.id, -1)} // Now uses global action
                       >
                         <Icons.Minus className="w-3 h-3" />
                       </button>

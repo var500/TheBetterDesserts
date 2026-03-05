@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Icons } from "../icons";
 import { Text } from "../ui/text";
+import { useCartStore } from "~/store/cartStore";
+import { CityPicker } from "./cityPicker";
 
+// Removed cartCount from props!
 interface NavbarProps {
-  cartCount: number;
-  onOpenCart: () => void;
   onOpenSearch: () => void;
   user: { name: string } | null;
   onAuthClick: () => void;
 }
 
-export const Navbar = ({
-  cartCount,
-  onOpenCart,
-  onOpenSearch,
-  user,
-  onAuthClick,
-}: NavbarProps) => {
+export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // FIX 1: Extract the state and functions correctly from Zustand
+  const setIsCartOpen = useCartStore((state) => state.setIsCartOpen);
+  const cart = useCartStore((state) => state.cart);
+
+  // FIX 2: Calculate cart count globally (sum of all quantities)
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   // Handle Navbar Background Scroll Effect
   useEffect(() => {
@@ -55,7 +57,7 @@ export const Navbar = ({
             className="w-6 h-6 md:hidden cursor-pointer text-primary-dark"
             onClick={() => setIsMobileMenuOpen(true)}
           />
-          <div className="hidden md:flex gap-6 text-sm font-medium tracking-wide text-primary-dark">
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium tracking-wide text-primary-dark">
             <a href="/about" className="hover:text-gray-500 transition-colors">
               <Text as="span" variant="primary">
                 Our Story
@@ -79,6 +81,7 @@ export const Navbar = ({
                 Gifting
               </Text>
             </a>
+            <CityPicker />
           </div>
         </div>
 
@@ -112,7 +115,8 @@ export const Navbar = ({
           </div>
           <div
             className="relative cursor-pointer hover:text-gray-500 transition-colors"
-            onClick={onOpenCart}
+            // FIX 3: Call the function safely inside the onClick
+            onClick={() => setIsCartOpen(true)}
           >
             <Icons.ShoppingBag className="w-5 h-5" />
             {cartCount > 0 && (
@@ -127,6 +131,7 @@ export const Navbar = ({
       </nav>
 
       {/* --- MOBILE SLIDE-OUT MENU --- */}
+      {/* (Rest of your exact mobile menu code remains unchanged) */}
 
       {/* Overlay Backdrop */}
       <div
@@ -152,7 +157,6 @@ export const Navbar = ({
             <img src="/brand/logo.png" className="object-contain max-h-8" />
           </Text>
 
-          {/* Close Button (I used a raw SVG here just in case you don't have Icons.Close defined yet!) */}
           <button
             onClick={() => setIsMobileMenuOpen(false)}
             className="p-2 -mr-2 text-primary-dark hover:text-gray-500 transition-colors cursor-pointer"
@@ -193,6 +197,7 @@ export const Navbar = ({
               </Text>
             </a>
           ))}
+          <CityPicker />
         </div>
 
         {/* Drawer Bottom Action */}

@@ -1,46 +1,32 @@
 import React from "react";
+import { Text } from "../ui/text";
+import { useCityStore } from "~/store/useCityStore";
+import { locations } from "~/constants";
 
-interface LocationSelectorProps {
-  onSelectLocation: (locationId: string) => void;
-}
+export const LocationSelector: React.FC = () => {
+  const setCity = useCityStore((state) => state.setCity);
 
-export const LocationSelector: React.FC<LocationSelectorProps> = ({
-  onSelectLocation,
-}) => {
-  const locations = [
-    {
-      id: "gurgaon",
-      label: "GURGAON",
-      // Note: If using Next.js/Vite, you typically drop "/public" and just use "/cities/..."
-      bgUrl: "/cities/cyber-city.png",
-    },
-    {
-      id: "delhi-ncr",
-      label: "DELHI / NCR",
-      bgUrl: "/cities/india-gate.png",
-    },
-    {
-      id: "pan-india",
-      label: "PAN INDIA",
-      bgUrl: "/cities/bengaluru.png",
-    },
-  ];
+  const handleSelection = (loc: { id: string; label: string }) => {
+    setCity(loc.id, loc.label);
+  };
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 pt-12 md:pt-20 flex flex-col justify-center min-h-[80vh]">
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-playfair text-center font-bold text-gray-800 mb-8 md:mb-20">
-        Select your Delivery Destination
-      </h1>
+    <section className="w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 pt-12 md:pt-20 flex flex-col justify-center min-h-[80vh] bg-[#F5F0E6]">
+      <Text
+        as="h1"
+        className="text-4xl md:text-6xl font-frista text-center text-primary-dark mb-12 md:mb-24 leading-tight"
+      >
+        Select your <br className="md:hidden" /> Delivery Destination
+      </Text>
 
-      {/* Changed to a Grid layout: 1 column on mobile, 3 columns on desktop */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
         {locations.map((loc) => (
           <div
             key={loc.id}
-            onClick={() => onSelectLocation(loc.id)}
-            // Standardized heights using arbitrary values to ensure it fits the screen
-            className="relative h-64 md:h-100 w-full rounded-3xl overflow-hidden cursor-pointer group shadow-xl hover:shadow-2xl transition-all duration-300"
+            onClick={() => handleSelection(loc)}
+            className="relative h-72 md:h-112.5 w-full rounded-[2.5rem] overflow-hidden cursor-pointer group shadow-2xl transition-all duration-500 hover:-translate-y-2 border-4 border-white/20"
           >
+            {/* Background Image with Zoom Effect */}
             <div
               className="absolute inset-0 bg-cover transition-transform duration-1000 ease-out group-hover:scale-110"
               style={{
@@ -49,12 +35,24 @@ export const LocationSelector: React.FC<LocationSelectorProps> = ({
               }}
             />
 
-            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent transition-opacity duration-700 group-hover:opacity-90" />
+            {/* Gradient Overlay optimized for readability */}
+            <div className="absolute inset-0 bg-linear-to-t from-primary-dark/90 via-primary-dark/20 to-transparent transition-opacity duration-500 group-hover:opacity-80" />
 
-            <div className="absolute inset-0 flex items-center justify-center p-6">
-              <span className="text-white text-3xl lg:text-4xl font-extrabold tracking-[0.15em] drop-shadow-xl uppercase text-center transition-transform duration-700 group-hover:scale-105 group-hover:-translate-y-2">
+            <div className="absolute inset-0 flex flex-col items-center justify-end p-10 pb-16">
+              <Text
+                as="span"
+                className="text-white text-3xl lg:text-4xl font-satoshi font-black tracking-[0.2em] uppercase text-center transition-all duration-500 group-hover:tracking-[0.25em]"
+              >
                 {loc.label}
-              </span>
+              </Text>
+
+              {/* Added a subtle "Deliver Here" hint on hover */}
+              <Text
+                as="span"
+                className="text-white/60 text-xs font-satoshi font-bold tracking-[0.3em] uppercase mt-4 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0"
+              >
+                Deliver Here
+              </Text>
             </div>
           </div>
         ))}
