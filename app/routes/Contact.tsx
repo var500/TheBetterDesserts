@@ -1,7 +1,7 @@
 import type { Route } from "./+types/home";
 import Layout from "~/components/Layout/Layout";
 
-import ContactUs from "~/components/Support/contact";
+import ContactUs from "~/components/Support/Contact";
 
 export function meta({}: Route.MetaArgs) {
   return [
