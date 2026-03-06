@@ -4,6 +4,7 @@ import { Text } from "../ui/text";
 import { Locations } from "~/common/types";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { Icons } from "../icons";
 
 export default function SignatureProduct() {
   const { selectedCityLabel } = useCityStore();
@@ -12,7 +13,7 @@ export default function SignatureProduct() {
 
   return (
     <section className="relative bg-[#F5F0E6] min-h-[80vh] py-20 flex justify-center px-4 md:px-8 overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-primary-dark/5 rounded-l-full -z-0"></div>
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-primary-dark/5 rounded-l-full z-0"></div>
 
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 lg:gap-24 relative z-10">
         <div className="w-full md:w-1/2 relative group">
@@ -80,12 +81,13 @@ export default function SignatureProduct() {
                 variant="default"
                 className="group flex items-center gap-3 px-10 h-14 text-lg font-satoshi disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {selectedCityLabel !== Locations.GURGAON
-                  ? "Not deliverable"
-                  : "Shop Now"}
-                <span className="transition-transform duration-300 group-hover:translate-x-2">
-                  →
-                </span>
+                {selectedCityLabel === null
+                  ? "Select your location"
+                  : selectedCityLabel !== Locations.GURGAON
+                    ? "Not deliverable"
+                    : "Shop Now"}
+
+                <Icons.ChevronRight className="transition-transform duration-300 group-hover:translate-x-2" />
               </Button>
 
               {showToast && selectedCityLabel !== Locations.GURGAON && (
