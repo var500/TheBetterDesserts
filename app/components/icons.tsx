@@ -29,6 +29,11 @@ import {
   Cookie,
   MessageSquare,
   Loader,
+  Target,
+  Mail,
+  Share2,
+  Globe,
+  ShieldCheck,
 } from "lucide-react";
 
 import type { JSX } from "react";
@@ -37,6 +42,11 @@ export type icon = (props: LucideProps) => JSX.Element;
 
 export const Icons = {
   ArrowRight: ArrowRight,
+  ShieldCheck: ShieldCheck,
+  Target: Target,
+  Globe: Globe,
+  Share2: Share2,
+  Mail: Mail,
   Cookie: Cookie,
   Loader: Loader,
   Menu: Menu,

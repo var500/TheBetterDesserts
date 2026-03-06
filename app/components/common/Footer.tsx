@@ -7,14 +7,13 @@ export default function Footer() {
   return (
     <footer className="bg-primary-dark text-[#F5F0E6] pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <img src="/brand/betterDesserts.jpeg" className="h-40 w-68 -mx-12" />
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-sm">
+          <img src="/brand/betterDesserts.jpeg" className="h-40 w-68 -mx-12" />
           <div className="space-y-4">
             <Text
               as="h4"
               variant="primary"
-              className="font-bold uppercase tracking-widest text-xs mb-6 text-[#A0A0A0]"
+              className="font-bold uppercase tracking-widest text-lg mb-6"
             >
               Links
             </Text>
@@ -36,28 +35,7 @@ export default function Footer() {
             <Text
               as="h4"
               variant="primary"
-              className="font-bold uppercase tracking-widest text-xs mb-6 text-[#A0A0A0]"
-            >
-              Categories
-            </Text>
-            {CATEGORIES.map((link) => (
-              <a
-                key={link}
-                href="#"
-                className="block text-gray-300 hover:text-white transition-colors"
-              >
-                <Text as="span" variant="primary">
-                  {link}
-                </Text>
-              </a>
-            ))}
-          </div>
-
-          <div className="space-y-4">
-            <Text
-              as="h4"
-              variant="primary"
-              className="font-bold uppercase tracking-widest text-xs mb-6 text-[#A0A0A0]"
+              className="font-bold uppercase tracking-widest text-lg mb-6"
             >
               Customer Service
             </Text>
