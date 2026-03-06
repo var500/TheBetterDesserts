@@ -1,7 +1,15 @@
+import { useCityStore } from "~/store/useCityStore";
 import { Button } from "../ui/button";
 import { Text } from "../ui/text";
+import { Locations } from "~/common/types";
+import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function SignatureProduct() {
+  const { selectedCityLabel } = useCityStore();
+  const [showToast, setShowToast] = useState(false);
+  const navigate = useNavigate();
+
   return (
     <section className="relative bg-[#F5F0E6] min-h-[80vh] py-20 flex justify-center px-4 md:px-8 overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-full bg-primary-dark/5 rounded-l-full -z-0"></div>
@@ -60,15 +68,33 @@ export default function SignatureProduct() {
           </Text>
 
           <div className="flex flex-wrap items-center gap-8">
-            <Button
-              variant="default"
-              className="group flex items-center gap-3 px-10 h-14 text-lg font-satoshi"
+            {/* Wrapper div to capture hover events even when button is disabled */}
+            <div
+              className="relative flex items-center"
+              onMouseEnter={() => setShowToast(true)}
+              onMouseLeave={() => setShowToast(false)}
             >
-              Shop Now
-              <span className="transition-transform duration-300 group-hover:translate-x-2">
-                →
-              </span>
-            </Button>
+              <Button
+                disabled={selectedCityLabel !== Locations.GURGAON}
+                onClick={() => navigate("/collection")}
+                variant="default"
+                className="group flex items-center gap-3 px-10 h-14 text-lg font-satoshi disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {selectedCityLabel !== Locations.GURGAON
+                  ? "Not deliverable"
+                  : "Shop Now"}
+                <span className="transition-transform duration-300 group-hover:translate-x-2">
+                  →
+                </span>
+              </Button>
+
+              {showToast && selectedCityLabel !== Locations.GURGAON && (
+                <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 bg-primary-dark text-[#F5F0E6] text-xs font-satoshi font-bold px-4 py-2 rounded-md shadow-lg z-50 whitespace-nowrap animate-fade-in-up pointer-events-none">
+                  Available for delivery or pickup only in Gurgaon
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-primary-dark rotate-45"></div>
+                </div>
+              )}
+            </div>
 
             <div className="flex flex-col">
               <Text

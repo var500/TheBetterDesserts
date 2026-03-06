@@ -1,12 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useCityStore } from "~/store/useCityStore";
 import { Text } from "../ui/text";
-import { MapPin, ChevronDown, Check } from "lucide-react";
 
+import { Locations } from "~/common/types";
+import { Icons } from "../icons";
+
+// 1. Added 'label' back so the UI displays nicely formatted names
 const AVAILABLE_LOCATIONS = [
-  { id: "gurgaon", label: "GURGAON" },
-  { id: "delhi-ncr", label: "DELHI / NCR" },
-  { id: "pan-india", label: "PAN INDIA" },
+  { id: "gurgaon", label: "GURGAON", value: Locations.GURGAON },
+  { id: "delhi-ncr", label: "DELHI / NCR", value: Locations.DELHI_NCR },
+  { id: "pan-india", label: "PAN INDIA", value: Locations.PAN_INDIA },
 ];
 
 export const CityPicker = () => {
@@ -33,33 +36,36 @@ export const CityPicker = () => {
     };
   }, []);
 
-  if (!selectedCityLabel) return null;
-
-  const handleSelectLocation = (id: string, label: string) => {
-    setCity(id, label);
+  const handleSelectLocation = (id: string, value: Locations) => {
+    setCity(id, value);
     setIsOpen(false);
   };
+
+  // 3. Look up the pretty label. If nothing is selected, default to "Select City"
+  const displayLabel = selectedCityId
+    ? AVAILABLE_LOCATIONS.find((loc) => loc.id === selectedCityId)?.label
+    : "Select City";
 
   return (
     <div className="relative flex items-center" ref={dropdownRef}>
       {/* Slim Trigger Button */}
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center border-primary-dark border  gap-1.5 cursor-pointer hover:bg-primary-dark/5 px-3 py-1.5 rounded-md transition-all duration-300"
+        className="group flex items-center border-primary-dark border gap-1.5 cursor-pointer hover:bg-primary-dark/5 px-3 py-1.5 rounded-md transition-all duration-300"
       >
-        <MapPin size={14} className="text-primary-dark/70" />
+        <Icons.MapPin size={14} className="text-primary-dark/70" />
 
-        {/* Single-line text for Navbar compatibility */}
         <div className="flex items-baseline gap-1.5">
           <Text
             as="span"
             className="text-xs font-satoshi font-bold text-primary-dark tracking-wide uppercase"
           >
-            {selectedCityLabel}
+            {/* 4. This will now show either the city or "Select City" */}
+            {displayLabel}
           </Text>
         </div>
 
-        <ChevronDown
+        <Icons.ChevronDown
           size={12}
           className={`text-primary-dark/60 ml-0.5 transition-transform duration-300 ${
             isOpen ? "rotate-180" : "group-hover:translate-y-0.5"
@@ -74,7 +80,7 @@ export const CityPicker = () => {
             {AVAILABLE_LOCATIONS.map((loc) => (
               <button
                 key={loc.id}
-                onClick={() => handleSelectLocation(loc.id, loc.label)}
+                onClick={() => handleSelectLocation(loc.id, loc.value)}
                 className="w-full text-left px-4 py-2.5 hover:bg-primary-dark/5 transition-colors flex items-center justify-between group/item"
               >
                 <Text
@@ -85,10 +91,11 @@ export const CityPicker = () => {
                       : "text-primary-dark/60 group-hover/item:text-primary-dark"
                   }`}
                 >
+                  {/* 5. Render the pretty label in the dropdown list */}
                   {loc.label}
                 </Text>
                 {selectedCityId === loc.id && (
-                  <Check size={14} className="text-green-600" />
+                  <Icons.Check size={14} className="text-green-600" />
                 )}
               </button>
             ))}

@@ -1,11 +1,13 @@
+import { useNavigate } from "react-router";
 import { Icons } from "../icons";
 import { Text } from "../ui/text";
-import type { cartItem } from "~/common/types";
+import type { CartItem } from "~/common/types";
 import { useCartStore } from "~/store/cartStore"; // Adjust path as needed
 
 // No more props!
 export const CartSidebar = () => {
   // Pull everything directly from global state
+  const navigate = useNavigate();
   const { cart, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart } =
     useCartStore();
 
@@ -15,6 +17,11 @@ export const CartSidebar = () => {
   if (!isCartOpen) return null;
 
   const onClose = () => setIsCartOpen(false);
+
+  const handleShopNow = () => {
+    onClose();
+    navigate("/collection");
+  };
 
   return (
     <div className="fixed inset-0 z-100 flex justify-end">
@@ -58,8 +65,8 @@ export const CartSidebar = () => {
                 Your bag is empty
               </Text>
               <button
-                onClick={onClose}
-                className="text-primary-dark text-xs uppercase tracking-widest font-bold border-b border-primary-dark pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors"
+                onClick={handleShopNow}
+                className="text-primary-dark text-xs uppercase tracking-widest font-bold border-b border-primary-dark pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors cursor-pointer"
               >
                 <Text as="span" variant="primary">
                   Start Shopping
@@ -69,7 +76,7 @@ export const CartSidebar = () => {
           ) : (
             // Filled State
             <div className="space-y-6">
-              {cart.map((item: cartItem) => (
+              {cart.map((item: CartItem) => (
                 <div key={item.id} className="flex gap-4 group">
                   <div className="w-24 h-24 rounded-lg overflow-hidden border border-gray-100 shrink-0">
                     <img

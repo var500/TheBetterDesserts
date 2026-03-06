@@ -3,6 +3,7 @@ import { Icons } from "../icons";
 import { Text } from "../ui/text";
 import { useCartStore } from "~/store/cartStore";
 import { CityPicker } from "./cityPicker";
+import { Link } from "react-router";
 
 // Removed cartCount from props!
 interface NavbarProps {
@@ -58,29 +59,32 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
             onClick={() => setIsMobileMenuOpen(true)}
           />
           <div className="hidden md:flex items-center gap-6 text-sm font-medium tracking-wide text-primary-dark">
-            <a href="/about" className="hover:text-gray-500 transition-colors">
-              <Text as="span" variant="primary">
-                Our Story
-              </Text>
-            </a>
-            <a href="/#home" className="hover:text-gray-500 transition-colors">
+            <Link to="/#home" className="hover:text-gray-500 transition-colors">
               <Text as="span" variant="primary">
                 Home
               </Text>
-            </a>
-            <a href="/shop" className="hover:text-gray-500 transition-colors">
+            </Link>
+            <Link
+              to="/collection"
+              className="hover:text-gray-500 transition-colors"
+            >
               <Text as="span" variant="primary">
                 Shop
               </Text>
-            </a>
-            <a
-              href="/#gifting-promo"
+            </Link>
+            <Link
+              to="/#gifting-promo"
               className="hover:text-gray-500 transition-colors"
             >
               <Text as="span" variant="primary">
                 Gifting
               </Text>
-            </a>
+            </Link>
+            <Link to="/about" className="hover:text-gray-500 transition-colors">
+              <Text as="span" variant="primary">
+                Our Story
+              </Text>
+            </Link>
             <CityPicker />
           </div>
         </div>
@@ -183,7 +187,7 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
           {[
             { name: "Our Story", href: "/about" },
             { name: "Home", href: "/#home" },
-            { name: "Shop", href: "/shop" },
+            { name: "Shop", href: "/collection" },
             { name: "Gifting", href: "/#gifting-promo" },
           ].map((link) => (
             <a

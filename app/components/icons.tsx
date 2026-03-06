@@ -23,6 +23,9 @@ import {
   Palmtree,
   Ban,
   Box,
+  MapPin,
+  ChevronDown,
+  Check,
 } from "lucide-react";
 
 import type { JSX } from "react";
@@ -53,6 +56,9 @@ export const Icons = {
   Ban: Ban,
   Box: Box,
   wheatOff: WheatOff,
+  MapPin: MapPin,
+  ChevronDown: ChevronDown,
+  Check: Check,
   instagram: ({ ...props }: LucideProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

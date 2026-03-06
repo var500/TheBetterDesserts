@@ -14,7 +14,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            addToCart(product);
+            addToCart(product, true);
           }}
           className="cursor-pointer absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm text-primary-dark py-2 rounded-md font-bold text-xs opacity-0 translate-y-4 transition-all group-hover:opacity-100 group-hover:translate-y-0"
         >

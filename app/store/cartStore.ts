@@ -1,10 +1,10 @@
 import { create } from "zustand";
-import type { cartItem } from "~/common/types";
+import type { CartItem } from "~/common/types";
 
 interface CartState {
-  cart: cartItem[];
+  cart: CartItem[];
   isCartOpen: boolean;
-  addToCart: (product: Omit<cartItem, "quantity">) => void;
+  addToCart: (product: Omit<CartItem, "quantity">, openCart?: boolean) => void;
   setIsCartOpen: (isOpen: boolean) => void;
   updateQuantity: (id: string, delta: number) => void;
   removeFromCart: (id: string) => void;
@@ -16,13 +16,13 @@ export const useCartStore = create<CartState>((set) => ({
 
   setIsCartOpen: (isOpen) => set({ isCartOpen: isOpen }),
 
-  addToCart: (product) =>
+  addToCart: (product, openCart) =>
     set((state) => {
       const existing = state.cart.find((item) => item.id === product.id);
 
       // Determine the maximum they are allowed to buy
       const absoluteMax = Math.min(
-        product.stockAvailable,
+        product.stockAvailable ?? 0,
         product.maxPerUser ?? 5,
       );
 
@@ -45,7 +45,7 @@ export const useCartStore = create<CartState>((set) => ({
 
       return {
         cart: [...state.cart, { ...product, quantity: 1 }],
-        isCartOpen: true,
+        isCartOpen: openCart,
       };
     }),
 
@@ -54,7 +54,7 @@ export const useCartStore = create<CartState>((set) => ({
       cart: state.cart.map((item) => {
         if (item.id === id) {
           const absoluteMax = Math.min(
-            item.stockAvailable,
+            item.stockAvailable ?? 0,
             item.maxPerUser ?? 5,
           );
 

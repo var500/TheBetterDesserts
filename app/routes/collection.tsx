@@ -1,7 +1,7 @@
 import type { Route } from "./+types/home";
 import Layout from "~/components/Layout/Layout";
 
-import Shop from "~/components/shop";
+import Collection from "~/components/shop";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -14,7 +14,7 @@ export function meta({}: Route.MetaArgs) {
 export default function Store() {
   return (
     <Layout>
-      <Shop />
+      <Collection />
     </Layout>
   );
 }

@@ -1,31 +1,32 @@
-export interface cartItem {
+export interface Product {
   id: string;
   name: string;
   price: number;
   image: string;
-  category: string;
-  quantity: number;
-  stockAvailable: number;
+  category?: string;
+  unitDescription?: string;
+  stockAvailable?: number;
   maxPerUser?: number;
 }
 
-export interface CartSidebarProps {
-  isOpen: boolean;
-  onClose: () => void;
-  cart: cartItem[];
-  updateQuantity: (id: string, delta: number) => void;
-  removeFromCart: (id: string) => void;
-  user: any;
+export interface CartItem extends Product {
+  quantity: number;
+}
+
+export interface ShopCategory {
+  id: string;
+  title: string;
+  description: string;
+  availableIn: Locations[];
+  itemIds: string[];
 }
 
 export interface ProductCardProps {
-  product: {
-    id: string;
-    name: string;
-    category: string;
-    price: number;
-    image: string;
-    stockAvailable: number;
-    maxPerUser?: number;
-  };
+  product: Product;
+}
+
+export enum Locations {
+  GURGAON = "GURGAON",
+  DELHI_NCR = "DELHI_NCR",
+  PAN_INDIA = "PAN_INDIA",
 }

@@ -1,3 +1,5 @@
+import { Locations } from "~/common/types";
+
 export const ingredients = [
   {
     name: "Dates",
@@ -48,47 +50,28 @@ export const ingredients = [
   },
 ];
 
-export const PRODUCTS = [
+export const SHOP_CATEGORIES = [
   {
-    id: "1",
-    name: "Caszel",
-    price: 350,
-    category: "Dessert",
-    flavors: ["Hazelnut", "Dark Chocolate", "Biscoff"],
-    image:
-      "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&q=80&w=400",
-    stockAvailable: 21,
-    availableIn: ["gurgaon", "delhi-ncr"],
+    id: "cake-tubs",
+    title: "Decadent Cake Tubs",
+    description: "Layered to perfection. Best enjoyed chilled.",
+    availableIn: [Locations.GURGAON, Locations.DELHI_NCR],
+    itemIds: ["t1", "t2", "t3", "t4", "t5"],
   },
   {
-    id: "2",
-    name: "Heart of hazelnut",
-    category: "Cake Tubs",
-    price: 429,
-    stockAvailable: 21,
-    image:
-      "https://plus.unsplash.com/premium_photo-1713447395823-2e0b40b75a89?q=80&w=982&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=400",
-    availableIn: ["gurgaon", "delhi-ncr"],
+    id: "cookies",
+    title: "Signature Brookies",
+    description: "Our famous thick, gooey cookies with chocolate sauce.",
+    availableIn: [Locations.GURGAON, Locations.DELHI_NCR, Locations.PAN_INDIA],
+    itemIds: ["b1", "b2"],
   },
+
   {
-    id: "3",
-    name: "Miss Matilda",
-    category: "Cake Tubs",
-    price: 499,
-    stockAvailable: 21,
-    image:
-      "https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=1336&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&q=80&w=400",
-    availableIn: ["gurgaon", "delhi-ncr", "pan-india"],
-  },
-  {
-    id: "4",
-    name: "Brookies",
-    stockAvailable: 21,
-    category: "Dessert",
-    price: 299,
-    image:
-      "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=400",
-    availableIn: ["gurgaon", "delhi-ncr"],
+    id: "desserts",
+    title: "Gourmet Desserts",
+    description: "Puddings, brownies, and chef specials.",
+    availableIn: [Locations.DELHI_NCR, Locations.GURGAON],
+    itemIds: ["d1", "d2"],
   },
 ];
 
@@ -109,3 +92,88 @@ export const locations = [
     bgUrl: "/cities/bengaluru.png",
   },
 ];
+
+export const AllProducts = [
+  {
+    id: "b1",
+    name: "The OG Brookie",
+    price: 199,
+    image: "/products/brookie/brookie.png",
+    unitDescription: "3 pc + Chocolate Sauce",
+    stockAvailable: 50,
+    availableIn: [Locations.GURGAON, Locations.DELHI_NCR, Locations.PAN_INDIA],
+    maxPerUser: 5,
+  },
+  {
+    id: "b2",
+    name: "Chocochip Brookie",
+    price: 249,
+    image: "/products/brookie/image.png",
+    unitDescription: "3 pc + Chocolate Sauce",
+    stockAvailable: 50,
+    availableIn: [Locations.GURGAON, Locations.DELHI_NCR, Locations.PAN_INDIA],
+    maxPerUser: 5,
+  },
+  {
+    id: "t1",
+    name: "Heart of Hazelnut",
+    price: 349,
+    image: "/products/cakeTubs/cake1.jpeg",
+    unitDescription: "1 Tub (500g)",
+    stockAvailable: 21,
+    availableIn: [Locations.GURGAON, Locations.DELHI_NCR],
+    maxPerUser: 5,
+  },
+  {
+    id: "t2",
+    name: "Miss Matilda",
+    price: 349,
+    image: "/products/cakeTubs/cake2.jpeg",
+    unitDescription: "1 Tub (500g)",
+    stockAvailable: 21,
+    availableIn: [Locations.GURGAON, Locations.DELHI_NCR],
+    maxPerUser: 5,
+  },
+  {
+    id: "t3",
+    name: "Dark Raspberry",
+    price: 379,
+    image: "/products/cakeTubs/cake3.jpeg",
+    unitDescription: "1 Tub (500g)",
+    stockAvailable: 21,
+    availableIn: [Locations.GURGAON, Locations.DELHI_NCR],
+    maxPerUser: 5,
+  },
+  {
+    id: "t4",
+    name: "Strawberry Affair",
+    price: 349,
+    image: "/products/cakeTubs/cake4.jpeg",
+    unitDescription: "1 Tub (500g)",
+    stockAvailable: 21,
+    availableIn: [Locations.GURGAON, Locations.DELHI_NCR],
+    maxPerUser: 5,
+  },
+  {
+    id: "d1",
+    name: "Classic Fudge Brownie",
+    price: 179,
+    image: "/products/brownie/image.png",
+    unitDescription: "Pack of 3",
+    stockAvailable: 21,
+    availableIn: [Locations.GURGAON, Locations.DELHI_NCR],
+    maxPerUser: 2,
+  },
+  {
+    id: "d2",
+    name: "Signature Caszel",
+    price: 299,
+    image: "/products/caszel/caszel.png",
+    unitDescription: "Pack of 3",
+    stockAvailable: 21,
+    availableIn: [Locations.GURGAON, Locations.DELHI_NCR],
+    maxPerUser: 2,
+  },
+];
+
+export const BESTSELLER_IDS = ["b1", "t1", "d2"];

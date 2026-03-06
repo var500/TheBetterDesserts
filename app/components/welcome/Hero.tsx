@@ -8,14 +8,17 @@ import { Button, buttonVariants } from "../ui/button";
 import { Text } from "../ui/text";
 import Badge from "../ui/badge";
 import { Link } from "react-router";
+import { useNavigate } from "react-router";
+import { Icons } from "../icons";
 
 export const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="relative h-[85vh]  overflow-hidden w-full flex">
       <Swiper
         slidesPerView={1}
         pagination={{ clickable: true }}
-        modules={[Pagination]}
+        modules={[Pagination, Autoplay]}
         loop={true}
         autoplay={{ delay: 4000, disableOnInteraction: false }}
         className="w-full h-full"
@@ -34,7 +37,11 @@ export const Hero = () => {
               className="object-contain md:w-[70%] md:h-[70%] w-62 h-62  "
             />
 
-            <Button variant={"light"} size={"sm-to-default"}>
+            <Button
+              variant={"light"}
+              size={"sm-to-default"}
+              onClick={() => navigate("/collection")}
+            >
               Shop Now
             </Button>
           </div>
@@ -54,18 +61,19 @@ export const Hero = () => {
 
               <ul className="text-lg font-satoshi md:text-2xl space-y-2 md:space-y-4 font-light">
                 <li className="flex items-center gap-3">
-                  <span className="text-red-400">✖</span> No White Sugar
+                  <Icons.X className="text-red-400" /> No White Sugar
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="text-red-400">✖</span> No Maida (Refined
-                  Flour)
+                  <Icons.X className="text-red-400" /> No Maida (Refined Flour)
                 </li>
 
                 <li className="flex items-center gap-3">
-                  <span className="text-red-400">✖</span>No Palm Oil
+                  <Icons.X className="text-red-400" />
+                  No Palm Oil
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="text-green-400">✔</span> 100% Eggless
+                  <Icons.Check className="text-green-400" />
+                  100% Eggless
                 </li>
               </ul>
             </div>

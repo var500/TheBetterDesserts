@@ -12,13 +12,13 @@ import LocationSelector from "../welcome/CitySlabs";
 import SignatureProduct from "./SignatureProduct";
 import { GiftingPromo } from "../promotional/Gifting";
 import { WhyChooseGifting } from "../promotional/GiftingMvp";
-import type { cartItem } from "~/common/types";
+import type { CartItem } from "~/common/types";
 import BetterIngredients from "./Ingredients";
 import { useCityStore } from "~/store/useCityStore";
 
 export default function App() {
   const [user, setUser] = useState(null);
-  const [cart, setCart] = useState<cartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -37,14 +37,14 @@ export default function App() {
     return () => clearTimeout(timeoutId);
   }, []);
 
-  const updateCart = async (newCart: cartItem[]) => {
+  const updateCart = async (newCart: CartItem[]) => {
     if (!user) {
       setCart(newCart);
       return;
     }
   };
 
-  const addToCart = (product: cartItem) => {
+  const addToCart = (product: CartItem) => {
     const existing = cart.find((item) => item.id === product.id);
     let newCart;
     if (existing) {
