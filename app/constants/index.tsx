@@ -97,7 +97,7 @@ export const AllProducts = [
   {
     id: "b1",
     name: "The OG Brookie",
-    price: 199,
+    price: 399,
     image: "/products/brookie/brookie.png",
     unitDescription: "3 pc + Chocolate Sauce",
     stockAvailable: 50,
@@ -107,7 +107,7 @@ export const AllProducts = [
   {
     id: "b2",
     name: "Chocochip Brookie",
-    price: 249,
+    price: 399,
     image: "/products/brookie/image.png",
     unitDescription: "3 pc + Chocolate Sauce",
     stockAvailable: 50,
@@ -117,7 +117,7 @@ export const AllProducts = [
   {
     id: "t1",
     name: "Heart of Hazelnut",
-    price: 349,
+    price: 699,
     image: "/products/cakeTubs/cake1.jpeg",
     unitDescription: "1 Tub (500g)",
     stockAvailable: 21,
@@ -127,7 +127,7 @@ export const AllProducts = [
   {
     id: "t2",
     name: "Miss Matilda",
-    price: 349,
+    price: 699,
     image: "/products/cakeTubs/cake2.jpeg",
     unitDescription: "1 Tub (500g)",
     stockAvailable: 21,
@@ -137,7 +137,7 @@ export const AllProducts = [
   {
     id: "t3",
     name: "Dark Raspberry",
-    price: 379,
+    price: 599,
     image: "/products/cakeTubs/cake3.jpeg",
     unitDescription: "1 Tub (500g)",
     stockAvailable: 21,
@@ -147,7 +147,7 @@ export const AllProducts = [
   {
     id: "t4",
     name: "Strawberry Affair",
-    price: 349,
+    price: 599,
     image: "/products/cakeTubs/cake4.jpeg",
     unitDescription: "1 Tub (500g)",
     stockAvailable: 21,
@@ -157,23 +157,45 @@ export const AllProducts = [
   {
     id: "d1",
     name: "Classic Fudge Brownie",
-    price: 179,
+    price: 399,
     image: "/products/brownie/image.png",
     unitDescription: "Pack of 3",
     stockAvailable: 21,
     availableIn: [Locations.GURGAON, Locations.DELHI_NCR],
-    maxPerUser: 2,
+    maxPerUser: 5,
   },
   {
     id: "d2",
     name: "Signature Caszel",
-    price: 299,
+    price: 599,
     image: "/products/caszel/caszel.png",
     unitDescription: "Pack of 3",
     stockAvailable: 21,
     availableIn: [Locations.GURGAON, Locations.DELHI_NCR],
-    maxPerUser: 2,
+    maxPerUser: 5,
   },
 ];
 
-export const BESTSELLER_IDS = ["b1", "t1", "d2"];
+export const BESTSELLER_IDS = ["t1", "t2", "b2", "d1"];
+
+export const CATEGORIES = [
+  "Cookie Cakes",
+  "Bundt Cakes",
+  "Decadent Cakes",
+  "Stuffed Cookies",
+  "Dessert Containers",
+  "Gifting",
+];
+
+export const NavLinks = [
+  { key: "Home", value: "/" },
+  { key: "Shop", value: "/collection" },
+  { key: "About", value: "/about" },
+  { key: "Contact", value: "/contact" },
+];
+
+export const CustomerServiceLinks = [
+  { key: "Shipping & Delivery", value: "shipping&delivery" },
+  { key: "Refund Policy", value: "Refund-Policy" },
+  { key: "Privacy Policies", value: "privacy-policy" },
+];

@@ -30,3 +30,12 @@ export enum Locations {
   DELHI_NCR = "DELHI_NCR",
   PAN_INDIA = "PAN_INDIA",
 }
+
+export interface Address {
+  id: string;
+  name: string;
+  street: string;
+  city: string;
+  pincode: string;
+  phone: string;
+}

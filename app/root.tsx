@@ -6,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
+import { ToastContainer } from "react-toastify";
 import type { Route } from "./+types/root";
 import "./app.css";
 import QueryProvider from "./QueryProvider";
@@ -49,6 +49,7 @@ export default function App() {
   return (
     <QueryProvider>
       <Outlet />
+      <ToastContainer />
     </QueryProvider>
   );
 }

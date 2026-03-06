@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap');
 @import "tailwindcss";
+@import "react-toastify/dist/ReactToastify.css";
 
 @font-face {
   font-family: "Frista";
@@ -61,7 +62,7 @@
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white dark:bg-gray-950 text-primary-dark;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;

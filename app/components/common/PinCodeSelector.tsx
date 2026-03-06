@@ -6,7 +6,7 @@ import { useCityStore } from "~/store/useCityStore";
 import { Locations } from "~/common/types";
 
 export default function PinCodeSelector() {
-  const { selectedCityId, selectedCityLabel, setCity } = useCityStore();
+  const { setCity } = useCityStore();
   const [pincode, setPincode] = useState("");
   const [pincodeError, setPincodeError] = useState("");
 

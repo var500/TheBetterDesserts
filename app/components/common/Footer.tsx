@@ -1,15 +1,7 @@
 import { Link } from "react-router";
 import { Icons } from "../icons";
 import { Text } from "../ui/text"; // Adjust import path if needed
-
-const CATEGORIES = [
-  "Cookie Cakes",
-  "Bundt Cakes",
-  "Decadent Cakes",
-  "Stuffed Cookies",
-  "Dessert Containers",
-  "Gifting",
-];
+import { CATEGORIES, CustomerServiceLinks, NavLinks } from "~/constants";
 
 export default function Footer() {
   return (
@@ -26,15 +18,15 @@ export default function Footer() {
             >
               Links
             </Text>
-            {["Home", "Shop", "Cookies", "About", "Contact"].map((link) => (
+            {NavLinks.map((link) => (
               <a
-                key={link}
-                href="#"
+                key={link?.key}
+                href={link?.value}
                 className="block text-gray-300 hover:text-white transition-colors"
               >
                 {/* Use Text as a span inside the anchor */}
                 <Text as="span" variant="primary">
-                  {link}
+                  {link?.key}
                 </Text>
               </a>
             ))}
@@ -69,20 +61,18 @@ export default function Footer() {
             >
               Customer Service
             </Text>
-            {["Shipping & Delivery", "Refund Policy", "Privacy Policies"].map(
-              (link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="block text-gray-300 hover:text-white transition-colors"
-                >
-                  {/* Use Text as a span inside the anchor */}
-                  <Text as="span" variant="primary">
-                    {link}
-                  </Text>
-                </a>
-              ),
-            )}
+            {CustomerServiceLinks.map((link) => (
+              <a
+                key={link.key}
+                href={link.value}
+                className="block text-gray-300 hover:text-white transition-colors"
+              >
+                {/* Use Text as a span inside the anchor */}
+                <Text as="span" variant="primary">
+                  {link.key}
+                </Text>
+              </a>
+            ))}
           </div>
         </div>
 

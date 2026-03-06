@@ -17,6 +17,8 @@ const buttonVariants = cva(
           "bg-primary-light text-primary-dark hover:bg-primary-light/90 shadow-none hover:-translate-y-1",
         orderNow:
           "border-2 border-[#F5F0E6] text-[#F5F0E6] hover:bg-[#F5F0E6] hover:text-[#1A243F] transition-all duration-300 px-8 py-3 w-max rounded-full font-medium",
+        checkout:
+          "group w-full bg-primary-dark text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-black transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:-translate-y-1",
       },
       size: {
         // Your original sizes

@@ -26,6 +26,9 @@ import {
   MapPin,
   ChevronDown,
   Check,
+  Cookie,
+  MessageSquare,
+  Loader,
 } from "lucide-react";
 
 import type { JSX } from "react";
@@ -34,6 +37,8 @@ export type icon = (props: LucideProps) => JSX.Element;
 
 export const Icons = {
   ArrowRight: ArrowRight,
+  Cookie: Cookie,
+  Loader: Loader,
   Menu: Menu,
   Search: Search,
   ShoppingBag: ShoppingBag,
@@ -59,6 +64,7 @@ export const Icons = {
   MapPin: MapPin,
   ChevronDown: ChevronDown,
   Check: Check,
+  MessageSquare: MessageSquare,
   instagram: ({ ...props }: LucideProps) => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

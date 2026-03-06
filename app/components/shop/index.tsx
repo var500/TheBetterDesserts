@@ -114,7 +114,6 @@ export default function Shop() {
                               </div>
                             )}
 
-                            {/* Added the ₹ symbol back in! */}
                             <Text
                               as="p"
                               className="text-sm text-primary-dark/80 mt-1 font-bold"

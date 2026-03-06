@@ -3,6 +3,7 @@ import { Icons } from "../icons";
 import { Text } from "../ui/text";
 import type { CartItem } from "~/common/types";
 import { useCartStore } from "~/store/cartStore"; // Adjust path as needed
+import { Button } from "../ui/button";
 
 // No more props!
 export const CartSidebar = () => {
@@ -21,6 +22,11 @@ export const CartSidebar = () => {
   const handleShopNow = () => {
     onClose();
     navigate("/collection");
+  };
+
+  const handleCheckout = () => {
+    onClose();
+    navigate("/checkout");
   };
 
   return (
@@ -158,7 +164,7 @@ export const CartSidebar = () => {
               Shipping & taxes calculated at checkout
             </Text>
 
-            <button className="group w-full bg-primary-dark text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-black transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:-translate-y-1">
+            <Button variant={"checkout"} onClick={handleCheckout}>
               <Text
                 as="span"
                 variant="primary"
@@ -167,7 +173,7 @@ export const CartSidebar = () => {
                 Checkout
               </Text>
               <Icons.ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </button>
+            </Button>
           </div>
         )}
       </div>
