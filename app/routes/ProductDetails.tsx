@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { AllProducts } from "~/constants";
 import type { Product } from "~/common/types";
@@ -15,7 +15,7 @@ import Itemdetails from "~/components/ItemDetails";
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
-  console.log(id);
+
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);

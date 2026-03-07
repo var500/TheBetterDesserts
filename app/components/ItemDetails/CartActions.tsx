@@ -68,9 +68,13 @@ export default function CartActions({
           ? "Max Limit Reached"
           : isOutOfStock
             ? "Out of Stock"
-            : isPincodeValid === true && (!deliveryDate || !deliverySlot)
-              ? "Select Date & Slot"
-              : "Add to Cart"}
+            : isPincodeValid === null
+              ? "Check Pincode to Add"
+              : isPincodeValid === false
+                ? "Not Deliverable"
+                : !deliveryDate || !deliverySlot
+                  ? "Select Date & Slot"
+                  : "Add to Cart"}
       </Button>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { useCartStore } from "~/store/cartStore";
 import { useCityStore } from "~/store/useCityStore";
@@ -23,7 +23,7 @@ interface ItemDetailsProps {
 export default function Itemdetails({ product }: ItemDetailsProps) {
   const navigate = useNavigate();
   const { addToCart, cart } = useCartStore();
-  const { setCity } = useCityStore();
+  const { setCity, selectedCityLabel } = useCityStore();
 
   const [quantity, setQuantity] = useState(1);
   const [pincode, setPincode] = useState("");
@@ -42,6 +42,31 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
       new Set(parentCategories.flatMap((cat) => cat.availableIn)),
     );
   }, [product]);
+
+  useEffect(() => {
+    if (!selectedCityLabel) return;
+
+    console.log(availableLocations);
+
+    const isCityValidForProduct = availableLocations.includes(
+      selectedCityLabel as Locations,
+    );
+
+    if (!isCityValidForProduct) {
+      setIsPincodeValid(false);
+      setPincodeMessage(
+        "Delivery is not available for this product in your selected city.",
+      );
+    } else {
+      if (isPincodeValid !== null) {
+        setIsPincodeValid(null);
+        setPincode("");
+        setPincodeMessage("");
+        setDeliveryDate("");
+        setDeliverySlot("");
+      }
+    }
+  }, [selectedCityLabel, availableLocations]);
 
   if (!product) {
     return (
@@ -71,8 +96,9 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
   const isAddToCartDisabled =
     isOutOfStock ||
     allowedToAdd === 0 ||
-    isPincodeValid === false ||
-    (isPincodeValid === true && (!deliveryDate || !deliverySlot));
+    isPincodeValid !== true ||
+    !deliveryDate ||
+    !deliverySlot;
 
   // --- Handlers ---
   const handleQuantityChange = (delta: number) => {
