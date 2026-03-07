@@ -5,12 +5,13 @@ import type { Product } from "~/common/types";
 
 import { FeaturesBanner } from "../components/welcome/FeaturesBanner";
 import { YouMayAlsoLike } from "~/components/common/ProductSuggestion";
-import Itemdetails from "~/components/shop/details";
+
 import { Icons } from "~/components/icons";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
 import BetterIngredients from "~/components/welcome/Ingredients";
 import { Layout } from "~/components/Layout/Layout";
+import Itemdetails from "~/components/ItemDetails";
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();

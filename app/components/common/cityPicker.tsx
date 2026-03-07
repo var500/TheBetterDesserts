@@ -4,6 +4,7 @@ import { Text } from "../ui/text";
 
 import { Locations } from "~/common/types";
 import { Icons } from "../icons";
+import { useLocation } from "react-router";
 
 // 1. Added 'label' back so the UI displays nicely formatted names
 const AVAILABLE_LOCATIONS = [
@@ -16,6 +17,7 @@ export const CityPicker = () => {
   const { selectedCityId, selectedCityLabel, setCity } = useCityStore();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
@@ -45,6 +47,10 @@ export const CityPicker = () => {
   const displayLabel = selectedCityId
     ? AVAILABLE_LOCATIONS.find((loc) => loc.id === selectedCityId)?.label
     : "Select City";
+
+  if (location.pathname === "/checkout") {
+    return;
+  }
 
   return (
     <div className="relative flex items-center" ref={dropdownRef}>
@@ -91,7 +97,6 @@ export const CityPicker = () => {
                       : "text-primary-dark/60 group-hover/item:text-primary-dark"
                   }`}
                 >
-                  {/* 5. Render the pretty label in the dropdown list */}
                   {loc.label}
                 </Text>
                 {selectedCityId === loc.id && (

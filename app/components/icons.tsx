@@ -34,6 +34,7 @@ import {
   Share2,
   Globe,
   ShieldCheck,
+  Calendar,
 } from "lucide-react";
 
 import type { JSX } from "react";
@@ -44,6 +45,7 @@ export const Icons = {
   ArrowRight: ArrowRight,
   ShieldCheck: ShieldCheck,
   Target: Target,
+  Calendar: Calendar,
   Globe: Globe,
   Share2: Share2,
   Mail: Mail,

@@ -12,7 +12,7 @@ export default function Badge({
   className = "",
 }: BadgeProps) {
   const baseStyles =
-    "inline-block font-bold tracking-widest uppercase px-4 py-1 rounded-full text-xs w-max mb-6";
+    "inline-block font-bold tracking-widest uppercase px-4 py-1 rounded-full text-xs  mb-6";
 
   const variants = {
     primary: "bg-[#F5F0E6] text-[#1A243F]",
