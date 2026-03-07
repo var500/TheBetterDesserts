@@ -49,7 +49,7 @@ export default function SignatureProduct() {
             as="span"
             className="text-sm md:text-base tracking-[0.2em] uppercase text-primary-dark/60 mb-4 font-bold font-satoshi"
           >
-            Chef's Creation
+            Chef&apos;s Creation
           </Text>
 
           <Text

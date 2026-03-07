@@ -1,8 +1,7 @@
 import Welcome from "~/components/welcome";
-import type { Route } from "./+types/home";
 import Layout from "~/components/Layout/Layout";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "The Better Desserts" },
     { name: "description", content: "Welcome to The Better Desserts!" },

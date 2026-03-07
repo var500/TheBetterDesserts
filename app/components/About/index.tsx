@@ -27,14 +27,14 @@ export default function AboutUs() {
               </h2>
               <div className="w-16 h-1 bg-primary-dark/20 rounded-full"></div>
               <p className="leading-relaxed text-primary-dark/80 text-lg md:text-xl font-medium">
-                As two certified pastry chefs, we spent years mastering the art
-                of traditional baking. We loved the joy our creations brought to
-                people, but we couldn't ignore the heavy reliance on ingredients
-                that just weren't good for the body.
+                {
+                  "As two certified pastry chefs, we spent years mastering the art of traditional baking. We loved the joy our creations brought to people, but we couldn't ignore the heavy reliance on ingredients that just weren't good for the body."
+                }
               </p>
               <p className="leading-relaxed text-primary-dark/80 text-lg md:text-xl font-medium">
-                We wanted to create treats that love you back, and that
-                realization sparked the beginning of our brand.
+                {
+                  " We wanted to create treats that love you back, and that realization sparked the beginning of our brand."
+                }
               </p>
             </div>
 
@@ -59,17 +59,17 @@ export default function AboutUs() {
           <section className="space-y-16">
             <div className="text-center max-w-3xl mx-auto space-y-6">
               <h2 className="text-4xl md:text-5xl font-frista text-primary-dark">
-                Skipping the Bad, Sourcing the Good
+                {" Skipping the Bad, Sourcing the Good"}
               </h2>
               <div className="w-16 h-1 bg-primary-dark/20 rounded-full mx-auto"></div>
               <p className="leading-relaxed text-primary-dark/80 text-lg md:text-xl font-medium">
-                We made a strict rule from day one: absolutely{" "}
+                {"We made a strict rule from day one: absolutely"}{" "}
                 <span className="font-bold text-primary-dark">
-                  no palm oil, no maida, and zero refined sugar
+                  {" no palm oil, no maida, and zero refined sugar"}
                 </span>
-                . Instead, we craft our recipes using nature's finest
-                alternatives, ensuring clean eating without ever compromising on
-                luxury.
+                {
+                  ". Instead, we craft our recipes using nature's finest alternatives, ensuring clean eating without ever compromising on luxury."
+                }
               </p>
             </div>
 
@@ -91,13 +91,14 @@ export default function AboutUs() {
               </h2>
               <div className="w-16 h-1 bg-primary-dark/20 rounded-full"></div>
               <p className="leading-relaxed text-primary-dark/80 text-lg md:text-xl font-medium">
-                Replacing conventional baking staples is not an easy task. It
-                took months of relentless recipe testing, hundreds of failed
-                batches, and countless late nights in the kitchen.
+                {
+                  "Replacing conventional baking staples is not an easy task. It took months of relentless recipe testing, hundreds of failed batches, and countless late nights in the kitchen."
+                }
               </p>
               <p className="leading-relaxed text-primary-dark/80 text-lg md:text-xl font-medium">
-                We tweaked, we tasted, and we tried again until we hit the
-                absolute perfect balance of sweetness, texture, and health.
+                {
+                  "We tweaked, we tasted, and we tried again until we hit the absolute perfect balance of sweetness, texture, and health."
+                }
               </p>
             </div>
 
@@ -115,14 +116,14 @@ export default function AboutUs() {
         {/* Closing / Call to Action */}
         <div className="text-center max-w-2xl mx-auto space-y-8 pb-12">
           <p className="text-3xl md:text-4xl font-frista italic text-primary-dark">
-            "Welcome to the sweet revolution."
+            {`"Welcome to the sweet revolution."`}
           </p>
           <Button
             variant={"checkout"}
             className="max-w-100 mx-auto"
             onClick={() => navigate("/collection")}
           >
-            Taste The Difference
+            {"Taste The Difference"}
           </Button>
         </div>
       </div>

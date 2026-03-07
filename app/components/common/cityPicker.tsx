@@ -14,7 +14,7 @@ const AVAILABLE_LOCATIONS = [
 ];
 
 export const CityPicker = () => {
-  const { selectedCityId, selectedCityLabel, setCity } = useCityStore();
+  const { selectedCityId, setCity } = useCityStore();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const location = useLocation();

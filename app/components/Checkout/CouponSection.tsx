@@ -27,7 +27,10 @@ export default function CouponSection({
       <Text as="h2" className="text-xl font-bold text-primary-dark mb-4">
         Have a Coupon?
       </Text>
-      <form onSubmit={handleApplyCoupon} className="flex gap-3">
+      <form
+        onSubmit={handleApplyCoupon}
+        className="flex gap-3 flex-col md:flex-wor"
+      >
         <input
           placeholder="Enter code (e.g., SWEET10)"
           value={couponCode}

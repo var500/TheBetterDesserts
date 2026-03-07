@@ -8,7 +8,7 @@ export const AuthModal = ({
 }: {
   isOpen: boolean;
   onClose: () => void;
-  user: any;
+  user: { name: string; uid: string } | null;
   onSignOut: () => void;
 }) => {
   if (!isOpen) return null;
@@ -37,7 +37,9 @@ export const AuthModal = ({
               </h2>
               <p className="text-gray-500 text-sm mt-1">
                 Logged in as:{" "}
-                <span className="font-mono">{user.uid.substring(0, 8)}...</span>
+                <span className="font-mono">
+                  {user?.uid.substring(0, 8)}...
+                </span>
               </p>
             </div>
             <div className="space-y-3">

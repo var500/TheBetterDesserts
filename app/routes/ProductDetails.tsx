@@ -62,7 +62,7 @@ export default function ProductDetails() {
           Oops! That treat crumbled.
         </Text>
         <Text as="p" className="text-lg text-primary-dark/70 max-w-md mb-8">
-          We couldn't find the dessert you're looking for.
+          We couldn&apos;t find the dessert you&apos;re looking for.
         </Text>
         <Button
           variant="default"

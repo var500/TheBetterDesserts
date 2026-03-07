@@ -25,7 +25,7 @@ export default function BetterIngredients() {
             variant="primary"
             className="text-lg text-[#F5F0E6]/80 leading-relaxed"
           >
-            We believe indulgence shouldn't come with a side of guilt. By
+            We believe indulgence shouldn&apos;t come with a side of guilt. By
             swapping out empty calories for nutrient-dense superfoods, we craft
             desserts that love you back.
           </Text>

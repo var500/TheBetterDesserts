@@ -13,6 +13,7 @@ import AddressSelection from "./AddressSelection";
 import PickupDetails from "./PickupDetails";
 import CouponSection from "./CouponSection";
 import OrderSummary from "./OrderSummary";
+import OrderSchedule from "./OrderSchedule";
 
 // Mocks (Keep these at the top or move to a separate utilities file)
 const mockVerifyCoupon = async (
@@ -72,6 +73,8 @@ export default function Checkout() {
 
   const [shippingFee, setShippingFee] = useState<number | null>(null);
   const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
+  const [scheduledDate, setScheduledDate] = useState("");
+  const [scheduledSlot, setScheduledSlot] = useState("");
 
   const [couponCode, setCouponCode] = useState("");
   const [appliedDiscountPercent, setAppliedDiscountPercent] =
@@ -154,8 +157,8 @@ export default function Checkout() {
           as="p"
           className="text-lg text-primary-dark/70 text-center max-w-md mb-8"
         >
-          A balanced diet is a brookie in each hand. Let's go find some sweet
-          treats to fill this up!
+          A balanced diet is a brookie in each hand. Let&apos;s go find some
+          sweet treats to fill this up!
         </Text>
         <Button
           variant="default"
@@ -172,7 +175,7 @@ export default function Checkout() {
   // Main Render
   return (
     <div className="min-h-screen bg-[#F5F0E6] pt-12 pb-24 px-4 md:px-8">
-      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-12">
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-0 md:gap-12">
         <div className="flex-1">
           <Text
             as="h1"
@@ -198,6 +201,14 @@ export default function Checkout() {
             <PickupDetails />
           )}
 
+          <OrderSchedule
+            deliveryMethod={deliveryMethod}
+            scheduledDate={scheduledDate}
+            setScheduledDate={setScheduledDate}
+            scheduledSlot={scheduledSlot}
+            setScheduledSlot={setScheduledSlot}
+          />
+
           <CouponSection
             couponCode={couponCode}
             setCouponCode={setCouponCode}
@@ -210,7 +221,6 @@ export default function Checkout() {
         </div>
 
         <OrderSummary
-          cart={cart}
           subtotal={subtotal}
           discountAmount={discountAmount}
           appliedDiscountPercent={appliedDiscountPercent}
@@ -219,6 +229,8 @@ export default function Checkout() {
           total={total}
           deliveryMethod={deliveryMethod}
           selectedAddressId={selectedAddressId}
+          scheduledDate={scheduledDate}
+          scheduledSlot={scheduledSlot}
         />
       </div>
     </div>

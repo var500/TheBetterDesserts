@@ -148,13 +148,13 @@ export const BirthdayModal = ({
                 as="h3"
                 className="text-2xl font-frista text-primary-dark mb-2"
               >
-                You're on the list!
+                You&apos;re on the list!
               </Text>
               <Text
                 as="p"
                 className="text-primary-dark/70 font-satoshi font-light"
               >
-                Keep an eye on your inbox. We'll send your treat shortly.
+                Keep an eye on your inbox. We&apos;ll send your treat shortly.
               </Text>
             </div>
           )}

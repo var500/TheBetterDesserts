@@ -1,9 +1,8 @@
-import type { Route } from "./+types/home";
 import Layout from "~/components/Layout/Layout";
 
 import Shipping from "~/components/Support/Shipping";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
     { title: "The Better Desserts" },
     { name: "description", content: "Shipping Policy" },

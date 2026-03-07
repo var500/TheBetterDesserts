@@ -19,6 +19,32 @@
   font-display: swap;
 }
 
+/* --- Global Scrollbar Theme --- */
+
+/* 1. WebKit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  @apply w-1.5 h-1.5;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-primary-dark/5 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-dark/20 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-dark/40;
+}
+
+/* 2. Firefox (Uses standard CSS properties) */
+* {
+  scrollbar-width: auto;
+  /* You can replace these hex codes with your actual primary-dark color */
+  scrollbar-color: rgba(26, 36, 63, 0.2) rgba(26, 36, 63, 0.05);
+}
+
 @theme {
   --font-mono: "Momo Signature", cursive;
   --font-frista: "Frista", ui-serif, serif;

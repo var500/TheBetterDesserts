@@ -3,25 +3,12 @@ import { Text } from "../ui/text";
 import { Button } from "../ui/button";
 import { Icons } from "../icons";
 
-const TIME_SLOTS = [
-  "09:00 AM - 11:00 AM",
-  "11:00 AM - 01:00 PM",
-  "01:00 PM - 03:00 PM",
-  "03:00 PM - 05:00 PM",
-  "05:00 PM - 07:00 PM",
-  "07:00 PM - 09:00 PM",
-];
-
 interface DeliveryAvailabilityProps {
   pincode: string;
   pincodeMessage: string;
   isPincodeValid: boolean | null;
-  deliveryDate: string;
-  deliverySlot: string;
   handlePincodeChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleCheckPincode: (e: React.FormEvent) => void;
-  setDeliveryDate: (date: string) => void;
-  setDeliverySlot: (slot: string) => void;
   onPanIndiaClick: () => void;
 }
 
@@ -29,12 +16,8 @@ export default function DeliveryAvailability({
   pincode,
   pincodeMessage,
   isPincodeValid,
-  deliveryDate,
-  deliverySlot,
   handlePincodeChange,
   handleCheckPincode,
-  setDeliveryDate,
-  setDeliverySlot,
   onPanIndiaClick,
 }: DeliveryAvailabilityProps) {
   return (
@@ -73,7 +56,7 @@ export default function DeliveryAvailability({
         </Button>
       </form>
 
-      {/* SUCCESS STATE UI */}
+      {/* SUCCESS STATE UI - Now only shows the message, no date picker! */}
       {isPincodeValid === true && (
         <div className="space-y-4 animate-in fade-in">
           <div className="px-5 py-4 border border-gray-100 rounded-2xl flex items-center gap-3 bg-white shadow-sm">
@@ -84,47 +67,6 @@ export default function DeliveryAvailability({
                 {pincodeMessage.substring(pincodeMessage.indexOf(".") + 1)}
               </span>
             </Text>
-          </div>
-
-          <div className="p-5 border border-gray-100 rounded-3xl bg-white shadow-sm">
-            <Text
-              as="h4"
-              className="text-sm font-bold text-primary-dark uppercase tracking-widest mb-4"
-            >
-              Schedule Delivery
-            </Text>
-            <div className="flex flex-col sm:flex-row gap-4 items-center">
-              <div className="relative w-full sm:w-auto flex-1">
-                <input
-                  type="date"
-                  value={deliveryDate}
-                  onChange={(e) => setDeliveryDate(e.target.value)}
-                  className="w-full p-3.5 pr-10 border border-gray-200 rounded-xl text-sm font-medium focus:border-primary-dark outline-none transition-all text-primary-dark bg-transparent [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-3 [&::-webkit-calendar-picker-indicator]:w-8 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0"
-                />
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary-dark">
-                  <Icons.Calendar className="text-primary-dark" />
-                </div>
-              </div>
-              <div className="w-full sm:w-auto flex-1 flex items-center gap-3">
-                <span className="text-sm font-bold text-primary-dark/70 shrink-0">
-                  Delivery slot
-                </span>
-                <select
-                  value={deliverySlot}
-                  onChange={(e) => setDeliverySlot(e.target.value)}
-                  className="w-full p-3.5 border border-gray-200 rounded-xl text-sm font-medium focus:border-primary-dark outline-none transition-all text-primary-dark bg-white"
-                >
-                  <option value="" disabled>
-                    Select slot
-                  </option>
-                  {TIME_SLOTS.map((slot) => (
-                    <option key={slot} value={slot}>
-                      {slot}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
           </div>
         </div>
       )}
@@ -138,7 +80,7 @@ export default function DeliveryAvailability({
             <button
               type="button"
               onClick={onPanIndiaClick}
-              className=" cursor-pointer font-bold uppercase underline underline-offset-4 hover:text-red-900 transition-colors"
+              className="cursor-pointer font-bold uppercase underline underline-offset-4 hover:text-red-900 transition-colors"
             >
               PAN INDIA PRODUCTS
             </button>{" "}

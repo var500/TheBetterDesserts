@@ -32,9 +32,9 @@ export default function Shipping() {
               as="p"
               className="text-xl md:text-2xl leading-relaxed text-primary-dark/90 font-medium italic"
             >
-              "At The Better Desserts, we take great care in delivering your
-              products to you. We partner only with reputed national couriers to
-              ensure your treats arrive in perfect condition."
+              &quot;At The Better Desserts, we take great care in delivering
+              your products to you. We partner only with reputed national
+              couriers to ensure your treats arrive in perfect condition.&quot;
             </Text>
           </section>
 

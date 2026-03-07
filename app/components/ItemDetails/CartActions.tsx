@@ -1,7 +1,7 @@
 import React from "react";
-import { Text } from "../ui/text";
 import { Button } from "../ui/button";
 import { Icons } from "../icons";
+import { Text } from "../ui/text";
 
 interface CartActionsProps {
   quantity: number;
@@ -9,8 +9,6 @@ interface CartActionsProps {
   isOutOfStock: boolean;
   isAddToCartDisabled: boolean;
   isPincodeValid: boolean | null;
-  deliveryDate: string;
-  deliverySlot: string;
   handleQuantityChange: (delta: number) => void;
   handleAddToCart: () => void;
 }
@@ -21,61 +19,59 @@ export default function CartActions({
   isOutOfStock,
   isAddToCartDisabled,
   isPincodeValid,
-  deliveryDate,
-  deliverySlot,
   handleQuantityChange,
   handleAddToCart,
 }: CartActionsProps) {
   return (
-    <div className="flex flex-col sm:flex-row gap-4 mb-8">
-      <div className="flex items-center justify-between border border-gray-200 bg-white rounded-full px-4 py-1 w-full sm:w-32 shrink-0 h-16">
-        <button
-          onClick={() => handleQuantityChange(-1)}
-          disabled={quantity <= 1 || isAddToCartDisabled}
-          className="p-2 text-primary-dark/60 hover:text-primary-dark disabled:opacity-30 transition-colors"
+    <div className="flex flex-col gap-4 mb-8">
+      {/* Quantity Selector & Add to Cart Button */}
+      <div className="flex gap-4 h-14">
+        <div className="flex items-center bg-white border border-gray-200 rounded-2xl w-32 shrink-0">
+          <button
+            type="button"
+            className="w-10 h-full flex items-center justify-center text-primary-dark/60 hover:text-primary-dark hover:bg-gray-50 rounded-l-2xl transition-colors disabled:opacity-50"
+            onClick={() => handleQuantityChange(-1)}
+            disabled={quantity <= 1 || isOutOfStock}
+          >
+            <Icons.Minus className="w-4 h-4" />
+          </button>
+
+          <span className="flex-1 text-center font-bold text-primary-dark">
+            {quantity}
+          </span>
+
+          <button
+            type="button"
+            className="w-10 h-full flex items-center justify-center text-primary-dark/60 hover:text-primary-dark hover:bg-gray-50 rounded-r-2xl transition-colors disabled:opacity-50"
+            onClick={() => handleQuantityChange(1)}
+            disabled={quantity >= allowedToAdd || isOutOfStock}
+          >
+            <Icons.Plus className="w-4 h-4" />
+          </button>
+        </div>
+
+        <Button
+          onClick={handleAddToCart}
+          disabled={isAddToCartDisabled}
+          className="flex-1 h-full rounded-2xl text-base font-bold tracking-wide uppercase shadow-md disabled:bg-gray-300 disabled:text-gray-500 disabled:shadow-none transition-all"
         >
-          <Icons.Minus className="w-5 h-5" />
-        </button>
-        <Text
-          as="span"
-          className={`font-bold w-6 text-center text-lg ${
-            isAddToCartDisabled ? "text-primary-dark/30" : "text-primary-dark"
-          }`}
-        >
-          {quantity}
-        </Text>
-        <button
-          onClick={() => handleQuantityChange(1)}
-          disabled={quantity >= allowedToAdd || isAddToCartDisabled}
-          className="p-2 text-primary-dark/60 hover:text-primary-dark disabled:opacity-30 transition-colors"
-        >
-          <Icons.Plus className="w-5 h-5" />
-        </button>
+          {isOutOfStock ? "Out of Stock" : "Add to Bag"}
+        </Button>
       </div>
 
-      <Button
-        variant="default"
-        size="lg"
-        onClick={handleAddToCart}
-        disabled={isAddToCartDisabled}
-        className={`flex-1 rounded-full h-16 text-sm tracking-widest uppercase font-bold transition-all ${
-          isAddToCartDisabled
-            ? "bg-gray-400 text-white cursor-not-allowed shadow-none"
-            : "shadow-lg hover:-translate-y-1"
-        }`}
-      >
-        {allowedToAdd === 0 && !isOutOfStock
-          ? "Max Limit Reached"
-          : isOutOfStock
-            ? "Out of Stock"
-            : isPincodeValid === null
-              ? "Check Pincode to Add"
-              : isPincodeValid === false
-                ? "Not Deliverable"
-                : !deliveryDate || !deliverySlot
-                  ? "Select Date & Slot"
-                  : "Add to Cart"}
-      </Button>
+      {/* Helper text to prompt the user to enter a pincode if they haven't yet */}
+      {isPincodeValid === null && !isOutOfStock && (
+        <Text as="p" className="text-sm text-primary-dark/60 text-center mt-2">
+          Please check delivery availability above to add this item to your bag.
+        </Text>
+      )}
+
+      {/* Warning if they hit the max limit */}
+      {allowedToAdd === 0 && !isOutOfStock && (
+        <Text as="p" className="text-sm text-[#A32A2A] text-center mt-2">
+          You've reached the maximum quantity limit for this item.
+        </Text>
+      )}
     </div>
   );
 }

@@ -14,7 +14,8 @@ export const WhyChooseGifting = () => (
           as="p"
           className="font-satoshi text-sm md:text-base text-primary-dark/60 max-w-[250px] leading-relaxed"
         >
-          Elegant boxes designed to impress from the moment they're received.
+          Elegant boxes designed to impress from the moment they&apos;re
+          received.
         </Text>
       </div>
 

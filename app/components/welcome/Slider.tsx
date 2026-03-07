@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 
@@ -15,9 +14,6 @@ const REELS_DATA = [
 ];
 
 export const SweetnessSlider = () => {
-  // We use this just to force React to reload/pause the previous iframe
-  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-
   const extendedReels = [
     ...REELS_DATA.map((item, i) => ({ uid: `set1-${i}`, ...item })),
     ...REELS_DATA.map((item, i) => ({ uid: `set2-${i}`, ...item })),
@@ -57,7 +53,7 @@ export const SweetnessSlider = () => {
             1024: { slidesPerView: 5 },
           }}
           // Track the active slide to pause off-screen videos
-          onSlideChange={(swiper) => setActiveSlideIndex(swiper.realIndex)}
+
           className="pb-12"
           style={
             {
@@ -66,7 +62,7 @@ export const SweetnessSlider = () => {
             } as React.CSSProperties
           }
         >
-          {extendedReels.map((item, index) => (
+          {extendedReels.map((item) => (
             <SwiperSlide key={item.uid}>
               {({ isActive }) => (
                 <div
@@ -88,7 +84,6 @@ export const SweetnessSlider = () => {
                       src={`https://www.instagram.com/p/${item.id}/embed`}
                       className="w-full h-full border-none outline-none bg-white"
                       scrolling="no"
-                      allowTransparency={true}
                       allow="encrypted-media"
                       title={`Instagram Reel ${item.id}`}
                     />

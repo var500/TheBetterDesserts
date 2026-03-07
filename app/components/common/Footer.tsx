@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Icons } from "../icons";
 import { Text } from "../ui/text"; // Adjust import path if needed
-import { CATEGORIES, CustomerServiceLinks, NavLinks } from "~/constants";
+import { CustomerServiceLinks, NavLinks } from "~/constants";
 
 export default function Footer() {
   return (

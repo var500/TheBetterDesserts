@@ -95,8 +95,8 @@ export const GiftingPromo = () => (
           as="p"
           className="text-primary-dark/50 mb-8 md:mb-10 text-sm md:text-base leading-relaxed italic border-l-2 border-primary-dark/20 pl-6 font-satoshi"
         >
-          "At The Better Desserts, we believe gifting should be more than just
-          giving — it should be an experience."
+          &quot;At The Better Desserts, we believe gifting should be more than
+          just giving — it should be an experience.&quot;
         </Text>
 
         <Button

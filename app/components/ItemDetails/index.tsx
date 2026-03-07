@@ -30,9 +30,6 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
   const [pincodeMessage, setPincodeMessage] = useState("");
   const [isPincodeValid, setIsPincodeValid] = useState<boolean | null>(null);
 
-  const [deliveryDate, setDeliveryDate] = useState("");
-  const [deliverySlot, setDeliverySlot] = useState("");
-
   const availableLocations = useMemo(() => {
     if (!product) return [];
     const parentCategories = SHOP_CATEGORIES.filter((cat) =>
@@ -62,8 +59,6 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
         setIsPincodeValid(null);
         setPincode("");
         setPincodeMessage("");
-        setDeliveryDate("");
-        setDeliverySlot("");
       }
     }
   }, [selectedCityLabel, availableLocations]);
@@ -94,11 +89,7 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
   const isOutOfStock = absoluteMax <= 0;
 
   const isAddToCartDisabled =
-    isOutOfStock ||
-    allowedToAdd === 0 ||
-    isPincodeValid !== true ||
-    !deliveryDate ||
-    !deliverySlot;
+    isOutOfStock || allowedToAdd === 0 || isPincodeValid !== true;
 
   // --- Handlers ---
   const handleQuantityChange = (delta: number) => {
@@ -107,7 +98,7 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) addToCart(product, false);
-    toast.success(`Added ${product.name} to your bag for ${deliveryDate}!`, {
+    toast.success(`Added ${product.name} to your bag !`, {
       icon: Icons.Cookie,
       style: {
         borderRadius: "16px",
@@ -123,8 +114,6 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
     setPincode(e.target.value.replace(/\D/g, ""));
     if (isPincodeValid !== null) {
       setIsPincodeValid(null);
-      setDeliveryDate("");
-      setDeliverySlot("");
     }
   };
 
@@ -190,12 +179,8 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
             pincode={pincode}
             pincodeMessage={pincodeMessage}
             isPincodeValid={isPincodeValid}
-            deliveryDate={deliveryDate}
-            deliverySlot={deliverySlot}
             handlePincodeChange={handlePincodeChange}
             handleCheckPincode={handleCheckPincode}
-            setDeliveryDate={setDeliveryDate}
-            setDeliverySlot={setDeliverySlot}
             onPanIndiaClick={handlePanIndiaClick}
           />
 
@@ -205,8 +190,6 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
             isOutOfStock={isOutOfStock}
             isAddToCartDisabled={isAddToCartDisabled}
             isPincodeValid={isPincodeValid}
-            deliveryDate={deliveryDate}
-            deliverySlot={deliverySlot}
             handleQuantityChange={handleQuantityChange}
             handleAddToCart={handleAddToCart}
           />

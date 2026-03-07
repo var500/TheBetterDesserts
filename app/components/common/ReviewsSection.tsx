@@ -25,8 +25,8 @@ export const ReviewsSection = () => (
         className="text-primary-dark/70 mb-16 max-w-2xl mx-auto text-base md:text-lg font-satoshi font-light leading-relaxed"
       >
         We asked our customers what they think—and the responses were as sweet
-        as our cookies. From flavor fanatics to dessert connoisseurs, everyone's
-        found a favorite.
+        as our cookies. From flavor fanatics to dessert connoisseurs,
+        everyone&apos;s found a favorite.
       </Text>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
