@@ -113,6 +113,7 @@ export const BirthdayModal = ({
                   <input
                     type="email"
                     required
+                    placeholder="sweets@mail.com"
                     className="w-full px-4 py-3 bg-white/50 border border-primary-dark/10 rounded-xl focus:ring-2 focus:ring-primary-dark outline-none font-satoshi"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

@@ -3,6 +3,7 @@ import { Icons } from "../icons";
 import { useSendOtp, useVerifyOtp } from "~/hooks/useOtp";
 import { toast } from "react-toastify";
 import { Button } from "../ui/button";
+import { Text } from "../ui/text";
 
 export const AuthModal = ({
   isOpen,
@@ -22,6 +23,10 @@ export const AuthModal = ({
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(0);
 
+  // Track resend attempts to prevent spam
+  const [resendCount, setResendCount] = useState(0);
+  const MAX_RESENDS = 5;
+
   const {
     mutate: sendOtp,
     isPending: isSending,
@@ -33,6 +38,7 @@ export const AuthModal = ({
     isError: isVerifyError,
   } = useVerifyOtp();
 
+  // Timer logic
   useEffect(() => {
     if (timer > 0) {
       const interval = setInterval(() => setTimer((t) => t - 1), 1000);
@@ -40,6 +46,7 @@ export const AuthModal = ({
     }
   }, [timer]);
 
+  // Reset everything when modal closes
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => {
@@ -47,10 +54,12 @@ export const AuthModal = ({
         setEmail("");
         setOtp("");
         setTimer(0);
+        setResendCount(0); // Reset the count on close
       }, 200);
     }
   }, [isOpen]);
 
+  // Handler for the initial OTP send
   const handleSendOtp = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
@@ -59,6 +68,7 @@ export const AuthModal = ({
       onSuccess: () => {
         setStep("otp");
         setTimer(30);
+        toast.success("Login code sent!");
       },
       onError: (err) => {
         toast.error((err as Error).message);
@@ -66,6 +76,23 @@ export const AuthModal = ({
     });
   };
 
+  // Handler explicitly for Resending
+  const handleResendOtp = () => {
+    if (resendCount >= MAX_RESENDS) return;
+
+    sendOtp(email, {
+      onSuccess: () => {
+        setTimer(30); // Restart the timer
+        setResendCount((prev) => prev + 1); // Increment attempt count
+        toast.success("New code sent to your email.");
+      },
+      onError: () => {
+        toast.error("Failed to resend. Please try again.");
+      },
+    });
+  };
+
+  // Handler for Verifying
   const handleVerifyOtp = (e: React.FormEvent) => {
     e.preventDefault();
     if (otp.length !== 6) return;
@@ -77,6 +104,7 @@ export const AuthModal = ({
           if (data?.user) {
             onSignIn(data.user);
           }
+          toast.success("Successfully logged in!");
           onClose();
         },
       },
@@ -86,17 +114,16 @@ export const AuthModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center px-4">
-      <div
-        className="absolute inset-0 bg-black/40 backdrop-blur-sm"
-        onClick={onClose}
-      />
-      <div className="relative w-full max-w-md bg-white rounded-2xl p-8 shadow-2xl animate-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 backdrop-blur-md bg-black/20">
+      <div className="absolute inset-0" onClick={onClose} />
+      <div className="relative w-full max-w-md bg-white rounded-2xl p-8 shadow-2xl animate-fade-in-up border border-primary-dark/10">
+        {/* Fixed Cursor Pointer for Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+          className="cursor-pointer absolute top-4 right-4 text-primary-dark/40 hover:text-primary-dark transition-colors"
+          aria-label="Close modal"
         >
-          <Icons.X className="w-6 h-6" />
+          <Icons.X size={24} />
         </button>
 
         {user ? (
@@ -106,108 +133,158 @@ export const AuthModal = ({
               <Icons.User className="w-10 h-10" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-primary-dark">
+              <Text
+                as="h2"
+                className="text-3xl font-frista text-primary-dark leading-tight mb-1"
+              >
                 Welcome Back!
-              </h2>
-              <p className="text-gray-500 text-sm mt-1">
+              </Text>
+              <Text
+                as="p"
+                className="text-primary-dark/70 font-satoshi text-sm"
+              >
                 Logged in as:{" "}
                 <span className="font-mono">
                   {user?.uid?.substring(0, 8)}...
                 </span>
-              </p>
+              </Text>
             </div>
             <div className="space-y-3">
-              <button className="w-full py-3 px-6 border border-gray-200 rounded-full font-bold hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 text-primary-dark">
+              <Button
+                variant="outline"
+                className="w-full h-12 text-lg font-satoshi font-medium flex items-center justify-center gap-2"
+              >
                 Order History <Icons.ChevronRight className="w-4 h-4" />
-              </button>
-              <button
+              </Button>
+              <Button
+                variant={"destructive"}
                 onClick={onSignOut}
-                className="w-full py-3 px-6 text-red-600 font-bold hover:bg-red-50 rounded-full transition-colors flex items-center justify-center gap-2"
+                className="w-full h-12 text-lg font-satoshi font-medium flex items-center justify-center gap-2"
               >
                 Sign Out <Icons.LogOut className="w-4 h-4" />
-              </button>
+              </Button>
             </div>
           </div>
         ) : (
           // --- AUTHENTICATION FLOW ---
           <div className="text-center space-y-6">
             <div>
-              <h2 className="text-2xl font-bold font-serif text-primary-dark">
+              <Text
+                as="h2"
+                className="text-3xl font-frista text-primary-dark leading-tight mb-2"
+              >
                 {step === "email" ? "Join the Club" : "Enter OTP"}
-              </h2>
-              <p className="text-gray-500 text-sm mt-2">
+              </Text>
+              <Text
+                as="p"
+                className="text-primary-dark/70 font-satoshi text-sm md:text-base font-light"
+              >
                 {step === "email"
                   ? "Enter your email to receive a secure login code."
                   : `We sent a 6-digit code to ${email}`}
-              </p>
+              </Text>
             </div>
 
             {step === "email" ? (
-              <form onSubmit={handleSendOtp} className="space-y-4">
-                <input
-                  type="email"
-                  placeholder="name@example.com"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-dark focus:border-transparent outline-none transition-all"
-                />
+              <form onSubmit={handleSendOtp} className="space-y-6">
+                <div className="space-y-2 text-left">
+                  <Text
+                    as="span"
+                    className="block text-xs font-bold uppercase tracking-wider text-primary-dark/60 font-satoshi"
+                  >
+                    Email Address
+                  </Text>
+                  <input
+                    type="email"
+                    placeholder="name@example.com"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-4 py-3 bg-white/50 border border-primary-dark/10 rounded-xl focus:ring-2 focus:ring-primary-dark outline-none font-satoshi"
+                  />
+                </div>
+
                 {isSendError && (
                   <p className="text-red-500 text-sm text-left">
                     Failed to send OTP. Please try again.
                   </p>
                 )}
-                <Button type="submit" disabled={isSending} variant={"rounded"}>
+
+                <Button
+                  type="submit"
+                  disabled={isSending}
+                  className="w-full h-12 text-lg font-satoshi font-medium flex justify-center items-center gap-2"
+                >
                   {isSending ? "Sending..." : "Send Login Code"}
                   {!isSending && <Icons.ArrowRight className="w-4 h-4" />}
                 </Button>
               </form>
             ) : (
-              <form onSubmit={handleVerifyOtp} className="space-y-4">
-                <input
-                  type="text"
-                  maxLength={6}
-                  pattern="\d*"
-                  required
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-                  className="w-full text-center text-3xl tracking-[0.5em] py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-dark outline-none font-mono"
-                  placeholder="••••••"
-                />
+              <form onSubmit={handleVerifyOtp} className="space-y-6">
+                <div className="space-y-2">
+                  <input
+                    type="text"
+                    maxLength={6}
+                    pattern="\d*"
+                    required
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+                    className="w-full text-center text-3xl tracking-[0.5em] py-3 bg-white/50 border border-primary-dark/10 rounded-xl focus:ring-2 focus:ring-primary-dark outline-none font-mono text-primary-dark"
+                    placeholder="••••••"
+                  />
+                </div>
+
                 {isVerifyError && (
                   <p className="text-red-500 text-sm">
                     Invalid or expired OTP. Please try again.
                   </p>
                 )}
-                <button
+
+                <Button
                   type="submit"
                   disabled={otp.length !== 6 || isVerifying}
-                  className="w-full bg-primary-dark text-white py-4 rounded-full font-bold hover:bg-opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+                  className="w-full h-12 text-lg font-satoshi font-medium"
                 >
                   {isVerifying ? "Verifying..." : "Verify & Login"}
-                </button>
+                </Button>
 
-                <div className="text-sm text-gray-500 pt-2">
+                {/* Resend Logic */}
+                <div className="text-sm text-primary-dark/70 pt-2 font-satoshi">
                   {timer > 0 ? (
                     <p>
                       Resend code in <span className="font-bold">{timer}s</span>
                     </p>
+                  ) : resendCount >= MAX_RESENDS ? (
+                    <p className="text-red-500">
+                      Too many attempts. Please try again later.
+                    </p>
                   ) : (
-                    <button
+                    <Button
                       type="button"
-                      onClick={() => sendOtp(email)}
-                      className="text-primary-dark font-bold hover:underline"
+                      onClick={handleResendOtp}
+                      disabled={isSending}
+                      className={`cursor-pointer bg-white shadow-none text-primary-dark font-bold hover:underline transition-all ${
+                        isSending ? "opacity-50 cursor-not-alowed" : ""
+                      }`}
                     >
-                      Resend OTP
-                    </button>
+                      {isSending ? "Sending..." : "Resend OTP"}{" "}
+                      {resendCount > 0 &&
+                        !isSending &&
+                        `(${resendCount}/${MAX_RESENDS})`}
+                    </Button>
                   )}
                 </div>
               </form>
             )}
 
-            <p className="text-[10px] text-gray-400 uppercase tracking-widest pt-4">
-              Secure session management enabled
-            </p>
+            <div className="bg-primary-dark/5 p-4 rounded-xl border border-primary-dark/5 mt-6">
+              <Text
+                as="p"
+                className="text-[10px] text-primary-dark/50 leading-relaxed text-center font-satoshi uppercase tracking-widest"
+              >
+                Secure session management enabled
+              </Text>
+            </div>
           </div>
         )}
       </div>

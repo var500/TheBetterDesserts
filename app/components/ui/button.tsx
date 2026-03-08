@@ -21,6 +21,8 @@ const buttonVariants = cva(
           "group w-full bg-primary-dark text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-black transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:-translate-y-1",
         rounded:
           "w-full bg-primary-dark text-white py-4 rounded-full font-bold hover:bg-opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-70",
+        destructive:
+          "text-red-600 bg-transparent hover:bg-red-50 border border-transparent hover:border-red-100 transition-all duration-300 shadow-none",
       },
       size: {
         // Your original sizes
