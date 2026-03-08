@@ -19,10 +19,12 @@ const buttonVariants = cva(
           "border-2 border-[#F5F0E6] text-[#F5F0E6] hover:bg-[#F5F0E6] hover:text-[#1A243F] transition-all duration-300 px-8 py-3 w-max rounded-full font-medium",
         checkout:
           "group w-full bg-primary-dark text-[#F5F0E6] py-4 rounded-full font-bold hover:bg-black transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:-translate-y-1",
+        rounded:
+          "w-full bg-primary-dark text-white py-4 rounded-full font-bold hover:bg-opacity-90 transition-all flex items-center justify-center gap-2 disabled:opacity-70",
       },
       size: {
         // Your original sizes
-        default: "px-10 py-4 text-sm md:text-base",
+        default: "px-10 py-4 text-sm md:text-base h-10",
         sm: "px-6 py-2 text-xs",
         lg: "px-14 py-6 text-base md:text-lg",
         "sm-to-default": "px-6 py-2 text-xs md:px-10 md:py-4 md:text-base",

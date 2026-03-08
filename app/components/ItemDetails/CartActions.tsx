@@ -69,7 +69,7 @@ export default function CartActions({
       {/* Warning if they hit the max limit */}
       {allowedToAdd === 0 && !isOutOfStock && (
         <Text as="p" className="text-sm text-[#A32A2A] text-center mt-2">
-          You've reached the maximum quantity limit for this item.
+          You&apos;ve reached the maximum quantity limit for this item.
         </Text>
       )}
     </div>

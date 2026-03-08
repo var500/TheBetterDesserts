@@ -6,14 +6,16 @@ import { CartSidebar } from "../common/SideCart";
 import { AuthModal } from "../common/AuthModal";
 import AutoRotatingBanner from "../common/AutoRotatingBanner";
 import Footer from "../common/Footer";
+import { useAuthStore } from "~/store/authStore";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<{ name: string; uid: string } | null>(null);
+  const { user, setUser, signOut } = useAuthStore();
+
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   const handleSignOut = async () => {
-    setUser(null);
+    signOut();
     setIsAuthOpen(false);
   };
 
@@ -40,6 +42,10 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         onClose={() => setIsAuthOpen(false)}
         user={user}
         onSignOut={handleSignOut}
+        onSignIn={(userData) => {
+          setUser(userData);
+          setIsAuthOpen(false);
+        }}
       />
     </>
   );

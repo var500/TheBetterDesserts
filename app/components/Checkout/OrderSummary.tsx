@@ -1,13 +1,7 @@
-import React from "react";
 import { Text } from "../ui/text";
 import { Button } from "../ui/button";
-import type { Product } from "~/common/types";
-import { Icons } from "../icons";
 import { useCartStore } from "~/store/cartStore";
-
-interface CartItem extends Product {
-  quantity: number;
-}
+// import { useRazorpay } from "~/hooks/useRazorpay";
 
 interface OrderSummaryProps {
   subtotal: number;
@@ -35,6 +29,9 @@ export default function OrderSummary({
   scheduledSlot,
 }: OrderSummaryProps) {
   const { cart, removeFromCart } = useCartStore();
+
+  // <-- Initialize the hook here
+  // const { processPayment, isProcessing } = useRazorpay();
 
   const isCheckoutDisabled =
     (deliveryMethod === "delivery" && !selectedAddressId) ||
@@ -77,7 +74,7 @@ export default function OrderSummary({
               <div className="flex-1">
                 <Text
                   as="h4"
-                  className="font-bold text-sm text-primary-dark line-clamp-1 pr-6" // Added padding-right so long names don't hit the price
+                  className="font-bold text-sm text-primary-dark line-clamp-1 pr-6"
                 >
                   {item.name}
                 </Text>
@@ -86,7 +83,6 @@ export default function OrderSummary({
                     Qty: {item.quantity}
                   </Text>
 
-                  {/* Remove Button - Subtle, text-based, or small icon next to Qty */}
                   <button
                     onClick={() => removeFromCart(item.id)}
                     className="text-[10px] cursor-pointer uppercase font-bold tracking-wider text-red-500/70 hover:text-red-600 transition-colors"
@@ -163,18 +159,25 @@ export default function OrderSummary({
           <Button
             variant="default"
             size="sm-to-default"
+            // onClick={() => processPayment(total)}
             className={`w-full rounded-2xl font-bold text-lg ${
-              isCheckoutDisabled ? "pointer-events-none" : ""
+              isCheckoutDisabled ? "pointer-events-none opacity-80" : ""
             }`}
+            // className={`w-full rounded-2xl font-bold text-lg ${
+            //   isCheckoutDisabled || isProcessing
+            //     ? "pointer-events-none opacity-80"
+            //     : ""
+            // }`}
+            // disabled={isCheckoutDisabled || isProcessing}
             disabled={isCheckoutDisabled}
           >
-            Proceed to Payment
+            {/* {isProcessing ? "Processing..." : "Proceed to Payment"} */}
+            {"Proceed to Payment"}
           </Button>
 
           {isCheckoutDisabled && (
             <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-max max-w-xs px-4 py-2.5 bg-primary-dark text-white text-xs font-bold tracking-wide rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 shadow-xl pointer-events-none">
               {tooltipMessage}
-
               <div className="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-primary-dark" />
             </div>
           )}
