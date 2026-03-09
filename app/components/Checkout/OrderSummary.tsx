@@ -14,6 +14,7 @@ interface OrderSummaryProps {
   selectedAddressId: string | null;
   scheduledDate: string;
   scheduledSlot: string;
+  isAddressDeliverable: boolean;
 }
 
 export default function OrderSummary({
@@ -27,6 +28,7 @@ export default function OrderSummary({
   selectedAddressId,
   scheduledDate,
   scheduledSlot,
+  isAddressDeliverable,
 }: OrderSummaryProps) {
   const { cart, removeFromCart } = useCartStore();
 
@@ -34,7 +36,8 @@ export default function OrderSummary({
   // const { processPayment, isProcessing } = useRazorpay();
 
   const isCheckoutDisabled =
-    (deliveryMethod === "delivery" && !selectedAddressId) ||
+    (deliveryMethod === "delivery" &&
+      (!selectedAddressId || !isAddressDeliverable)) ||
     !scheduledDate ||
     !scheduledSlot ||
     isCalculatingShipping;
@@ -42,6 +45,8 @@ export default function OrderSummary({
   let tooltipMessage = "";
   if (deliveryMethod === "delivery" && !selectedAddressId) {
     tooltipMessage = "Please select a delivery address.";
+  } else if (deliveryMethod === "delivery" && !isAddressDeliverable) {
+    tooltipMessage = "Cannot deliver to the selected address.";
   } else if (!scheduledDate || !scheduledSlot) {
     tooltipMessage = "Please select a date and time slot.";
   } else if (isCalculatingShipping) {
@@ -50,7 +55,7 @@ export default function OrderSummary({
 
   return (
     <div className="w-full lg:w-100">
-      <div className="sticky top-24 bg-white p-6 md:p-8 rounded-3xl shadow-lg border border-primary-dark/5">
+      <div className="sticky top-24 bg-white p-6 md:p-8 rounded-3xl shadow-lg border border-primary-dark/5 mb-10 md:mb-0">
         <Text as="h2" className="text-2xl font-bold text-primary-dark mb-6">
           Order Summary
         </Text>
@@ -64,7 +69,7 @@ export default function OrderSummary({
               {/* Image */}
               <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
                 <img
-                  src={item.image}
+                  src={item.image[0]}
                   alt={item.name}
                   className="w-full h-full object-cover"
                 />
@@ -120,26 +125,28 @@ export default function OrderSummary({
             </div>
           )}
 
-          <div className="flex justify-between text-primary-dark/70">
-            <Text as="p">Shipping</Text>
-            {deliveryMethod === "pickup" ? (
-              <Text as="p" className="font-medium text-green-600">
-                Free Pickup
-              </Text>
-            ) : isCalculatingShipping ? (
-              <Text as="p" className="animate-pulse text-xs">
-                Calculating...
-              </Text>
-            ) : shippingFee !== null ? (
-              <Text as="p" className="font-medium">
-                ₹{shippingFee.toLocaleString()}
-              </Text>
-            ) : (
-              <Text as="p" className="text-xs">
-                Select address
-              </Text>
-            )}
-          </div>
+          {isAddressDeliverable && (
+            <div className="flex justify-between text-primary-dark/70">
+              <Text as="p">Shipping</Text>
+              {deliveryMethod === "pickup" ? (
+                <Text as="p" className="font-medium text-green-600">
+                  Free Pickup
+                </Text>
+              ) : isCalculatingShipping ? (
+                <Text as="p" className="animate-pulse text-xs">
+                  Calculating...
+                </Text>
+              ) : shippingFee !== null ? (
+                <Text as="p" className="font-medium">
+                  ₹{shippingFee.toLocaleString()}
+                </Text>
+              ) : (
+                <Text as="p" className="text-xs">
+                  Select address
+                </Text>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="border-t border-primary-dark/10 mt-4 pt-4 flex justify-between items-center">

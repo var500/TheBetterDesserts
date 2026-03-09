@@ -5,17 +5,22 @@ import { useNavigate } from "react-router";
 import { Text } from "../ui/text";
 import { Button } from "../ui/button";
 import { Icons } from "../icons";
-import type { Address } from "~/common/types";
 
 // Import sub-components
 import DeliveryMethodSelector from "./DeliveryMethodSelector";
-import AddressSelection from "./AddressSelection";
+
 import PickupDetails from "./PickupDetails";
 import CouponSection from "./CouponSection";
 import OrderSummary from "./OrderSummary";
 import OrderSchedule from "./OrderSchedule";
+import { useAuthStore } from "~/store/authStore";
+import { useCheckoutStore } from "~/store/checkoutStore";
+import { ContactStep, OtpVerificationStep } from "./AuthStep";
+import { useAddresses } from "~/hooks/useAddress";
 
-// Mocks (Keep these at the top or move to a separate utilities file)
+import { getZoneFromPincode } from "~/lib/utils";
+import AddressManager from "./AddressManager";
+
 const mockVerifyCoupon = async (
   code: string,
 ): Promise<{ success: boolean; discountPercent?: number; message: string }> => {
@@ -46,29 +51,19 @@ const mockCalculateShipping = async (
   );
 };
 
-const SAVED_ADDRESSES: Address[] = [
-  {
-    id: "addr_1",
-    name: "John Doe",
-    street: "DLF Phase 3, Block U",
-    city: "Gurgaon",
-    pincode: "122002",
-    phone: "9876543210",
-  },
-];
-
 export default function Checkout() {
   const { cart } = useCartStore();
   const { selectedCityId } = useCityStore();
   const navigate = useNavigate();
-
+  const { step, setStep } = useCheckoutStore();
+  const { user } = useAuthStore();
   // State
   const [deliveryMethod, setDeliveryMethod] = useState<"delivery" | "pickup">(
     "delivery",
   );
-  const [addresses, setAddresses] = useState<Address[]>(SAVED_ADDRESSES);
+
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(
-    SAVED_ADDRESSES[0]?.id || null,
+    null,
   );
 
   const [shippingFee, setShippingFee] = useState<number | null>(null);
@@ -81,7 +76,36 @@ export default function Checkout() {
     useState<number>(0);
   const [couponMessage, setCouponMessage] = useState("");
   const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
+  const { data: fetchedAddresses } = useAddresses(user?.uid);
 
+  const addresses = fetchedAddresses || [];
+
+  useEffect(() => {
+    if (addresses.length > 0 && !selectedAddressId) {
+      const defaultAddr = addresses.find((addr) => addr.is_default);
+
+      if (defaultAddr) {
+        setSelectedAddressId(defaultAddr.id);
+      } else {
+        setSelectedAddressId(addresses[addresses.length - 1].id);
+      }
+    }
+  }, [addresses, selectedAddressId]);
+
+  const selectedAddr = addresses.find((a) => a.id === selectedAddressId);
+  const deliveryZone = selectedAddr
+    ? getZoneFromPincode(selectedAddr.pin_code)
+    : null;
+
+  const isAddressDeliverable =
+    selectedAddr && deliveryZone
+      ? cart.every((item) => {
+          if (!item.availableIn || item.availableIn.length === 0) return true;
+
+          // Check if the calculated zone is in the product's available zones
+          return item.availableIn.includes(deliveryZone);
+        })
+      : false;
   // Derived Totals
   const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -89,6 +113,12 @@ export default function Checkout() {
   );
   const discountAmount = Math.floor((subtotal * appliedDiscountPercent) / 100);
   const total = subtotal - discountAmount + (shippingFee || 0);
+
+  useEffect(() => {
+    if (user?.uid && step !== "DELIVERY_AND_PAYMENT") {
+      setStep("DELIVERY_AND_PAYMENT");
+    }
+  }, [user?.uid, step, setStep]);
 
   // Effects
   useEffect(() => {
@@ -105,7 +135,7 @@ export default function Checkout() {
       setIsCalculatingShipping(true);
       const selectedAddr = addresses.find((a) => a.id === selectedAddressId);
       if (selectedAddr) {
-        const cost = await mockCalculateShipping(selectedAddr.pincode);
+        const cost = await mockCalculateShipping(selectedAddr.pin_code);
         setShippingFee(cost);
       }
       setIsCalculatingShipping(false);
@@ -137,12 +167,12 @@ export default function Checkout() {
     setCouponMessage("");
   };
 
-  const handleAddNewAddress = (newAddr: Address) => {
-    setAddresses([...addresses, newAddr]);
-    setSelectedAddressId(newAddr.id);
-  };
+  useEffect(() => {
+    if (addresses.length > 0 && !selectedAddressId) {
+      setSelectedAddressId(addresses[0].id);
+    }
+  }, [addresses, selectedAddressId]);
 
-  // Empty Cart Render
   if (cart.length === 0) {
     return (
       <div className="min-h-screen bg-[#F5F0E6] flex flex-col items-center justify-center px-4">
@@ -175,7 +205,7 @@ export default function Checkout() {
   // Main Render
   return (
     <div className="min-h-screen bg-[#F5F0E6] pt-12 pb-24 px-4 md:px-8">
-      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-0 md:gap-12">
+      <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-col  lg:flex-row gap-0 md:gap-12">
         <div className="flex-1">
           <Text
             as="h1"
@@ -184,40 +214,68 @@ export default function Checkout() {
             Checkout
           </Text>
 
-          <DeliveryMethodSelector
-            selectedCityId={selectedCityId}
-            deliveryMethod={deliveryMethod}
-            setDeliveryMethod={setDeliveryMethod}
-          />
+          {/* Render Step 1: Email */}
+          {step === "CONTACT" && <ContactStep />}
 
-          {deliveryMethod === "delivery" ? (
-            <AddressSelection
-              addresses={addresses}
-              selectedAddressId={selectedAddressId}
-              setSelectedAddressId={setSelectedAddressId}
-              onAddNewAddress={handleAddNewAddress}
-            />
-          ) : (
-            <PickupDetails />
+          {/* Render Step 2: OTP */}
+          {step === "OTP_VERIFICATION" && <OtpVerificationStep />}
+
+          {/* Render Step 3: The existing delivery flow! */}
+          {step === "DELIVERY_AND_PAYMENT" && (
+            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
+              <DeliveryMethodSelector
+                selectedCityId={selectedCityId}
+                deliveryMethod={deliveryMethod}
+                setDeliveryMethod={setDeliveryMethod}
+              />
+
+              {deliveryMethod === "delivery" ? (
+                <div className="space-y-4">
+                  {user?.uid && (
+                    <AddressManager
+                      userId={user.uid}
+                      // 2. Pass the state down!
+                      selectedAddressId={selectedAddressId}
+                      setSelectedAddressId={setSelectedAddressId}
+                    />
+                  )}
+                  {/* Show error if address is selected but not deliverable */}
+                  {selectedAddr && !isAddressDeliverable && (
+                    <div className="p-4 bg-red-50 border border-red-200 rounded-2xl animate-in fade-in">
+                      <Text as="p" className="text-red-500 font-bold text-sm">
+                        Sorry, one or more items in your cart cannot be
+                        delivered to {selectedAddr.pin_code}. Please select a
+                        different address.
+                      </Text>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <PickupDetails />
+              )}
+
+              {(deliveryMethod === "pickup" ||
+                (deliveryMethod === "delivery" && isAddressDeliverable)) && (
+                <OrderSchedule
+                  deliveryMethod={deliveryMethod}
+                  scheduledDate={scheduledDate}
+                  setScheduledDate={setScheduledDate}
+                  scheduledSlot={scheduledSlot}
+                  setScheduledSlot={setScheduledSlot}
+                />
+              )}
+
+              <CouponSection
+                couponCode={couponCode}
+                setCouponCode={setCouponCode}
+                appliedDiscountPercent={appliedDiscountPercent}
+                couponMessage={couponMessage}
+                isApplyingCoupon={isApplyingCoupon}
+                handleApplyCoupon={handleApplyCoupon}
+                handleRemoveCoupon={handleRemoveCoupon}
+              />
+            </div>
           )}
-
-          <OrderSchedule
-            deliveryMethod={deliveryMethod}
-            scheduledDate={scheduledDate}
-            setScheduledDate={setScheduledDate}
-            scheduledSlot={scheduledSlot}
-            setScheduledSlot={setScheduledSlot}
-          />
-
-          <CouponSection
-            couponCode={couponCode}
-            setCouponCode={setCouponCode}
-            appliedDiscountPercent={appliedDiscountPercent}
-            couponMessage={couponMessage}
-            isApplyingCoupon={isApplyingCoupon}
-            handleApplyCoupon={handleApplyCoupon}
-            handleRemoveCoupon={handleRemoveCoupon}
-          />
         </div>
 
         <OrderSummary
@@ -231,6 +289,7 @@ export default function Checkout() {
           selectedAddressId={selectedAddressId}
           scheduledDate={scheduledDate}
           scheduledSlot={scheduledSlot}
+          isAddressDeliverable={isAddressDeliverable}
         />
       </div>
     </div>

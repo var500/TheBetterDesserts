@@ -24,7 +24,6 @@ export const useVerifyOtp = () => {
         secure: true,
         sameSite: "strict",
       });
-      window.location.href = "/";
     },
     onError: (error: Error) => {
       console.error("Login Error:", error.message);

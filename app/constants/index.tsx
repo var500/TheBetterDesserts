@@ -50,6 +50,24 @@ export const ingredients = [
   },
 ];
 
+export const locations = [
+  {
+    id: "gurgaon",
+    label: "GURGAON",
+    bgUrl: "/cities/cyber-city.png",
+  },
+  {
+    id: "delhi-ncr",
+    label: "DELHI / NCR",
+    bgUrl: "/cities/india-gate.png",
+  },
+  {
+    id: "pan-india",
+    label: "PAN INDIA",
+    bgUrl: "/cities/bengaluru.png",
+  },
+];
+
 export const SHOP_CATEGORIES = [
   {
     id: "cake-tubs",
@@ -72,24 +90,6 @@ export const SHOP_CATEGORIES = [
     description: "Puddings, brownies, and chef specials.",
     availableIn: [Locations.DELHI_NCR, Locations.GURGAON],
     itemIds: ["d1", "d2"],
-  },
-];
-
-export const locations = [
-  {
-    id: "gurgaon",
-    label: "GURGAON",
-    bgUrl: "/cities/cyber-city.png",
-  },
-  {
-    id: "delhi-ncr",
-    label: "DELHI / NCR",
-    bgUrl: "/cities/india-gate.png",
-  },
-  {
-    id: "pan-india",
-    label: "PAN INDIA",
-    bgUrl: "/cities/bengaluru.png",
   },
 ];
 
@@ -177,15 +177,6 @@ export const AllProducts = [
 ];
 
 export const BESTSELLER_IDS = ["t1", "t2", "b2", "d1"];
-
-export const CATEGORIES = [
-  "Cookie Cakes",
-  "Bundt Cakes",
-  "Decadent Cakes",
-  "Stuffed Cookies",
-  "Dessert Containers",
-  "Gifting",
-];
 
 export const NavLinks = [
   { key: "Home", value: "/" },

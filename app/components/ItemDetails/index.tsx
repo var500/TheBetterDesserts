@@ -1,49 +1,39 @@
+// ~/components/shop/ItemDetails.tsx
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router"; // 👈 Import useParams
 import { useCartStore } from "~/store/cartStore";
 import { useCityStore } from "~/store/useCityStore";
 import { Locations, type Product } from "~/common/types";
-import { SHOP_CATEGORIES } from "~/constants";
-import { Text } from "../ui/text";
-import { Button } from "../ui/button";
+
 import { toast } from "react-toastify";
 import { Icons } from "../icons";
 
-// Import our new sub-components
+// Import sub-components
 import ImageGallery from "./ImageGallery";
 import ProductHeader from "./ProductHeader";
 import DeliveryAvailability from "./DeliveryAvailability";
 import CartActions from "./CartActions";
 import ProductDescription from "./ProductDescription";
 
-interface ItemDetailsProps {
-  product: Product;
-}
-
-export default function Itemdetails({ product }: ItemDetailsProps) {
+export default function Itemdetails({ product }: { product: Product }) {
   const navigate = useNavigate();
   const { addToCart, cart } = useCartStore();
   const { setCity, selectedCityLabel } = useCityStore();
+
+  // 👇 Fetch the product dynamically!
 
   const [quantity, setQuantity] = useState(1);
   const [pincode, setPincode] = useState("");
   const [pincodeMessage, setPincodeMessage] = useState("");
   const [isPincodeValid, setIsPincodeValid] = useState<boolean | null>(null);
 
+  // ❌ Removed SHOP_CATEGORIES logic. We now use product.availableIn directly!
   const availableLocations = useMemo(() => {
-    if (!product) return [];
-    const parentCategories = SHOP_CATEGORIES.filter((cat) =>
-      cat.itemIds.includes(product.id),
-    );
-    return Array.from(
-      new Set(parentCategories.flatMap((cat) => cat.availableIn)),
-    );
+    return product?.availableIn || [];
   }, [product]);
 
   useEffect(() => {
-    if (!selectedCityLabel) return;
-
-    console.log(availableLocations);
+    if (!selectedCityLabel || availableLocations.length === 0) return;
 
     const isCityValidForProduct = availableLocations.includes(
       selectedCityLabel as Locations,
@@ -55,39 +45,27 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
         "Delivery is not available for this product in your selected city.",
       );
     } else {
-      if (isPincodeValid !== null) {
-        setIsPincodeValid(null);
-        setPincode("");
-        setPincodeMessage("");
-      }
+      setIsPincodeValid((prev) => {
+        if (prev === false) {
+          setPincode("");
+          setPincodeMessage("");
+          return null;
+        }
+        return prev;
+      });
     }
   }, [selectedCityLabel, availableLocations]);
-
-  if (!product) {
-    return (
-      <div className="min-h-screen bg-[#F5F0E6] flex flex-col items-center justify-center">
-        <Text as="h2" className="text-2xl text-primary-dark">
-          Product not found.
-        </Text>
-        <Button onClick={() => navigate("/shop")} className="mt-4 rounded-xl">
-          Back to Menu
-        </Button>
-      </div>
-    );
-  }
 
   // --- Derived Values & Limits ---
   const absoluteMax = Math.min(
     product.stockAvailable ?? 0,
     product.maxPerUser ?? 5,
   );
-  const cartQuantity = useMemo(
-    () => cart.find((item) => item.id === product.id)?.quantity ?? 0,
-    [cart, product.id],
-  );
+
+  const cartQuantity =
+    cart.find((item) => item.id === product.id)?.quantity ?? 0;
   const allowedToAdd = Math.max(0, absoluteMax - cartQuantity);
   const isOutOfStock = absoluteMax <= 0;
-
   const isAddToCartDisabled =
     isOutOfStock || allowedToAdd === 0 || isPincodeValid !== true;
 
@@ -98,7 +76,7 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) addToCart(product, false);
-    toast.success(`Added ${product.name} to your bag !`, {
+    toast.success(`Added ${product.name} to your bag!`, {
       icon: Icons.Cookie,
       style: {
         borderRadius: "16px",
@@ -112,9 +90,7 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
 
   const handlePincodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPincode(e.target.value.replace(/\D/g, ""));
-    if (isPincodeValid !== null) {
-      setIsPincodeValid(null);
-    }
+    if (isPincodeValid !== null) setIsPincodeValid(null);
   };
 
   const handleCheckPincode = (e: React.FormEvent) => {
@@ -128,6 +104,7 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
     let isAvailable = false;
     let deliveryMessage = "";
 
+    // Pincode validation logic remains the same
     if (
       pincode.startsWith("12") &&
       availableLocations.includes(Locations.GURGAON)
@@ -151,13 +128,8 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
         "Standard delivery. (Delivery to this pin code can be done in 3-5 days.)";
     }
 
-    if (isAvailable) {
-      setIsPincodeValid(true);
-      setPincodeMessage(deliveryMessage);
-    } else {
-      setIsPincodeValid(false);
-      setPincodeMessage("");
-    }
+    setIsPincodeValid(isAvailable);
+    setPincodeMessage(isAvailable ? deliveryMessage : "");
   };
 
   const handlePanIndiaClick = () => {
@@ -169,8 +141,9 @@ export default function Itemdetails({ product }: ItemDetailsProps) {
   return (
     <main className="flex-1 max-w-7xl mx-auto w-full px-4 md:px-8 py-8 md:py-12">
       <div className="flex flex-col md:flex-row gap-12 lg:gap-20">
-        {/* LEFT: Image Gallery */}
-        <ImageGallery image={product.image} name={product.name} />
+        {product.image.map((item, idx) => {
+          return <ImageGallery key={idx} image={item} name={product.name} />;
+        })}
 
         <div className="w-full md:w-1/2 flex flex-col lg:sticky lg:top-24 h-max">
           <ProductHeader name={product.name} price={product.price} />

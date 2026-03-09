@@ -1,12 +1,17 @@
+export type Zone = "GURGAON" | "DELHI_NCR" | "PAN_INDIA";
 export interface Product {
   id: string;
   name: string;
   price: number;
-  image: string;
-  category?: string;
-  unitDescription?: string;
-  stockAvailable?: number;
-  maxPerUser?: number;
+  image: string[];
+  unitDescription: string;
+  stockAvailable: number;
+  availableIn: Zone[];
+  maxPerUser: number;
+  category: {
+    title: string;
+    description: string;
+  };
 }
 
 export interface CartItem extends Product {
@@ -33,9 +38,15 @@ export enum Locations {
 
 export interface Address {
   id: string;
-  name: string;
-  street: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  house_no: string;
+  street_address: string;
   city: string;
-  pincode: string;
-  phone: string;
+  state: string;
+  pin_code: string;
+  is_default?: boolean;
 }
+
+export type AddAddressInput = Omit<Address, "id">;

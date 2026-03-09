@@ -1,11 +1,11 @@
 import React from "react";
 import { Text } from "../ui/text";
 import { Icons } from "../icons";
-import { Locations, type Product } from "~/common/types";
+import { Locations, type Product, type Zone } from "~/common/types";
 
 interface ProductDescriptionProps {
   product: Product;
-  availableLocations: Locations[];
+  availableLocations: Zone[];
 }
 
 export default function ProductDescription({
