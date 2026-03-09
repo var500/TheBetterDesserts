@@ -4,11 +4,16 @@ import { useAuthStore } from "~/store/authStore";
 import Cookies from "js-cookie";
 
 export const useAdminLogin = () => {
-  const setUser = useAuthStore((state) => state.setUser);
+  const setAuth = useAuthStore((state) => state.setAuth);
   return useMutation({
     mutationFn: adminLogin,
     onSuccess: (data) => {
-      setUser(data.user);
+      const adminUser = {
+        uid: data.adminId,
+        name: "Admin",
+        role: "ADMIN",
+      };
+      setAuth(adminUser, data.accessToken);
       Cookies.set("accessToken", data.accessToken, {
         expires: 7,
         secure: true,

@@ -3,8 +3,11 @@ import { BACKEND_API_URL } from "~/lib/utils";
 export const adminLogin = async (credentials: {
   email: string;
   password: string;
-}) => {
-  console.log(BACKEND_API_URL);
+}): Promise<{
+  accessToken: string;
+  adminId: string;
+  message: string;
+}> => {
   const response = await fetch(`${BACKEND_API_URL}/auth/admin/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

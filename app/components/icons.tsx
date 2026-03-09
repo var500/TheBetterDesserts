@@ -35,6 +35,9 @@ import {
   Globe,
   ShieldCheck,
   Calendar,
+  LayoutDashboard,
+  Users,
+  Settings,
 } from "lucide-react";
 
 import type { JSX } from "react";
@@ -42,6 +45,9 @@ import type { JSX } from "react";
 export type icon = (props: LucideProps) => JSX.Element;
 
 export const Icons = {
+  LayoutDashboard: LayoutDashboard,
+  Users: Users,
+  Settings: Settings,
   ArrowRight: ArrowRight,
   ShieldCheck: ShieldCheck,
   Target: Target,

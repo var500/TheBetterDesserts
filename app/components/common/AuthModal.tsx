@@ -4,6 +4,8 @@ import { useSendOtp, useVerifyOtp } from "~/hooks/useOtp";
 import { toast } from "react-toastify";
 import { Button } from "../ui/button";
 import { Text } from "../ui/text";
+import { useNavigate } from "react-router";
+import type { User } from "~/store/authStore";
 
 export const AuthModal = ({
   isOpen,
@@ -16,12 +18,13 @@ export const AuthModal = ({
   onClose: () => void;
   user: { name: string; uid: string } | null;
   onSignOut: () => void;
-  onSignIn: (user: { name: string; uid: string }) => void;
+  onSignIn: (user: Partial<User>, token: string) => void;
 }) => {
   const [step, setStep] = useState<"email" | "otp">("email");
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(0);
+  const navigate = useNavigate();
 
   // Track resend attempts to prevent spam
   const [resendCount, setResendCount] = useState(0);
@@ -101,11 +104,13 @@ export const AuthModal = ({
       { email, otp },
       {
         onSuccess: (data) => {
-          if (data?.user) {
-            onSignIn(data.user);
+          if (data?.user && data?.accessToken) {
+            onSignIn(data.user, data.accessToken);
+            toast.success("Successfully logged in!");
+            onClose();
+          } else {
+            toast.error("Login failed: Invalid server response.");
           }
-          toast.success("Successfully logged in!");
-          onClose();
         },
       },
     );
@@ -144,14 +149,21 @@ export const AuthModal = ({
                 className="text-primary-dark/70 font-satoshi text-sm"
               >
                 Logged in as:{" "}
-                <span className="font-mono">
-                  {user?.uid?.substring(0, 8)}...
-                </span>
+                {user.name ? (
+                  <span className="font-mono">
+                    {user?.uid?.substring(0, 8)}...
+                  </span>
+                ) : (
+                  <span className="font-mono">
+                    {user?.uid?.substring(0, 8)}...
+                  </span>
+                )}
               </Text>
             </div>
             <div className="space-y-3">
               <Button
                 variant="outline"
+                onClick={() => navigate("/profile")}
                 className="w-full h-12 text-lg font-satoshi font-medium flex items-center justify-center gap-2"
               >
                 Order History <Icons.ChevronRight className="w-4 h-4" />

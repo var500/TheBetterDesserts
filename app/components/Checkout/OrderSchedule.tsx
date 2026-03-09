@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Text } from "../ui/text";
-import { Icons } from "../icons";
 
 const TIME_SLOTS = [
   "09:00 AM - 11:00 AM",
@@ -27,27 +26,54 @@ export default function OrderSchedule({
   setScheduledSlot,
 }: OrderScheduleProps) {
   // 1. Get exact current time metrics
+  // Add this near your other hooks
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const todayObj = new Date();
   const currentHour = todayObj.getHours();
 
-  // Adjusting for local timezone offset so it doesn't accidentally disable "today" if UTC is a day behind
-  const today = new Date(
+  // Adjusting for local timezone offset for string comparison
+  const todayStr = new Date(
     todayObj.getTime() - todayObj.getTimezoneOffset() * 60000,
   )
     .toISOString()
     .split("T")[0];
 
-  const maxDateObj = new Date(todayObj);
-  maxDateObj.setMonth(maxDateObj.getMonth() + 2);
-  const maxDate = new Date(
-    maxDateObj.getTime() - maxDateObj.getTimezoneOffset() * 60000,
-  )
-    .toISOString()
-    .split("T")[0];
+  const isToday = scheduledDate === todayStr;
 
-  const isToday = scheduledDate === today;
+  // 2. Dynamically generate the next 3 days for the UI buttons
+  const dateOptions = useMemo(() => {
+    const options = [];
+    const baseDate = new Date();
 
-  // 2. Filter available slots based on the current hour + 2 buffer
+    for (let i = 0; i < 3; i++) {
+      const targetDate = new Date(baseDate);
+      targetDate.setDate(targetDate.getDate() + i);
+
+      // Get YYYY-MM-DD safely for local timezone
+      const localStr = new Date(
+        targetDate.getTime() - targetDate.getTimezoneOffset() * 60000,
+      )
+        .toISOString()
+        .split("T")[0];
+
+      let label = "";
+      if (i === 0) label = "Today";
+      else if (i === 1) label = "Tomorrow";
+      else {
+        // e.g., "Wed, 11 Mar"
+        label = targetDate.toLocaleDateString("en-US", {
+          weekday: "short",
+          day: "numeric",
+          month: "short",
+        });
+      }
+
+      options.push({ label, value: localStr });
+    }
+    return options;
+  }, []);
+
+  // 3. Filter available slots based on the current hour + 2 buffer
   const availableSlots = useMemo(() => {
     if (!isToday) return TIME_SLOTS;
 
@@ -63,17 +89,16 @@ export default function OrderSchedule({
     });
   }, [isToday, currentHour]);
 
-  // 3. Clear the slot if they change the date and their previously selected slot is no longer valid
+  // 4. Clear the slot if they change the date and previously selected slot is invalid
   useEffect(() => {
     if (scheduledSlot && !availableSlots.includes(scheduledSlot)) {
       setScheduledSlot("");
     }
   }, [availableSlots, scheduledSlot, setScheduledSlot]);
 
-  // 4. Format the selected date for the success message
+  // 5. Format the selected date for the success message
   const formattedFriendlyDate = useMemo(() => {
     if (!scheduledDate) return "";
-    // Split the date string to avoid timezone shifting issues when creating a new Date object
     const [year, month, day] = scheduledDate.split("-").map(Number);
     const date = new Date(year, month - 1, day);
 
@@ -81,7 +106,7 @@ export default function OrderSchedule({
       weekday: "long",
       month: "short",
       day: "numeric",
-    }); // e.g., "Monday, Mar 9"
+    });
   }, [scheduledDate]);
 
   return (
@@ -95,47 +120,55 @@ export default function OrderSchedule({
           : "When will you come to pick up your order?"}
       </Text>
 
-      <div className="flex flex-col sm:flex-row gap-4 items-center">
-        {/* Date Picker */}
-        <div className="relative w-full sm:w-auto flex-1">
-          <input
-            type="date"
-            min={today}
-            max={maxDate}
-            value={scheduledDate}
-            onChange={(e) => setScheduledDate(e.target.value)}
-            className="w-full p-4 pr-10 border border-gray-200 rounded-2xl text-base font-bold text-primary-dark focus:border-primary-dark outline-none transition-all bg-transparent [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-4 [&::-webkit-calendar-picker-indicator]:w-8 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0"
-          />
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary-dark/50">
-            <Icons.Calendar className="w-5 h-5" />
-          </div>
+      <div className="flex flex-col gap-6">
+        {/* 3-Day Button Selector */}
+        <div className="grid grid-cols-3 gap-3 w-full">
+          {dateOptions.map((opt) => {
+            const isSelected = scheduledDate === opt.value;
+            return (
+              <button
+                key={opt.value}
+                onClick={() => setScheduledDate(opt.value)}
+                className={`py-2 md:py-3 px-1 md:px-2 text-xs md:text-sm font-bold rounded-2xl border transition-all duration-200 ${
+                  isSelected
+                    ? "bg-primary-dark border-primary-dark text-white shadow-md scale-[1.02]"
+                    : "bg-transparent border-gray-200 text-primary-dark/70 hover:border-primary-dark/40 hover:bg-primary-dark/5"
+                }`}
+              >
+                {opt.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* Time Slot Picker */}
-        <div className="w-full sm:w-auto flex-1 relative">
-          <select
-            value={scheduledSlot}
-            onChange={(e) => setScheduledSlot(e.target.value)}
-            disabled={isToday && availableSlots.length === 0}
-            className="w-full p-4 appearance-none border border-gray-200 rounded-2xl text-base font-bold text-primary-dark focus:border-primary-dark outline-none transition-all bg-white disabled:bg-gray-50 disabled:opacity-60"
+        {/* Custom Theme Dropdown Picker */}
+        <div className="w-full max-w-80 relative">
+          <button
+            type="button"
+            disabled={
+              !scheduledDate || (isToday && availableSlots.length === 0)
+            }
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            // Using onBlur to close the menu if the user clicks away
+            onBlur={() => setTimeout(() => setIsDropdownOpen(false), 200)}
+            className="w-full p-4 flex justify-between items-center border border-gray-200 rounded-2xl text-base font-bold text-primary-dark focus:border-primary-dark outline-none transition-all bg-white disabled:bg-gray-50 disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed"
           >
-            <option value="" disabled>
-              {isToday && availableSlots.length === 0
-                ? "No slots left for today"
-                : "Select a time slot"}
-            </option>
-            {availableSlots.map((slot) => (
-              <option key={slot} value={slot}>
-                {slot}
-              </option>
-            ))}
-          </select>
-          <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary-dark/50">
+            <span>
+              {!scheduledDate
+                ? "Select a date first"
+                : isToday && availableSlots.length === 0
+                  ? "No slots left for today"
+                  : scheduledSlot || "Select a time slot"}
+            </span>
+
+            {/* Custom Chevron that rotates when open */}
             <svg
               width="12"
               height="8"
               viewBox="0 0 12 8"
               fill="none"
+              className={`text-primary-dark/50 transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`}
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -146,7 +179,29 @@ export default function OrderSchedule({
                 strokeLinejoin="round"
               />
             </svg>
-          </div>
+          </button>
+
+          {/* The Custom Dropdown Menu */}
+          {isDropdownOpen && availableSlots.length > 0 && (
+            <ul className="absolute top-full left-0 w-full mt-2 bg-primary-light text-primary-dark border border-primary-dark/10 rounded-2xl shadow-xl z-20 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+              {availableSlots.map((slot) => (
+                <li
+                  key={slot}
+                  onClick={() => {
+                    setScheduledSlot(slot);
+                    setIsDropdownOpen(false);
+                  }}
+                  className={`p-4 cursor-pointer font-bold text-base transition-colors ${
+                    scheduledSlot === slot
+                      ? "bg-primary-dark/10" // Slight highlight for the currently selected item
+                      : "hover:bg-primary-dark hover:text-white"
+                  }`}
+                >
+                  {slot}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
 
@@ -164,7 +219,6 @@ export default function OrderSchedule({
       {/* Confirmation Success Message */}
       {scheduledDate && scheduledSlot && (
         <div className="mt-6 p-4 bg-green-50/50 border border-green-100 rounded-2xl flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
-          {/* Using an inline SVG check icon so it works immediately without you needing to add a new icon */}
           <svg
             className="w-5 h-5 text-green-600 shrink-0 mt-0.5"
             fill="none"

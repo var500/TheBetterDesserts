@@ -5,10 +5,9 @@ import { useNavigate } from "react-router";
 import { Text } from "../ui/text";
 import { Button } from "../ui/button";
 import { Icons } from "../icons";
+import { toast } from "react-toastify";
 
-// Import sub-components
 import DeliveryMethodSelector from "./DeliveryMethodSelector";
-
 import PickupDetails from "./PickupDetails";
 import CouponSection from "./CouponSection";
 import OrderSummary from "./OrderSummary";
@@ -17,26 +16,10 @@ import { useAuthStore } from "~/store/authStore";
 import { useCheckoutStore } from "~/store/checkoutStore";
 import { ContactStep, OtpVerificationStep } from "./AuthStep";
 import { useAddresses } from "~/hooks/useAddress";
-
 import { getZoneFromPincode } from "~/lib/utils";
 import AddressManager from "./AddressManager";
 
-const mockVerifyCoupon = async (
-  code: string,
-): Promise<{ success: boolean; discountPercent?: number; message: string }> => {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      if (code.toUpperCase() === "SWEET10")
-        resolve({
-          success: true,
-          discountPercent: 10,
-          message: "10% off applied!",
-        });
-      else
-        resolve({ success: false, message: "Invalid or expired coupon code." });
-    }, 600),
-  );
-};
+import { useCoupon } from "~/hooks/useCoupon";
 
 const mockCalculateShipping = async (
   destinationPincode: string,
@@ -56,34 +39,35 @@ export default function Checkout() {
   const { selectedCityId } = useCityStore();
   const navigate = useNavigate();
   const { step, setStep } = useCheckoutStore();
-  const { user } = useAuthStore();
-  // State
+
+  const { user, token } = useAuthStore();
+
   const [deliveryMethod, setDeliveryMethod] = useState<"delivery" | "pickup">(
     "delivery",
   );
-
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(
     null,
   );
-
   const [shippingFee, setShippingFee] = useState<number | null>(null);
   const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
   const [scheduledDate, setScheduledDate] = useState("");
   const [scheduledSlot, setScheduledSlot] = useState("");
 
   const [couponCode, setCouponCode] = useState("");
+  const [appliedCouponCode, setAppliedCouponCode] = useState<string | null>(
+    null,
+  );
   const [appliedDiscountPercent, setAppliedDiscountPercent] =
     useState<number>(0);
+  const [backendDiscountAmount, setBackendDiscountAmount] = useState<number>(0);
   const [couponMessage, setCouponMessage] = useState("");
-  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
-  const { data: fetchedAddresses } = useAddresses(user?.uid);
 
+  const { data: fetchedAddresses } = useAddresses(user?.uid);
   const addresses = fetchedAddresses || [];
 
   useEffect(() => {
     if (addresses.length > 0 && !selectedAddressId) {
       const defaultAddr = addresses.find((addr) => addr.is_default);
-
       if (defaultAddr) {
         setSelectedAddressId(defaultAddr.id);
       } else {
@@ -101,26 +85,23 @@ export default function Checkout() {
     selectedAddr && deliveryZone
       ? cart.every((item) => {
           if (!item.availableIn || item.availableIn.length === 0) return true;
-
-          // Check if the calculated zone is in the product's available zones
           return item.availableIn.includes(deliveryZone);
         })
       : false;
-  // Derived Totals
+
   const subtotal = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
-  const discountAmount = Math.floor((subtotal * appliedDiscountPercent) / 100);
-  const total = subtotal - discountAmount + (shippingFee || 0);
+  const total = subtotal - backendDiscountAmount + (shippingFee || 0);
 
+  // Flow Step
   useEffect(() => {
     if (user?.uid && step !== "DELIVERY_AND_PAYMENT") {
       setStep("DELIVERY_AND_PAYMENT");
     }
   }, [user?.uid, step, setStep]);
 
-  // Effects
   useEffect(() => {
     const calculateShipping = async () => {
       if (deliveryMethod === "pickup") {
@@ -143,35 +124,40 @@ export default function Checkout() {
     calculateShipping();
   }, [selectedAddressId, addresses, deliveryMethod]);
 
-  // Handlers
-  const handleApplyCoupon = async (e: React.FormEvent) => {
+  const { mutate: applyCoupon, isPending: isVerifyingCoupon } = useCoupon(
+    (data) => {
+      setAppliedDiscountPercent(data.discountPercentage);
+      setBackendDiscountAmount(data.discountAmount);
+      setAppliedCouponCode(data.code);
+      setCouponMessage(`Awesome! You saved ₹${data.discountAmount}`);
+    },
+  );
+
+  const handleApplyCoupon = (e: React.FormEvent) => {
     e.preventDefault();
     if (!couponCode.trim()) return;
-    setIsApplyingCoupon(true);
+
+    if (!token) {
+      toast.error("Please log in to apply coupons.");
+      return;
+    }
+
     setCouponMessage("");
 
-    const res = await mockVerifyCoupon(couponCode);
-    if (res.success && res.discountPercent) {
-      setAppliedDiscountPercent(res.discountPercent);
-      setCouponMessage(res.message);
-    } else {
-      setAppliedDiscountPercent(0);
-      setCouponMessage(res.message);
-    }
-    setIsApplyingCoupon(false);
+    applyCoupon({
+      code: couponCode.trim(),
+      cartTotal: subtotal,
+      token: token,
+    });
   };
 
   const handleRemoveCoupon = () => {
     setAppliedDiscountPercent(0);
+    setBackendDiscountAmount(0);
+    setAppliedCouponCode(null);
     setCouponCode("");
     setCouponMessage("");
   };
-
-  useEffect(() => {
-    if (addresses.length > 0 && !selectedAddressId) {
-      setSelectedAddressId(addresses[0].id);
-    }
-  }, [addresses, selectedAddressId]);
 
   if (cart.length === 0) {
     return (
@@ -205,7 +191,7 @@ export default function Checkout() {
   // Main Render
   return (
     <div className="min-h-screen bg-[#F5F0E6] pt-12 pb-24 px-4 md:px-8">
-      <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-col  lg:flex-row gap-0 md:gap-12">
+      <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-col lg:flex-row gap-0 md:gap-12">
         <div className="flex-1">
           <Text
             as="h1"
@@ -214,13 +200,9 @@ export default function Checkout() {
             Checkout
           </Text>
 
-          {/* Render Step 1: Email */}
           {step === "CONTACT" && <ContactStep />}
-
-          {/* Render Step 2: OTP */}
           {step === "OTP_VERIFICATION" && <OtpVerificationStep />}
 
-          {/* Render Step 3: The existing delivery flow! */}
           {step === "DELIVERY_AND_PAYMENT" && (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
               <DeliveryMethodSelector
@@ -234,12 +216,10 @@ export default function Checkout() {
                   {user?.uid && (
                     <AddressManager
                       userId={user.uid}
-                      // 2. Pass the state down!
                       selectedAddressId={selectedAddressId}
                       setSelectedAddressId={setSelectedAddressId}
                     />
                   )}
-                  {/* Show error if address is selected but not deliverable */}
                   {selectedAddr && !isAddressDeliverable && (
                     <div className="p-4 bg-red-50 border border-red-200 rounded-2xl animate-in fade-in">
                       <Text as="p" className="text-red-500 font-bold text-sm">
@@ -270,7 +250,7 @@ export default function Checkout() {
                 setCouponCode={setCouponCode}
                 appliedDiscountPercent={appliedDiscountPercent}
                 couponMessage={couponMessage}
-                isApplyingCoupon={isApplyingCoupon}
+                isApplyingCoupon={isVerifyingCoupon}
                 handleApplyCoupon={handleApplyCoupon}
                 handleRemoveCoupon={handleRemoveCoupon}
               />
@@ -280,7 +260,7 @@ export default function Checkout() {
 
         <OrderSummary
           subtotal={subtotal}
-          discountAmount={discountAmount}
+          discountAmount={backendDiscountAmount}
           appliedDiscountPercent={appliedDiscountPercent}
           shippingFee={shippingFee}
           isCalculatingShipping={isCalculatingShipping}
@@ -290,6 +270,7 @@ export default function Checkout() {
           scheduledDate={scheduledDate}
           scheduledSlot={scheduledSlot}
           isAddressDeliverable={isAddressDeliverable}
+          couponCode={appliedCouponCode}
         />
       </div>
     </div>

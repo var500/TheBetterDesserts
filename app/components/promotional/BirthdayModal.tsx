@@ -14,7 +14,7 @@ export const BirthdayModal = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const { user, setUser } = useAuthStore();
+  const { user, updateUser } = useAuthStore();
 
   // If logged in, we don't need them to type their email
   const [email, setEmail] = useState("");
@@ -58,7 +58,7 @@ export const BirthdayModal = ({
     },
     onSuccess: () => {
       if (user) {
-        setUser({ ...user, dob });
+        updateUser({ ...user, dob });
       }
       setSubmitted(true);
     },

@@ -28,7 +28,7 @@ export default function OrderConfirmation() {
             <Button
               variant="outline"
               className="flex-1 rounded-xl py-6"
-              onClick={() => navigate("/profile/orders")}
+              onClick={() => navigate("/profile")}
             >
               View Order
             </Button>

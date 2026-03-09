@@ -3,7 +3,8 @@ import { Icons } from "../icons";
 import { Text } from "../ui/text";
 import { useCartStore } from "~/store/cartStore";
 import { CityPicker } from "./cityPicker";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { Button } from "../ui/button";
 
 // Removed cartCount from props!
 interface NavbarProps {
@@ -15,7 +16,7 @@ interface NavbarProps {
 export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  const navigate = useNavigate();
   // FIX 1: Extract the state and functions correctly from Zustand
   const setIsCartOpen = useCartStore((state) => state.setIsCartOpen);
   const cart = useCartStore((state) => state.cart);
@@ -104,6 +105,16 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
 
         {/* Right Section: Icons */}
         <div className="flex items-center gap-4 text-primary-dark flex-1 justify-end">
+          {user?.name === "Admin" ? (
+            <Button
+              variant={"rounded"}
+              size={"sm"}
+              className="max-w-40"
+              onClick={() => navigate("/admin/dashboard")}
+            >
+              Go to Admin Dashboard
+            </Button>
+          ) : null}
           <Icons.Search
             className="w-5 h-5 cursor-pointer hover:text-gray-500 transition-colors"
             onClick={onOpenSearch}

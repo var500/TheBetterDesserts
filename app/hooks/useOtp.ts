@@ -14,11 +14,11 @@ export const useSendOtp = () => {
 };
 
 export const useVerifyOtp = () => {
-  const setUser = useAuthStore((state) => state.setUser);
+  const setAuth = useAuthStore((state) => state.setAuth);
   return useMutation({
     mutationFn: verifyOtp,
     onSuccess: (data) => {
-      setUser(data.user);
+      setAuth(data.user, data.accessToken);
       Cookies.set("accessToken", data.accessToken, {
         expires: 7,
         secure: true,

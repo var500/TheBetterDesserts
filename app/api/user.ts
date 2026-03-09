@@ -1,4 +1,9 @@
-import type { AddAddressInput, Address } from "~/common/types";
+import type {
+  AddAddressInput,
+  Address,
+  OtpVerifyResponse,
+  UpdateProfilePayload,
+} from "~/common/types";
 
 import { BACKEND_API_URL } from "~/lib/utils";
 
@@ -19,7 +24,7 @@ export const verifyOtp = async ({
 }: {
   email: string;
   otp: string;
-}) => {
+}): Promise<OtpVerifyResponse> => {
   const response = await fetch(`${BACKEND_API_URL}/auth/otp/verify`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -92,5 +97,26 @@ export const deleteAddress = async ({
     },
   );
   if (!response.ok) throw new Error("Failed to delete address");
+  return response.json();
+};
+
+export const updateProfileApi = async (
+  data: UpdateProfilePayload,
+  token: string,
+) => {
+  const response = await fetch(`${BACKEND_API_URL}/users/profile`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || "Failed to update profile");
+  }
+
   return response.json();
 };

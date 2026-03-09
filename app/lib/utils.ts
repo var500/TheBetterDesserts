@@ -23,6 +23,8 @@ export const loadScript = (src: string): Promise<boolean> => {
 export const BACKEND_API_URL =
   import.meta.env.VITE_API_URL || "http://localhost:3000";
 
+export const RAZORPAY_PUBLIC_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID;
+
 import type { Zone } from "~/common/types";
 
 export const getZoneFromPincode = (pincode: string): Zone => {

@@ -10,7 +10,7 @@ import { useAuthStore } from "~/store/authStore";
 import BirthdayModal from "../promotional/BirthdayModal";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { user, setUser, signOut } = useAuthStore();
+  const { user, setAuth, signOut } = useAuthStore();
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -68,9 +68,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         onClose={() => setIsAuthOpen(false)}
         user={user}
         onSignOut={handleSignOut}
-        onSignIn={(userData) => {
-          setUser(userData);
-          setIsAuthOpen(false);
+        onSignIn={(userData, token) => {
+          setAuth(userData, token);
         }}
       />
     </>

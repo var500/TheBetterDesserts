@@ -1,7 +1,8 @@
 import { Text } from "../ui/text";
 import { Button } from "../ui/button";
 import { useCartStore } from "~/store/cartStore";
-// import { useRazorpay } from "~/hooks/useRazorpay";
+import { useRazorpay, type CheckoutPayload } from "~/hooks/useRazorpay";
+import { useAuthStore } from "~/store/authStore";
 
 interface OrderSummaryProps {
   subtotal: number;
@@ -15,6 +16,7 @@ interface OrderSummaryProps {
   scheduledDate: string;
   scheduledSlot: string;
   isAddressDeliverable: boolean;
+  couponCode?: string | null;
 }
 
 export default function OrderSummary({
@@ -28,12 +30,42 @@ export default function OrderSummary({
   selectedAddressId,
   scheduledDate,
   scheduledSlot,
+  couponCode,
   isAddressDeliverable,
 }: OrderSummaryProps) {
   const { cart, removeFromCart } = useCartStore();
+  const { user } = useAuthStore();
 
-  // <-- Initialize the hook here
-  // const { processPayment, isProcessing } = useRazorpay();
+  const { processPayment, isProcessing } = useRazorpay();
+
+  const handleCheckoutClick = () => {
+    if (!user?.uid || !selectedAddressId || !scheduledDate || !scheduledSlot)
+      return;
+
+    const [startStr, endStr] = scheduledSlot.split(" - ");
+
+    const createDateString = (dateStr: string, timeStr: string) => {
+      const d = new Date(`${dateStr} ${timeStr}`);
+      return d.toISOString();
+    };
+
+    const payload: CheckoutPayload = {
+      user_id: user.uid,
+      address_id: selectedAddressId,
+      total_amount: total,
+      delivery_fee: shippingFee ?? undefined,
+      delivery_date: new Date(scheduledDate).toISOString(),
+      slot_start_time: createDateString(scheduledDate, startStr),
+      slot_end_time: createDateString(scheduledDate, endStr),
+      coupon_code: couponCode || undefined,
+      items: cart.map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+      })),
+    };
+
+    processPayment(payload);
+  };
 
   const isCheckoutDisabled =
     (deliveryMethod === "delivery" &&
@@ -166,20 +198,15 @@ export default function OrderSummary({
           <Button
             variant="default"
             size="sm-to-default"
-            // onClick={() => processPayment(total)}
+            onClick={handleCheckoutClick}
             className={`w-full rounded-2xl font-bold text-lg ${
-              isCheckoutDisabled ? "pointer-events-none opacity-80" : ""
+              isCheckoutDisabled || isProcessing
+                ? "pointer-events-none opacity-80"
+                : ""
             }`}
-            // className={`w-full rounded-2xl font-bold text-lg ${
-            //   isCheckoutDisabled || isProcessing
-            //     ? "pointer-events-none opacity-80"
-            //     : ""
-            // }`}
-            // disabled={isCheckoutDisabled || isProcessing}
-            disabled={isCheckoutDisabled}
+            disabled={isCheckoutDisabled || isProcessing}
           >
-            {/* {isProcessing ? "Processing..." : "Proceed to Payment"} */}
-            {"Proceed to Payment"}
+            {isProcessing ? "Processing..." : "Proceed to Payment"}
           </Button>
 
           {isCheckoutDisabled && (
