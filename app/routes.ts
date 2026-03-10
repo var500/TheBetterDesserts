@@ -20,5 +20,7 @@ export default [
   layout("./routes/AdminGuard.tsx", [
     route("/admin/dashboard", "./routes/AdminDashboard.tsx"),
     route("/admin/coupons", "./routes/AdminCoupons.tsx"),
+    route("/admin/products", "./routes/Products.tsx"),
+    route("/admin/orders/:id", "./routes/OrderDetails.tsx"),
   ]),
 ] satisfies RouteConfig;

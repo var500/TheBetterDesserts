@@ -38,6 +38,8 @@ import {
   LayoutDashboard,
   Users,
   Settings,
+  RefreshCcw,
+  ArrowLeft,
 } from "lucide-react";
 
 import type { JSX } from "react";
@@ -47,6 +49,8 @@ export type icon = (props: LucideProps) => JSX.Element;
 export const Icons = {
   LayoutDashboard: LayoutDashboard,
   Users: Users,
+  ArrowLeft: ArrowLeft,
+  Refresh: RefreshCcw,
   Settings: Settings,
   ArrowRight: ArrowRight,
   ShieldCheck: ShieldCheck,

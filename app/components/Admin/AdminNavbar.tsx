@@ -14,11 +14,9 @@ export default function AdminNavbar() {
   };
 
   const navLinks = [
-    { name: "Overview", path: "/admin/dashboard", icon: Icons.LayoutDashboard },
-    { name: "Orders", path: "/admin/orders", icon: Icons.Package },
+    { name: "Orders", path: "/admin/dashboard", icon: Icons.Package },
     { name: "Products", path: "/admin/products", icon: Icons.ShoppingBag },
-    { name: "Customers", path: "/admin/customers", icon: Icons.Users },
-    { name: "Settings", path: "/admin/settings", icon: Icons.Settings },
+    { name: "Coupons", path: "/admin/coupons", icon: Icons.Settings },
   ];
 
   return (

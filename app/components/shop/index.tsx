@@ -157,11 +157,9 @@ export default function Shop() {
                           size="sm-to-default"
                           className="w-full rounded-xl py-2 text-sm"
                           onClick={() => addToCart(product)}
-                          disabled={product.stockAvailable <= 0}
+                          disabled={!product.isAvailable}
                         >
-                          {product.stockAvailable > 0
-                            ? "Add to Cart"
-                            : "Sold Out"}
+                          {product.isAvailable ? "Add to Cart" : "Sold Out"}
                         </Button>
                       </div>
                     </Card>
