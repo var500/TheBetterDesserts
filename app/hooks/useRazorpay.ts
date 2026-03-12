@@ -5,8 +5,7 @@ import { loadScript, RAZORPAY_PUBLIC_KEY } from "~/lib/utils";
 import { useAuthStore } from "~/store/authStore";
 import { toast } from "react-toastify";
 // Ensure you have a way to access your backend URL
-const BACKEND_API_URL =
-  import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3000";
+const BACKEND_API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 interface RazorpayInstance {
   open: () => void;
