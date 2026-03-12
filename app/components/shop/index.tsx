@@ -2,13 +2,14 @@ import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router";
 import { useCityStore } from "~/store/useCityStore";
 import { Text } from "../ui/text";
-import { Button } from "../ui/button";
+
 import { Card } from "../ui/card";
 import { useCartStore } from "~/store/cartStore";
 
 import PinCodeSelector from "../common/PinCodeSelector";
 import { useProducts } from "~/hooks/useProducts";
 import type { Product } from "~/common/types";
+import { AddToCartButton } from "./AddToCartButton";
 
 export default function Shop() {
   const { selectedCityId, selectedCityLabel } = useCityStore();
@@ -148,19 +149,14 @@ export default function Shop() {
                             as="p"
                             className="text-sm text-primary-dark/80 mt-1 font-bold"
                           >
-                            ₹{product.price.toLocaleString()}
+                            ₹{product.base_price}
                           </Text>
                         </div>
 
-                        <Button
-                          variant="default"
-                          size="sm-to-default"
-                          className="w-full rounded-xl py-2 text-sm"
-                          onClick={() => addToCart(product)}
-                          disabled={!product.isAvailable}
-                        >
-                          {product.isAvailable ? "Add to Cart" : "Sold Out"}
-                        </Button>
+                        <AddToCartButton
+                          product={product}
+                          addToCart={addToCart}
+                        />
                       </div>
                     </Card>
                   ))}

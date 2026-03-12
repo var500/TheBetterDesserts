@@ -19,7 +19,7 @@ export default function ProductHeader({ name, price }: ProductHeaderProps) {
         as="p"
         className="text-2xl font-bold text-primary-dark/90 mb-6 tracking-wide"
       >
-        ₹{price.toLocaleString()}
+        ₹{price}
       </Text>
     </>
   );

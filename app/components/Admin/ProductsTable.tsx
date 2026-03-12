@@ -186,7 +186,7 @@ export default function ProductsTable() {
                         {product.category?.title || "N/A"}
                       </td>
                       <td className="px-6 py-4 font-medium text-gray-900">
-                        ₹{Number(product.price).toFixed(2)}{" "}
+                        ₹{Number(product.base_price).toFixed(2)}{" "}
                         {/* Safe fallback for price too */}
                       </td>
                       <td className="px-6 py-4">

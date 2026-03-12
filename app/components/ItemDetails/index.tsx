@@ -57,10 +57,7 @@ export default function Itemdetails({ product }: { product: Product }) {
   }, [selectedCityLabel, availableLocations]);
 
   // --- Derived Values & Limits ---
-  const absoluteMax = Math.min(
-    product.stockAvailable ?? 0,
-    product.maxPerUser ?? 5,
-  );
+  const absoluteMax = product.maxPerUser ?? 5;
 
   const cartQuantity =
     cart.find((item) => item.id === product.id)?.quantity ?? 0;
@@ -141,12 +138,9 @@ export default function Itemdetails({ product }: { product: Product }) {
   return (
     <main className="flex-1 max-w-7xl mx-auto w-full px-4 md:px-8 py-8 md:py-12">
       <div className="flex flex-col md:flex-row gap-12 lg:gap-20">
-        {product.image.map((item, idx) => {
-          return <ImageGallery key={idx} image={item} name={product.name} />;
-        })}
-
+        <ImageGallery images={product.image} name={product.name} />
         <div className="w-full md:w-1/2 flex flex-col lg:sticky lg:top-24 h-max">
-          <ProductHeader name={product.name} price={product.price} />
+          <ProductHeader name={product.name} price={product.base_price} />
 
           <DeliveryAvailability
             pincode={pincode}

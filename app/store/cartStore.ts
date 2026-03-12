@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware"; // 👈 1. Import persist
+import { persist } from "zustand/middleware";
 import type { CartItem } from "~/common/types";
 
 interface CartState {
@@ -23,16 +23,17 @@ export const useCartStore = create<CartState>()(
 
       addToCart: (product, openCart) =>
         set((state) => {
-          const existing = state.cart.find((item) => item.id === product.id);
+          // 1. If the item is marked as completely out of stock, reject immediately
+          if (product.isAvailable === false) {
+            return state;
+          }
 
-          const absoluteMax = Math.min(
-            product.stockAvailable ?? 0,
-            product.maxPerUser ?? 5,
-          );
+          const existing = state.cart.find((item) => item.id === product.id);
+          const maxAllowed = product.maxPerUser ?? 5;
 
           if (existing) {
-            if (existing.quantity >= absoluteMax) {
-              return state;
+            if (existing.quantity >= maxAllowed) {
+              return state; // They hit their limit
             }
 
             return {
@@ -41,15 +42,13 @@ export const useCartStore = create<CartState>()(
                   ? { ...item, quantity: item.quantity + 1 }
                   : item,
               ),
-              isCartOpen: openCart,
+              isCartOpen: openCart ?? state.isCartOpen,
             };
           }
 
-          if (absoluteMax <= 0) return state;
-
           return {
             cart: [...state.cart, { ...product, quantity: 1 }],
-            isCartOpen: openCart,
+            isCartOpen: openCart ?? state.isCartOpen,
           };
         }),
 
@@ -57,13 +56,11 @@ export const useCartStore = create<CartState>()(
         set((state) => ({
           cart: state.cart.map((item) => {
             if (item.id === id) {
-              const absoluteMax = Math.min(
-                item.stockAvailable ?? 0,
-                item.maxPerUser ?? 5,
-              );
+              const maxAllowed = item.maxPerUser ?? 5;
 
               let newQuantity = item.quantity + delta;
-              newQuantity = Math.max(1, Math.min(newQuantity, absoluteMax));
+              // Ensure they don't go below 1, and don't go above their maxPerUser
+              newQuantity = Math.max(1, Math.min(newQuantity, maxAllowed));
 
               return { ...item, quantity: newQuantity };
             }
@@ -77,8 +74,7 @@ export const useCartStore = create<CartState>()(
         })),
     }),
     {
-      name: "bakery-cart-storage", // 👈 3. The name of the key in localStorage
-      // Optional: You can choose NOT to persist the isCartOpen state so the cart doesn't pop open automatically on page reload
+      name: "bakery-cart-storage",
       partialize: (state) => ({ cart: state.cart }),
     },
   ),

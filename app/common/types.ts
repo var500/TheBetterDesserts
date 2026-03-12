@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Zone = "GURGAON" | "DELHI_NCR" | "PAN_INDIA";
 export interface Product {
   id: string;
   name: string;
-  price: number;
+  base_price: number;
   image: string[];
   unitDescription: string;
   isAvailable: boolean;
   availableIn: Zone[];
+  is_bestseller: boolean;
+  is_Active: boolean;
   maxPerUser: number;
   category: {
     title: string;
@@ -26,6 +29,49 @@ export const STATUS_OPTIONS = [
   "DELIVERED",
   "CANCELLED",
 ];
+
+export interface ValidateCartPayload {
+  zone: string;
+  items: { productId: string; quantity: number }[];
+}
+
+export interface CartValidationError {
+  productId: string;
+  name?: string;
+  message: string;
+  requested?: number;
+  available?: number;
+}
+
+export interface CartValidationError {
+  productId: string;
+  message: string;
+  name?: string;
+  requested?: number;
+  available?: number;
+}
+
+export interface ValidateCartErrorResponse {
+  message: string;
+  errors?: CartValidationError[];
+  error?: string;
+  statusCode?: number;
+}
+
+export type FormDataValue =
+  | string
+  | number
+  | boolean
+  | File
+  | File[]
+  | Record<string, any>
+  | null
+  | undefined;
+
+export interface ValidateCartError {
+  message: string;
+  errors: CartValidationError[];
+}
 
 export interface ShopCategory {
   id: string;
@@ -210,8 +256,7 @@ export interface ProductAvailabilityInput {
 // 2. Create Payload
 export interface CreateProductPayload {
   name: string;
-  description?: string | null;
-  price: number;
+  base_price: number;
   image_url: string[];
   category: string; // The category_id string
   weight_grams?: number | null;
@@ -229,7 +274,7 @@ export type UpdateProductPayload = Partial<CreateProductPayload>;
 export interface AdminProduct {
   id: string;
   name: string;
-  price: number | string; // Decimal from Prisma sometimes serializes as string
+  base_price: number | string; // Decimal from Prisma sometimes serializes as string
   image: string[];
   unitDescription: string | null;
   description: string | null;

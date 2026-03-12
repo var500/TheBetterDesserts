@@ -7,7 +7,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
     <div className="group flex flex-col ">
       <div className="relative overflow-hidden aspect-square mb-3 rounded-lg bg-gray-100">
         <img
-          src={product.image}
+          src={product.image[0]}
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
@@ -22,11 +22,11 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </button>
       </div>
       <div className="text-xs text-gray-400 uppercase tracking-widest mb-1">
-        {product.category}
+        {product.category?.title}
       </div>
       <h3 className="text-sm font-bold text-gray-800 mb-1">{product.name}</h3>
       <div className="text-sm font-semibold text-primary-dark">
-        RS. {product.price.toLocaleString()}
+        RS. {product.base_price}
       </div>
     </div>
   );

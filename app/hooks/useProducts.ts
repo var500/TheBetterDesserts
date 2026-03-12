@@ -7,8 +7,9 @@ import {
   fetchProductById,
   fetchProducts,
   updateProduct,
+  validateCart,
 } from "~/api/products";
-import type { UpdateProductPayload } from "~/common/types";
+import type { UpdateProductPayload, ValidateCartPayload } from "~/common/types";
 import { useCityStore } from "~/store/useCityStore";
 
 export const useProducts = () => {
@@ -43,7 +44,8 @@ export const useProductMutations = (token: string | null | undefined) => {
     queryClient.invalidateQueries({ queryKey: ["adminProducts"] });
 
   const create = useMutation({
-    mutationFn: (data: UpdateProductPayload) => createProduct(data, token!),
+    mutationFn: (data: UpdateProductPayload & { images?: File[] }) =>
+      createProduct(data, token!),
     onSuccess: () => {
       toast.success("Product created!");
       invalidate();
@@ -52,8 +54,13 @@ export const useProductMutations = (token: string | null | undefined) => {
   });
 
   const update = useMutation({
-    mutationFn: ({ id, data }: { id: string; data: UpdateProductPayload }) =>
-      updateProduct(id, data, token!),
+    mutationFn: ({
+      id,
+      data,
+    }: {
+      id: string;
+      data: UpdateProductPayload & { images?: File[] };
+    }) => updateProduct(id, data, token!),
     onSuccess: () => {
       toast.success("Product updated!");
       invalidate();
@@ -71,4 +78,10 @@ export const useProductMutations = (token: string | null | undefined) => {
   });
 
   return { create, update, remove };
+};
+
+export const useValidateCart = () => {
+  return useMutation({
+    mutationFn: (payload: ValidateCartPayload) => validateCart(payload),
+  });
 };

@@ -21,7 +21,7 @@ export default function SignatureProduct() {
 
           <div className="relative overflow-hidden rounded-2xl shadow-xl border-4 border-[#F5F0E6] bg-white">
             <img
-              src="/products/caszel.png"
+              src="https://better-dessert.s3.eu-north-1.amazonaws.com/products/c097b797-f590-496b-befe-8235b47f3c99.avif"
               alt="The Signature Caszel"
               className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
             />

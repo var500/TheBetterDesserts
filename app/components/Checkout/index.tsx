@@ -20,6 +20,11 @@ import { getZoneFromPincode } from "~/lib/utils";
 import AddressManager from "./AddressManager";
 
 import { useCoupon } from "~/hooks/useCoupon";
+import { useValidateCart } from "~/hooks/useProducts";
+import type {
+  CartValidationError,
+  ValidateCartErrorResponse,
+} from "~/common/types";
 
 const mockCalculateShipping = async (
   destinationPincode: string,
@@ -90,10 +95,54 @@ export default function Checkout() {
       : false;
 
   const subtotal = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (sum, item) => sum + item.base_price * item.quantity,
     0,
   );
   const total = subtotal - backendDiscountAmount + (shippingFee || 0);
+  const { mutate: validateCart, isPending: isValidatingCart } =
+    useValidateCart();
+  const { setIsCartOpen } = useCartStore();
+
+  useEffect(() => {
+    if (cart.length === 0) return;
+
+    const zoneToCheck =
+      deliveryMethod === "delivery" ? deliveryZone : "STORE_PICKUP_ZONE";
+
+    if (deliveryMethod === "delivery" && !zoneToCheck) return;
+
+    const payload = {
+      zone: zoneToCheck as string,
+      items: cart.map((item) => ({
+        productId: item.id,
+        quantity: item.quantity,
+      })),
+    };
+
+    console.log(payload);
+
+    validateCart(payload, {
+      onError: (err: ValidateCartErrorResponse) => {
+        if (err.errors && err.errors.length > 0) {
+          err.errors.forEach((errorItem: CartValidationError) => {
+            toast.error(errorItem.message);
+          });
+        } else {
+          toast.error("Some items in your cart are no longer available.");
+        }
+
+        navigate("/collection");
+        setIsCartOpen(true);
+      },
+    });
+  }, [
+    cart,
+    deliveryZone,
+    deliveryMethod,
+    validateCart,
+    navigate,
+    setIsCartOpen,
+  ]);
 
   // Flow Step
   useEffect(() => {
@@ -158,6 +207,20 @@ export default function Checkout() {
     setCouponCode("");
     setCouponMessage("");
   };
+
+  if (isValidatingCart) {
+    return (
+      <div className="min-h-screen bg-[#F5F0E6] flex flex-col items-center justify-center px-4">
+        <Icons.Refresh className="w-12 h-12 animate-spin text-primary-dark mb-4" />
+        <Text
+          as="h2"
+          className="text-xl font-bold text-primary-dark tracking-widest uppercase"
+        >
+          Just a moment...
+        </Text>
+      </div>
+    );
+  }
 
   if (cart.length === 0) {
     return (

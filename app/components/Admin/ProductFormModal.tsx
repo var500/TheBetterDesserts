@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import type { AdminProduct, CreateProductPayload } from "~/common/types";
 import { useProductMutations } from "~/hooks/useProducts";
+import ImageDropzone from "../common/ImageDropzone";
+import { Button } from "../ui/button";
 
 interface ProductFormModalProps {
   isOpen: boolean;
@@ -12,8 +14,7 @@ interface ProductFormModalProps {
 
 const DEFAULT_FORM_STATE: CreateProductPayload = {
   name: "",
-  description: "",
-  price: 0,
+  base_price: 0,
   image_url: [""],
   category: "",
   weight_grams: 0,
@@ -39,18 +40,16 @@ export default function ProductFormModal({
     useState<CreateProductPayload>(DEFAULT_FORM_STATE);
   const { create, update } = useProductMutations(token);
 
-  // Populate form if editing
-  // Populate form if editing
+  const [existingImages, setExistingImages] = useState<string[]>([]);
+  const [newImages, setNewImages] = useState<File[]>([]);
+  const [imagesToDelete, setImagesToDelete] = useState<string[]>([]);
+
   useEffect(() => {
     if (initialData) {
-      const images = initialData.image || [];
-
       setFormData({
         name: initialData.name || "",
-        description: initialData.description || "",
-        price: Number(initialData.price || 0),
-        image_url: images.length > 0 ? images : [""],
-
+        image_url: initialData.image || "",
+        base_price: Number(initialData.base_price || 0),
         category: initialData.category?.id || "",
         weight_grams: initialData.weight_grams || 0,
         unitDescription: initialData.unitDescription || "",
@@ -67,27 +66,36 @@ export default function ProductFormModal({
           };
         }),
       });
+
+      // Populate existing images
+      setExistingImages(initialData.image || []);
     } else {
       setFormData(DEFAULT_FORM_STATE);
+      setExistingImages([]);
     }
+
+    // Reset states on open/close
+    setNewImages([]);
+    setImagesToDelete([]);
   }, [initialData, isOpen]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Clean up empty image URLs
-    const cleanedData = {
+    const payload = {
       ...formData,
-      image_url: formData.image_url.filter((url) => url.trim() !== ""),
+      image_url: existingImages,
+      images: newImages,
+      imagesToDelete: imagesToDelete,
     };
 
     if (initialData) {
       update.mutate(
-        { id: initialData.id, data: cleanedData },
+        { id: initialData.id, data: payload },
         { onSuccess: onClose },
       );
     } else {
-      create.mutate(cleanedData, { onSuccess: onClose });
+      create.mutate(payload, { onSuccess: onClose });
     }
   };
 
@@ -135,11 +143,11 @@ export default function ProductFormModal({
                 required
                 type="number"
                 min="0"
-                value={formData.price}
+                value={formData.base_price}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    price: Number(e.target.value),
+                    base_price: Number(e.target.value),
                   })
                 }
                 className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none"
@@ -152,9 +160,9 @@ export default function ProductFormModal({
               </label>
               <textarea
                 rows={3}
-                value={formData.description || ""}
+                value={formData.unitDescription || ""}
                 onChange={(e) =>
-                  setFormData({ ...formData, description: e.target.value })
+                  setFormData({ ...formData, unitDescription: e.target.value })
                 }
                 className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none"
               />
@@ -182,22 +190,22 @@ export default function ProductFormModal({
                 ))}
               </select>
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Primary Image URL
-              </label>
-              <input
-                type="text"
-                placeholder="https://..."
-                value={formData.image_url[0] || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, image_url: [e.target.value] })
-                }
-                className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none"
-              />
-            </div>
           </div>
+
+          <hr className="border-gray-100" />
+
+          <ImageDropzone
+            existingImages={existingImages}
+            newImages={newImages}
+            onAddFiles={(files) => setNewImages((prev) => [...prev, ...files])}
+            onRemoveNew={(index) =>
+              setNewImages((prev) => prev.filter((_, i) => i !== index))
+            }
+            onRemoveExisting={(url) => {
+              setExistingImages((prev) => prev.filter((img) => img !== url));
+              setImagesToDelete((prev) => [...prev, url]);
+            }}
+          />
 
           <hr className="border-gray-100" />
 
@@ -263,24 +271,26 @@ export default function ProductFormModal({
 
           {/* Footer */}
           <div className="pt-4 border-t border-gray-100 flex justify-end gap-3 sticky bottom-0 bg-white">
-            <button
+            <Button
               type="button"
+              variant={"default"}
               onClick={onClose}
               className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
             >
               Cancel
-            </button>
-            <button
+            </Button>
+            <Button
+              variant={"default"}
               type="submit"
               disabled={isPending}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50"
+              className="cursor-pointer px-4 py-2 text-sm font-medium  rounded-md disabled:opacity-50"
             >
               {isPending
                 ? "Saving..."
                 : initialData
                   ? "Update Product"
                   : "Create Product"}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

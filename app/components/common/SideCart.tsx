@@ -12,7 +12,10 @@ export const CartSidebar = () => {
   const { cart, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart } =
     useCartStore();
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const total = cart.reduce(
+    (sum, item) => sum + item.base_price * item.quantity,
+    0,
+  );
 
   // Use the global state flag instead of the old isOpen prop
   if (!isCartOpen) return null;
@@ -86,7 +89,7 @@ export const CartSidebar = () => {
                 <div key={item.id} className="flex gap-4 group">
                   <div className="w-24 h-24 rounded-lg overflow-hidden border border-gray-100 shrink-0">
                     <img
-                      src={item.image}
+                      src={item.image[0]}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       alt={item.name}
                     />
@@ -112,14 +115,13 @@ export const CartSidebar = () => {
                       variant="primary"
                       className="text-primary-dark/70 text-sm mb-4"
                     >
-                      Rs. {item.price.toLocaleString()}
+                      Rs. {item.base_price.toLocaleString()}
                     </Text>
 
-                    {/* Quantity Selector */}
                     <div className="flex items-center border border-primary-dark/20 rounded-full w-max overflow-hidden">
                       <button
                         className="px-3 py-1 text-primary-dark hover:bg-[#F5F0E6] transition-colors"
-                        onClick={() => updateQuantity(item.id, -1)} // Now uses global action
+                        onClick={() => updateQuantity(item.id, -1)}
                       >
                         <Icons.Minus className="w-3 h-3" />
                       </button>
@@ -130,9 +132,16 @@ export const CartSidebar = () => {
                       >
                         {item.quantity}
                       </Text>
+
                       <button
-                        className="px-3 py-1 text-primary-dark hover:bg-[#F5F0E6] transition-colors"
+                        className="px-3 py-1 text-primary-dark hover:bg-[#F5F0E6] transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed"
                         onClick={() => updateQuantity(item.id, 1)}
+                        disabled={item.quantity >= (item.maxPerUser ?? 5)}
+                        title={
+                          item.quantity >= (item.maxPerUser ?? 5)
+                            ? `Limit of ${item.maxPerUser ?? 5} reached`
+                            : undefined
+                        }
                       >
                         <Icons.Plus className="w-3 h-3" />
                       </button>

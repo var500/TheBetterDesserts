@@ -134,7 +134,7 @@ export default function OrderSummary({
                 as="p"
                 className="font-bold text-sm text-primary-dark shrink-0"
               >
-                ₹{(item.price * item.quantity).toLocaleString()}
+                ₹{(item.base_price * item.quantity).toLocaleString()}
               </Text>
             </div>
           ))}
