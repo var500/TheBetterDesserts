@@ -19,6 +19,7 @@ const DEFAULT_FORM_STATE: CreateProductPayload = {
   category: "",
   weight_grams: 0,
   unitDescription: "",
+  description: "",
   is_active: true,
   is_bestseller: false,
   max_per_user: 5,
@@ -53,6 +54,7 @@ export default function ProductFormModal({
         category: initialData.category?.id || "",
         weight_grams: initialData.weight_grams || 0,
         unitDescription: initialData.unitDescription || "",
+        description: initialData.description || "",
         is_active: initialData.is_active !== false,
         is_bestseller: !!initialData.is_bestseller,
         max_per_user: initialData.max_per_user || 5,
@@ -154,12 +156,12 @@ export default function ProductFormModal({
               />
             </div>
 
-            <div className="md:col-span-2">
+            <div className="md:col-span-1">
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Description
+                Unit Description
               </label>
               <textarea
-                rows={3}
+                rows={1}
                 value={formData.unitDescription || ""}
                 onChange={(e) =>
                   setFormData({ ...formData, unitDescription: e.target.value })
@@ -167,7 +169,6 @@ export default function ProductFormModal({
                 className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none"
               />
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Category *
@@ -189,6 +190,19 @@ export default function ProductFormModal({
                   </option>
                 ))}
               </select>
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Product Description
+              </label>
+              <textarea
+                rows={3}
+                value={formData.description || ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, description: e.target.value })
+                }
+                className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none"
+              />
             </div>
           </div>
 

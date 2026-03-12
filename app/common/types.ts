@@ -261,6 +261,7 @@ export interface CreateProductPayload {
   category: string; // The category_id string
   weight_grams?: number | null;
   unitDescription?: string | null;
+  description?: string | null;
   is_active?: boolean;
   is_bestseller?: boolean;
   max_per_user?: number;
@@ -277,6 +278,7 @@ export interface AdminProduct {
   base_price: number | string; // Decimal from Prisma sometimes serializes as string
   image: string[];
   unitDescription: string | null;
+  desctiption: string | null;
   description: string | null;
   stockAvailable: number;
   weight_grams: number | null;

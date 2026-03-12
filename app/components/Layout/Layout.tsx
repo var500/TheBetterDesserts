@@ -8,9 +8,11 @@ import AutoRotatingBanner from "../common/AutoRotatingBanner";
 import Footer from "../common/Footer";
 import { useAuthStore } from "~/store/authStore";
 import BirthdayModal from "../promotional/BirthdayModal";
+import { useNavigate } from "react-router";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const { user, setAuth, signOut } = useAuthStore();
+  const navigate = useNavigate();
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -38,6 +40,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const handleSignOut = async () => {
     signOut();
     setIsAuthOpen(false);
+    navigate("/");
   };
 
   return (
