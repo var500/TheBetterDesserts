@@ -54,7 +54,8 @@ export default function SignatureProduct() {
 
           <Text
             as="h2"
-            className="text-5xl md:text-7xl font-frista text-primary-dark mb-6 leading-[1.1]"
+            variant={"secondary"}
+            className="text-5xl md:text-7xl  text-primary-dark mb-6 leading-[1.1]"
           >
             The Signature <br className="hidden md:block" /> Caszel
           </Text>

@@ -10,6 +10,7 @@ import BetterIngredients from "~/components/welcome/Ingredients";
 import { Layout } from "~/components/Layout/Layout";
 import Itemdetails from "~/components/ItemDetails";
 import { useGetProductById } from "~/hooks/useProducts";
+import { ProductFAQ } from "~/components/ItemDetails/ProductFAQ";
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
@@ -63,7 +64,8 @@ export default function ProductDetails() {
       <div className="min-h-screen bg-[#F5F0E6] flex flex-col">
         <Itemdetails product={product} />
         <FeaturesBanner />
-        <YouMayAlsoLike currentProductId={product.id} />
+        <ProductFAQ faqs={product.faq} />
+        <YouMayAlsoLike />
         <BetterIngredients />
       </div>
     </Layout>

@@ -3,6 +3,7 @@ import type { AdminProduct, CreateProductPayload } from "~/common/types";
 import { useProductMutations } from "~/hooks/useProducts";
 import ImageDropzone from "../common/ImageDropzone";
 import { Button } from "../ui/button";
+import FAQInputManager from "../common/FAQInputManager";
 
 interface ProductFormModalProps {
   isOpen: boolean;
@@ -20,8 +21,10 @@ const DEFAULT_FORM_STATE: CreateProductPayload = {
   weight_grams: 0,
   unitDescription: "",
   description: "",
+  faq: [],
   is_active: true,
   is_bestseller: false,
+  isNewLaunch: true,
   max_per_user: 5,
   availability: [
     { zone: "GURGAON", stock_count: 0 },
@@ -50,12 +53,14 @@ export default function ProductFormModal({
       setFormData({
         name: initialData.name || "",
         image_url: initialData.image || "",
+        faq: initialData.faq || [],
         base_price: Number(initialData.base_price || 0),
         category: initialData.category?.id || "",
         weight_grams: initialData.weight_grams || 0,
         unitDescription: initialData.unitDescription || "",
         description: initialData.description || "",
         is_active: initialData.is_active !== false,
+        isNewLaunch: !!initialData.isNewLaunch,
         is_bestseller: !!initialData.is_bestseller,
         max_per_user: initialData.max_per_user || 5,
         availability: ["GURGAON", "DELHI_NCR", "PAN_INDIA"].map((zone) => {
@@ -206,6 +211,11 @@ export default function ProductFormModal({
             </div>
           </div>
 
+          <FAQInputManager
+            faqs={formData.faq || []}
+            onChange={(newFaqs) => setFormData({ ...formData, faq: newFaqs })}
+          />
+
           <hr className="border-gray-100" />
 
           <ImageDropzone
@@ -267,6 +277,19 @@ export default function ProductFormModal({
                 className="w-4 h-4 text-blue-600 rounded border-gray-300"
               />
               <span className="text-sm font-medium text-gray-700">Active</span>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.isNewLaunch}
+                onChange={(e) =>
+                  setFormData({ ...formData, isNewLaunch: e.target.checked })
+                }
+                className="w-4 h-4 text-blue-600 rounded border-gray-300"
+              />
+              <span className="text-sm font-medium text-gray-700">
+                New Launch
+              </span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input

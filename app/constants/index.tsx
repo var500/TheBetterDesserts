@@ -190,3 +190,26 @@ export const CustomerServiceLinks = [
   { key: "Refund Policy", value: "/refund-policy" },
   { key: "Privacy Policies", value: "/privacy-policy" },
 ];
+
+export const HomeFAQs = [
+  {
+    question: "What is FOS and why do you use it?",
+    answer:
+      "FOS is a natural, plant-based sweetener that’s gentle on blood sugar and doubles as a prebiotic, supporting gut health. It lets us create desserts that are sweet, light, and better for your wellbeing.",
+  },
+  {
+    question: "Do “better” desserts mean fewer calories?",
+    answer:
+      "Not necessarily. Our focus is on better ingredients—not diet food. While some desserts may be lighter, what we truly promise is indulgence made with honesty, purity, and balance.",
+  },
+  {
+    question: "What’s so special about being palm oil-free?",
+    answer:
+      "Palm oil hides in most desserts, but we keep it out—choosing pure, conscious fats instead. It’s our way of caring for both you and the planet.",
+  },
+  {
+    question: "Why do you call them Better Desserts?",
+    answer:
+      "Because every ingredient is chosen with intention. “Better” means more than health—it’s about taste, quality, and care in every bite.",
+  },
+];

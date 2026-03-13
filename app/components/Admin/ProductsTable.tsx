@@ -107,12 +107,13 @@ export default function ProductsTable() {
               Refresh
             </Text>
           </Button>
-          <button
+          <Button
+            variant={"outline"}
             onClick={handleAddNew}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition"
+            className="bg-blue-600 border-none text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700 transition"
           >
             + Add Product
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -148,7 +149,7 @@ export default function ProductsTable() {
                   </td>
                 </tr>
               ) : (
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                 
                 products.map((product) => {
                   // Temp using 'any' to bypass strict TS check while we fix the read logic
 
@@ -215,13 +216,13 @@ export default function ProductsTable() {
                       <td className="px-6 py-4 text-right">
                         <button
                           onClick={() => handleEdit(product)}
-                          className="text-blue-600 hover:text-blue-800 font-medium mr-4"
+                          className="cursor-pointer text-blue-600 hover:text-blue-800 font-medium mr-4"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDelete(product.id)}
-                          className="text-red-600 hover:text-red-800 font-medium"
+                          className="cursor-pointer text-red-600 hover:text-red-800 font-medium"
                         >
                           Delete
                         </button>

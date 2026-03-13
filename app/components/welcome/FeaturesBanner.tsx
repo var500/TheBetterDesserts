@@ -7,7 +7,11 @@ export const FeaturesBanner = () => (
       {/* Feature 1 */}
       <div className="flex flex-col items-center">
         <Icons.Sparkles className="w-10 h-10 mb-5 text-primary-dark/80" />
-        <Text as="h3" className="font-frista text-2xl md:text-3xl mb-3">
+        <Text
+          variant={"secondary"}
+          as="h3"
+          className=" text-2xl md:text-3xl mb-3"
+        >
           Exquisite & Eggless
         </Text>
         <Text
@@ -22,7 +26,11 @@ export const FeaturesBanner = () => (
       {/* Feature 2 */}
       <div className="flex flex-col items-center">
         <Icons.Clock className="w-10 h-10 mb-5 text-primary-dark/80" />
-        <Text as="h3" className="font-frista text-2xl md:text-3xl mb-3">
+        <Text
+          variant={"secondary"}
+          as="h3"
+          className=" text-2xl md:text-3xl mb-3"
+        >
           Freshly Baked
         </Text>
         <Text
@@ -37,7 +45,11 @@ export const FeaturesBanner = () => (
       {/* Feature 3 */}
       <div className="flex flex-col items-center">
         <Icons.Gift className="w-10 h-10 mb-5 text-primary-dark/80" />
-        <Text as="h3" className="font-frista text-2xl md:text-3xl mb-3">
+        <Text
+          variant={"secondary"}
+          as="h3"
+          className=" text-2xl md:text-3xl mb-3"
+        >
           Nationwide Gifting
         </Text>
         <Text

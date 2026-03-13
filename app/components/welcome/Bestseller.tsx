@@ -2,12 +2,19 @@ import { Button } from "../ui/button";
 import { ProductCard } from "./ProductCard";
 import { Text } from "../ui/text";
 import { useNavigate } from "react-router";
-import { useProducts } from "~/hooks/useProducts";
 
-export default function Bestseller() {
+import type { Product } from "~/common/types";
+
+export default function Bestseller({
+  bestsellers,
+  isLoading,
+  isError,
+}: {
+  bestsellers: Product[];
+  isLoading: boolean;
+  isError: boolean;
+}) {
   const navigate = useNavigate();
-  const { data: products, isLoading, isError } = useProducts();
-  const bestsellers = products?.filter((item) => item.is_bestseller);
 
   if (isLoading) {
     return (
@@ -22,7 +29,7 @@ export default function Bestseller() {
     );
   }
 
-  if (isError || !products) {
+  if (isError) {
     return (
       <div className="min-h-screen bg-[#F5F0E6] flex items-center justify-center">
         <Text as="p" className="text-red-500 font-satoshi">

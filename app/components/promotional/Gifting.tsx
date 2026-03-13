@@ -68,13 +68,13 @@ export const GiftingPromo = () => (
         <Text
           as="h2"
           variant={"primary"}
-          className="text-primary-dark font-satoshi font-black text-4xl md:text-6xl tracking-tight uppercase leading-[1.1] mb-6"
+          className="text-primary-dark   text-4xl md:text-6xl tracking-tight uppercase leading-[1.1] mb-6"
         >
           Send Something, <br />
           <Text
             as={"span"}
-            variant={"secondary"}
-            className=" normal-case  text-5xl md:text-7xl"
+            variant={"primary"}
+            className=" normal-case font-frista font-black tracking-wider text-5xl md:text-7xl"
           >
             Better
           </Text>

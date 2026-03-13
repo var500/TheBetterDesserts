@@ -4,12 +4,12 @@ import { cn } from "~/lib/utils";
 
 const textVariants = cva(
   // Base classes applied to all variants (400 font-weight)
-  "font-normal",
+  "",
   {
     variants: {
       variant: {
         primary: "font-satoshi",
-        secondary: "font-frista",
+        secondary: "font-playfair",
       },
     },
     defaultVariants: {

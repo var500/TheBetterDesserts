@@ -59,9 +59,9 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
             className="w-6 h-6 md:hidden cursor-pointer text-primary-dark"
             onClick={() => setIsMobileMenuOpen(true)}
           />
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium tracking-wide text-primary-dark">
+          <div className="hidden md:flex items-center gap-6 text-sm font-bold tracking-wider text-primary-dark">
             <Link to="/" className="hover:text-gray-500 transition-colors">
-              <Text as="span" variant="primary">
+              <Text as="span" variant="secondary">
                 Home
               </Text>
             </Link>
@@ -69,7 +69,7 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
               to="/collection"
               className="hover:text-gray-500 transition-colors"
             >
-              <Text as="span" variant="primary">
+              <Text as="span" variant="secondary">
                 Shop
               </Text>
             </Link>
@@ -77,12 +77,12 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
               to="/#gifting-promo"
               className="hover:text-gray-500 transition-colors"
             >
-              <Text as="span" variant="primary">
+              <Text as="span" variant="secondary">
                 Gifting
               </Text>
             </Link>
             <Link to="/about" className="hover:text-gray-500 transition-colors">
-              <Text as="span" variant="primary">
+              <Text as="span" variant="secondary">
                 Our Story
               </Text>
             </Link>

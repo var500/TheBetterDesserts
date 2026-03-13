@@ -5,10 +5,12 @@ export interface Product {
   name: string;
   base_price: number;
   image: string[];
+  faq: { question: string; answer: string }[];
   unitDescription: string;
   isAvailable: boolean;
   availableIn: Zone[];
   is_bestseller: boolean;
+  isNewLaunch: boolean;
   is_Active: boolean;
   maxPerUser: number;
   category: {
@@ -258,12 +260,14 @@ export interface CreateProductPayload {
   name: string;
   base_price: number;
   image_url: string[];
+  faq: FAQItem[];
   category: string; // The category_id string
   weight_grams?: number | null;
   unitDescription?: string | null;
   description?: string | null;
   is_active?: boolean;
   is_bestseller?: boolean;
+  isNewLaunch?: boolean;
   max_per_user?: number;
   availability: ProductAvailabilityInput[];
 }
@@ -277,6 +281,7 @@ export interface AdminProduct {
   name: string;
   base_price: number | string; // Decimal from Prisma sometimes serializes as string
   image: string[];
+  faq: FAQItem[];
   unitDescription: string | null;
   desctiption: string | null;
   description: string | null;
@@ -285,6 +290,7 @@ export interface AdminProduct {
   max_per_user: number;
   is_active: boolean;
   is_bestseller: boolean;
+  isNewLaunch: boolean;
   category: {
     id: string;
     title: string;
@@ -296,4 +302,9 @@ export interface AdminProduct {
     zone: "GURGAON" | "DELHI_NCR" | "PAN_INDIA";
     stock_count: number | null;
   }[];
+}
+
+export interface FAQItem {
+  question: string;
+  answer: string;
 }
