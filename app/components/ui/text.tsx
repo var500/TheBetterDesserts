@@ -8,7 +8,7 @@ const textVariants = cva(
   {
     variants: {
       variant: {
-        primary: "",
+        primary: "font-satoshi",
         secondary: "font-playfair",
       },
     },

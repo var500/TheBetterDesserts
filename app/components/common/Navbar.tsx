@@ -59,7 +59,7 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
             className="text-primary-dark h-6 w-6 cursor-pointer md:hidden"
             onClick={() => setIsMobileMenuOpen(true)}
           />
-          <div className="text-primary-dark hidden items-center gap-6 text-sm font-bold tracking-wider md:flex">
+          <div className="text-primary-dark hidden items-center gap-6 text-base font-bold tracking-wider md:flex">
             <Link to="/" className="transition-colors hover:text-gray-500">
               <Text as="span" variant="secondary">
                 Home
@@ -158,7 +158,7 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
 
       {/* Menu Drawer */}
       <div
-        className={`fixed top-0 bottom-0 left-0 z-[60] flex w-[80%] max-w-sm transform flex-col bg-[#F5F0E6] shadow-2xl transition-transform duration-300 ease-out md:hidden ${
+        className={`fixed top-0 bottom-0 left-0 z-60 flex w-[80%] max-w-sm transform flex-col bg-[#F5F0E6] shadow-2xl transition-transform duration-300 ease-out md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >

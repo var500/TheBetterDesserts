@@ -17,6 +17,7 @@ export default function ProductHeader({ name, price }: ProductHeaderProps) {
       </Text>
       <Text
         as="p"
+        variant={"primary"}
         className="text-primary-dark/90 mb-6 text-2xl font-bold tracking-wide"
       >
         ₹{price}

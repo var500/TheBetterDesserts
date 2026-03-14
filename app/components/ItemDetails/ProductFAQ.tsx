@@ -43,8 +43,7 @@ export function ProductFAQ({ faqs }: ProductFAQProps) {
               >
                 <Text
                   as="h4"
-                  variant={"primary"}
-                  className="font-playfair text-primary-dark pr-4 text-lg font-semibold tracking-wide"
+                  className="text-primary-dark pr-4 text-lg font-semibold tracking-wide"
                 >
                   {faq.question}
                 </Text>

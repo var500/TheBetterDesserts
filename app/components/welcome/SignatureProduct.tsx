@@ -16,18 +16,20 @@ export default function SignatureProduct() {
       <div className="bg-primary-dark/5 absolute top-0 right-0 z-0 h-full w-1/3 rounded-l-full"></div>
 
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center gap-16 md:flex-row lg:gap-24">
-        <div className="group relative w-full md:w-1/2">
+        <div className="group relative mx-auto w-full max-w-sm">
           <div className="bg-primary-dark absolute inset-0 translate-x-4 translate-y-4 transform rounded-2xl transition-transform duration-500 group-hover:translate-x-6 group-hover:translate-y-6"></div>
 
-          <div className="relative overflow-hidden rounded-2xl border-4 border-[#F5F0E6] bg-white shadow-xl">
+          <div className="relative aspect-square overflow-hidden rounded-2xl border-4 border-[#F5F0E6] bg-white shadow-xl">
             <img
-              src="https://better-dessert.s3.eu-north-1.amazonaws.com/products/c097b797-f590-496b-befe-8235b47f3c99.avif"
+              src="https://better-dessert.s3.eu-north-1.amazonaws.com/products/18db2412-a3d1-4762-ab07-f375c42554e8.jpg"
               alt="The Signature Caszel"
-              className="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-105"
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           </div>
 
-          <div className="border-primary-dark/5 absolute -bottom-6 hidden items-center gap-3 rounded-full border bg-white px-6 py-3 shadow-xl sm:flex md:-left-8">
+          {/* Floating Badge (Unchanged) */}
+          <div className="border-primary-dark/5 absolute -bottom-6 z-10 hidden items-center gap-3 rounded-full border bg-white px-6 py-3 shadow-xl sm:flex md:-left-8">
             <span className="text-xl text-yellow-500">★</span>
             <Text as="span" className="text-primary-dark font-bold">
               4.9/5
@@ -61,9 +63,10 @@ export default function SignatureProduct() {
             as="p"
             className="text-primary-dark/80 mb-8 max-w-md text-lg leading-relaxed font-light md:text-xl"
           >
-            A perfect symphony of roasted cashews and rich hazelnut truffle.
-            Crafted without a single grain of white sugar or maida, this is
-            indulgence redefined.
+            Caszel is our signature gourmet chocolate–nut dessert featuring a
+            nourishing base of amaranth, quinoa, and dates, layered with smooth
+            cashew butter and caramelised hazelnuts, enrobed in dark Belgian
+            chocolate.
           </Text>
 
           <div className="flex flex-wrap items-center gap-8">
@@ -97,15 +100,19 @@ export default function SignatureProduct() {
             </div>
 
             <div className="flex flex-col">
-              <Text as="span" className="text-primary-dark text-2xl font-bold">
+              <Text
+                as="span"
+                variant={"primary"}
+                className="text-primary-dark text-2xl font-bold"
+              >
                 ₹550{" "}
-                <Text as={"span"} className="font-thin">
+                <Text as={"span"} className="text-sm font-thin md:text-base">
                   +gst
                 </Text>
               </Text>
               <Text
                 as="span"
-                className="text-primary-dark/50 text-xs tracking-widest uppercase"
+                className="text-primary-dark text-xs tracking-widest uppercase"
               >
                 Pack of 3
               </Text>
