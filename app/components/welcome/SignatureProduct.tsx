@@ -54,9 +54,12 @@ export default function SignatureProduct() {
           <Text
             as="h2"
             variant={"secondary"}
-            className="text-primary-dark mb-6 text-5xl leading-[1.1] md:text-7xl"
+            className="text-primary-dark mb-6 text-5xl leading-[1.1] md:text-6xl"
           >
-            The Signature <br className="hidden md:block" /> Caszel
+            The Signature <br className="hidden md:block" />
+            <Text as={"span"} className="text-6xl uppercase md:text-7xl">
+              Caszel
+            </Text>
           </Text>
 
           <Text

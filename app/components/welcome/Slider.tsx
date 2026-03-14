@@ -70,7 +70,7 @@ export const SweetnessSlider = () => {
   ];
 
   return (
-    <section className="overflow-hidden bg-white pt-24 text-center">
+    <section className="overflow-hidden py-24 text-center">
       <Text
         as="h3"
         variant="secondary"

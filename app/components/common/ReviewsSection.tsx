@@ -12,11 +12,12 @@ export const ReviewsSection = () => (
     <div className="mx-auto max-w-7xl">
       <Text
         as="h2"
-        className="text-primary-dark mb-4 text-3xl font-black tracking-tight uppercase md:text-4xl"
+        className="text-primary-dark mb-4 text-3xl tracking-tight uppercase md:text-4xl"
       >
-        Warning: These Reviews <br className="md:hidden" />
+        Real words from people,
+        <br className="md:hidden" />
         <span className="block text-4xl normal-case italic md:ml-3 md:inline md:text-5xl">
-          May Cause Cravings
+          who have tasted better{" "}
         </span>
       </Text>
 

@@ -2,7 +2,7 @@ import { Icons } from "../icons";
 import { Text } from "../ui/text";
 
 export const FeaturesBanner = () => (
-  <section className="border-primary-dark/10 border-b bg-[#F5F0E6] px-4 py-16 md:px-8">
+  <section className="border-primary-dark/10 border-b bg-white px-4 py-16 md:px-8">
     <div className="text-primary-dark mx-auto grid max-w-7xl grid-cols-1 gap-12 text-center md:grid-cols-3 md:gap-8">
       {/* Feature 1 */}
       <div className="flex flex-col items-center">

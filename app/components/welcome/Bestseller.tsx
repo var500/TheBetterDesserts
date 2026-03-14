@@ -49,7 +49,7 @@ export default function Bestseller({
           </Text>
           <Text
             as="h3"
-            className="text-primary-dark text-4xl font-black tracking-[0.15em] uppercase md:text-5xl"
+            className="text-primary-dark text-4xl tracking-[0.15em] uppercase md:text-5xl"
           >
             Bestsellers
           </Text>

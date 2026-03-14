@@ -18,7 +18,7 @@ export function ProductFAQ({ faqs }: ProductFAQProps) {
   };
 
   return (
-    <section className="mx-auto w-full max-w-3xl px-4 py-16 md:px-8">
+    <section className="border-primary-dark/10 mx-auto w-full max-w-3xl border-t px-4 py-16 md:px-8">
       <Text
         variant={"secondary"}
         as="h3"

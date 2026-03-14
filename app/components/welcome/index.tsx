@@ -37,8 +37,8 @@ export default function App() {
         )}
         <BetterIngredients />
         <GiftingPromo />
-        <SweetnessSlider />
         <WhyChooseGifting />
+        <SweetnessSlider />
         <ProductFAQ faqs={HomeFAQs} />
         <ReviewsSection />
       </main>
