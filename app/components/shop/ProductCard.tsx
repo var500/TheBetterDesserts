@@ -24,7 +24,7 @@ export const ProductCard = memo(
         <Link
           to={`/product/${product.id}`}
           // Added 'group' class here to control child elements on hover
-          className="group relative aspect-square overflow-hidden bg-[#E8E3D9] block"
+          className="group relative block aspect-square overflow-hidden bg-[#E8E3D9]"
         >
           {/* Primary Image */}
           <img
@@ -33,7 +33,7 @@ export const ProductCard = memo(
             loading="lazy"
             decoding="async"
             // Changed to absolute positioning to layer the images
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
 
           {/* Secondary Hover Image */}
@@ -43,27 +43,27 @@ export const ProductCard = memo(
               alt={`${product.name} alternate view`}
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 w-full h-full object-cover transition-all duration-700 opacity-0 group-hover:opacity-100 group-hover:scale-105"
+              className="absolute inset-0 h-full w-full object-cover opacity-0 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
             />
           )}
         </Link>
 
-        <div className="p-4 flex flex-col flex-1 justify-between gap-4">
+        <div className="flex flex-1 flex-col justify-between gap-4 p-4">
           <div>
             <Link to={`/product/${product.id}`}>
               <Text
                 as="h3"
-                className="font-bold text-primary-dark line-clamp-2 hover:underline"
+                className="text-primary-dark line-clamp-2 font-bold hover:underline"
               >
                 {product.name}
               </Text>
             </Link>
 
             {product.unitDescription && (
-              <div className="mb-1 mt-2 w-max inline-flex items-center">
+              <div className="mt-2 mb-1 inline-flex w-max items-center">
                 <Text
                   as="span"
-                  className="text-[11px] uppercase tracking-wider font-semibold text-primary-dark/60"
+                  className="text-primary-dark/60 text-[11px] font-semibold tracking-wider uppercase"
                 >
                   {product.unitDescription}
                 </Text>
@@ -72,7 +72,7 @@ export const ProductCard = memo(
 
             <Text
               as="p"
-              className="text-sm text-primary-dark/80 mt-1 font-bold"
+              className="text-primary-dark/80 mt-1 text-sm font-bold"
             >
               ₹{product.base_price}
             </Text>

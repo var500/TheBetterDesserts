@@ -85,30 +85,30 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="max-w-7xl px-4 md:px-10 pt-4 mx-auto space-y-8 pb-10">
+    <div className="mx-auto max-w-7xl space-y-8 px-4 pt-4 pb-10 md:px-10">
       {/* Header */}
       <div>
-        <h1 className="text-3xl text-center md:text-left font-bold tracking-tight">
+        <h1 className="text-center text-3xl font-bold tracking-tight md:text-left">
           Dashboard Overview
         </h1>
-        <p className="text-gray-500 mt-1 text-center md:text-left">
+        <p className="mt-1 text-center text-gray-500 md:text-left">
           Manage and track customer orders.
         </p>
       </div>
 
       {/* Orders Table Section */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
         {/* Table Header & Filters */}
-        <div className="p-6 border-b border-gray-100 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 bg-white">
+        <div className="flex flex-col items-start justify-between gap-4 border-b border-gray-100 bg-white p-6 lg:flex-row lg:items-center">
           <h2 className="text-xl font-semibold">Recent Orders</h2>
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+          <div className="flex w-full flex-col items-center gap-3 sm:flex-row lg:w-auto">
             {/* SEARCH INPUT */}
             <input
               type="text"
               placeholder="Search ID, Name, or Phone..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="border border-gray-300 rounded-md text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-1.5 outline-none w-full sm:w-64"
+              className="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500 sm:w-64"
             />
 
             {/* DATE FILTER */}
@@ -118,7 +118,7 @@ export default function AdminDashboard() {
                 setDateFilter(e.target.value);
                 setCurrentPage(1);
               }}
-              className="border-gray-300 rounded-md text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-1.5 border outline-none cursor-pointer w-full sm:w-auto"
+              className="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-1.5 text-sm shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500 sm:w-auto"
             >
               {DATE_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -134,7 +134,7 @@ export default function AdminDashboard() {
                 setStatusFilter(e.target.value);
                 setCurrentPage(1);
               }}
-              className="border-gray-300 rounded-md text-sm shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-1.5 border outline-none cursor-pointer w-full sm:w-auto"
+              className="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-1.5 text-sm shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500 sm:w-auto"
             >
               <option value="ALL">All Statuses</option>
               {STATUS_OPTIONS.map((status) => (
@@ -147,7 +147,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto min-h-75">
+        <div className="min-h-75 overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
             <thead className="bg-gray-50 text-gray-600">
               <tr>
@@ -167,8 +167,8 @@ export default function AdminDashboard() {
                     colSpan={6}
                     className="px-6 py-12 text-center text-gray-500"
                   >
-                    <div className="animate-pulse flex flex-col items-center justify-center">
-                      <div className="h-6 w-6 border-b-2 border-blue-600 rounded-full animate-spin mb-2"></div>
+                    <div className="flex animate-pulse flex-col items-center justify-center">
+                      <div className="mb-2 h-6 w-6 animate-spin rounded-full border-b-2 border-blue-600"></div>
                       Loading orders...
                     </div>
                   </td>
@@ -177,7 +177,7 @@ export default function AdminDashboard() {
                 <tr>
                   <td
                     colSpan={6}
-                    className="px-6 py-12 text-center text-gray-500 w-full"
+                    className="w-full px-6 py-12 text-center text-gray-500"
                   >
                     No orders found matching this filter.
                   </td>
@@ -187,21 +187,21 @@ export default function AdminDashboard() {
                   <tr
                     key={order.id}
                     onClick={() => navigate(`/admin/orders/${order.id}`)}
-                    className=" hover:bg-gray-50/50 transition-colors cursor-pointer"
+                    className="cursor-pointer transition-colors hover:bg-gray-50/50"
                   >
                     <td className="px-6 py-4 font-medium text-blue-600 hover:underline">
                       #{order.id.slice(0, 8).toUpperCase()}
                     </td>
                     <td className="px-6 py-4">
                       {order.user?.fname} {order.user?.lname}
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className="mt-1 text-xs text-gray-500">
                         {order.user?.phone_number}
                       </div>
                     </td>
                     <td className="px-6 py-4">₹{order.total_amount}</td>
                     <td className="px-6 py-4">
                       <span
-                        className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                        className={`rounded-full px-2.5 py-1 text-xs font-medium ${
                           order.payment_status === "SUCCESS"
                             ? "bg-green-100 text-green-700"
                             : order.payment_status === "FAILED"
@@ -232,14 +232,14 @@ export default function AdminDashboard() {
                         }
                         onClick={(e) => e.stopPropagation()} // <-- 4. Stop click from bubbling up to the row
                         disabled={isUpdating}
-                        className={`text-xs font-bold rounded-md px-2 py-1.5 border outline-none cursor-pointer transition-colors ${
+                        className={`cursor-pointer rounded-md border px-2 py-1.5 text-xs font-bold transition-colors outline-none ${
                           order.order_status === "CANCELLED"
-                            ? "bg-red-50 text-red-700 border-red-200"
+                            ? "border-red-200 bg-red-50 text-red-700"
                             : order.order_status === "DELIVERED"
-                              ? "bg-green-50 text-green-700 border-green-200"
+                              ? "border-green-200 bg-green-50 text-green-700"
                               : order.order_status === "BAKING"
-                                ? "bg-orange-50 text-orange-700 border-orange-200"
-                                : "bg-gray-50 text-gray-700 border-gray-200 hover:border-blue-400"
+                                ? "border-orange-200 bg-orange-50 text-orange-700"
+                                : "border-gray-200 bg-gray-50 text-gray-700 hover:border-blue-400"
                         }`}
                       >
                         {STATUS_OPTIONS.map((status) => (
@@ -258,7 +258,7 @@ export default function AdminDashboard() {
 
         {/* Pagination Controls */}
         {totalPages > 1 && (
-          <div className="px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-gray-50/50">
+          <div className="flex items-center justify-between border-t border-gray-100 bg-gray-50/50 px-6 py-4">
             <span className="text-sm text-gray-500">
               Page{" "}
               <span className="font-medium text-gray-900">{currentPage}</span>{" "}
@@ -268,7 +268,7 @@ export default function AdminDashboard() {
               <button
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                 disabled={currentPage === 1 || isLoading}
-                className="px-3 py-1.5 text-sm font-medium border border-gray-200 rounded-md bg-white text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"
+                className="rounded-md border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Previous
               </button>
@@ -277,7 +277,7 @@ export default function AdminDashboard() {
                   setCurrentPage((p) => Math.min(totalPages, p + 1))
                 }
                 disabled={currentPage === totalPages || isLoading}
-                className="px-3 py-1.5 text-sm font-medium border border-gray-200 rounded-md bg-white text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"
+                className="rounded-md border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-600 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Next
               </button>

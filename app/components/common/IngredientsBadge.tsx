@@ -10,9 +10,9 @@ export default function IngredientsBadge({
       <img
         src={path}
         alt="Oats Flour"
-        className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover shadow-lg border-4 border-white"
+        className="h-28 w-28 rounded-full border-4 border-white object-cover shadow-lg md:h-36 md:w-36"
       />
-      <span className="font-bold text-lg">{label}</span>
+      <span className="text-lg font-bold">{label}</span>
     </div>
   );
 }

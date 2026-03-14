@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap");
 @import "tailwindcss";
 @import "react-toastify/dist/ReactToastify.css";
 
@@ -23,7 +23,7 @@
 
 /* 1. WebKit Browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-  @apply w-1.5 h-1.5;
+  @apply h-1.5 w-1.5;
 }
 
 ::-webkit-scrollbar-track {
@@ -42,18 +42,17 @@
 * {
   scrollbar-width: auto;
   /* You can replace these hex codes with your actual primary-dark color */
-  scrollbar-color: rgba(26, 36, 63, 0.2) #F5F0E6;
+  scrollbar-color: rgba(26, 36, 63, 0.2) #f5f0e6;
 }
 
 @theme {
   --font-mono: "Momo Signature", cursive;
   --font-frista: "Frista", ui-serif, serif;
-  --font-satoshi: "Satoshi", ui-sans-serif, system-ui, sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
-
-
 
 @config "../tailwind.config.ts";
 
@@ -67,7 +66,6 @@
   }
 
   100% {
-
     transform: translateX(calc(-50% - 0.5rem));
   }
 }
@@ -88,7 +86,7 @@
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950 text-primary-dark;
+  @apply text-primary-dark bg-white dark:bg-gray-950;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;

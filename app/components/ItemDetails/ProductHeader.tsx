@@ -11,13 +11,13 @@ export default function ProductHeader({ name, price }: ProductHeaderProps) {
     <>
       <Text
         as="h1"
-        className="text-4xl md:text-5xl lg:text-6xl font-frista text-primary-dark mb-2 uppercase"
+        className="text-primary-dark mb-2 text-4xl uppercase md:text-5xl lg:text-6xl"
       >
         {name}
       </Text>
       <Text
         as="p"
-        className="text-2xl font-bold text-primary-dark/90 mb-6 tracking-wide"
+        className="text-primary-dark/90 mb-6 text-2xl font-bold tracking-wide"
       >
         ₹{price}
       </Text>

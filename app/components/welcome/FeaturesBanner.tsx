@@ -2,21 +2,21 @@ import { Icons } from "../icons";
 import { Text } from "../ui/text";
 
 export const FeaturesBanner = () => (
-  <section className="bg-[#F5F0E6] py-16 px-4 md:px-8 border-b border-primary-dark/10">
-    <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 text-center text-primary-dark">
+  <section className="border-primary-dark/10 border-b bg-[#F5F0E6] px-4 py-16 md:px-8">
+    <div className="text-primary-dark mx-auto grid max-w-7xl grid-cols-1 gap-12 text-center md:grid-cols-3 md:gap-8">
       {/* Feature 1 */}
       <div className="flex flex-col items-center">
-        <Icons.Sparkles className="w-10 h-10 mb-5 text-primary-dark/80" />
+        <Icons.Sparkles className="text-primary-dark/80 mb-5 h-10 w-10" />
         <Text
           variant={"secondary"}
           as="h3"
-          className=" text-2xl md:text-3xl mb-3"
+          className="mb-3 text-2xl md:text-3xl"
         >
           Exquisite & Eggless
         </Text>
         <Text
           as="p"
-          className="font-satoshi text-sm md:text-base text-primary-dark/70 max-w-xs leading-relaxed"
+          className="text-primary-dark/70 max-w-xs text-sm leading-relaxed md:text-base"
         >
           Every creation is 100% eggless, crafted for all to indulge without
           limits.
@@ -25,17 +25,17 @@ export const FeaturesBanner = () => (
 
       {/* Feature 2 */}
       <div className="flex flex-col items-center">
-        <Icons.Clock className="w-10 h-10 mb-5 text-primary-dark/80" />
+        <Icons.Clock className="text-primary-dark/80 mb-5 h-10 w-10" />
         <Text
           variant={"secondary"}
           as="h3"
-          className=" text-2xl md:text-3xl mb-3"
+          className="mb-3 text-2xl md:text-3xl"
         >
           Freshly Baked
         </Text>
         <Text
           as="p"
-          className="font-satoshi text-sm md:text-base text-primary-dark/70 max-w-xs leading-relaxed"
+          className="text-primary-dark/70 max-w-xs text-sm leading-relaxed md:text-base"
         >
           Made to order in small batches—because true indulgence is always
           served fresh.
@@ -44,17 +44,17 @@ export const FeaturesBanner = () => (
 
       {/* Feature 3 */}
       <div className="flex flex-col items-center">
-        <Icons.Gift className="w-10 h-10 mb-5 text-primary-dark/80" />
+        <Icons.Gift className="text-primary-dark/80 mb-5 h-10 w-10" />
         <Text
           variant={"secondary"}
           as="h3"
-          className=" text-2xl md:text-3xl mb-3"
+          className="mb-3 text-2xl md:text-3xl"
         >
           Nationwide Gifting
         </Text>
         <Text
           as="p"
-          className="font-satoshi text-sm md:text-base text-primary-dark/70 max-w-xs leading-relaxed"
+          className="text-primary-dark/70 max-w-xs text-sm leading-relaxed md:text-base"
         >
           From our studio to every corner of India, elegantly packed and
           delivered.

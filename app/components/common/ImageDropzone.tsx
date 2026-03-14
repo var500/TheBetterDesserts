@@ -139,7 +139,7 @@ export default function ImageDropzone({
   const activeCropItem = cropQueue[0];
 
   return (
-    <div className="space-y-4 relative">
+    <div className="relative space-y-4">
       <label className="block text-sm font-medium text-gray-700">
         Product Images
       </label>
@@ -155,10 +155,10 @@ export default function ImageDropzone({
           }
           fileInputRef.current?.click();
         }}
-        className={`w-full border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
+        className={`w-full rounded-xl border-2 border-dashed p-8 text-center transition-colors ${
           isAtLimit
-            ? "border-red-200 bg-red-50/50 cursor-not-allowed"
-            : "border-gray-300 cursor-pointer hover:bg-gray-50"
+            ? "cursor-not-allowed border-red-200 bg-red-50/50"
+            : "cursor-pointer border-gray-300 hover:bg-gray-50"
         }`}
       >
         <div className={isAtLimit ? "text-red-400" : "text-gray-500"}>
@@ -167,7 +167,7 @@ export default function ImageDropzone({
               ? "Image limit reached. Remove an image to upload more."
               : "Click to upload or drag and drop"}
           </p>
-          <p className="text-xs mt-1">
+          <p className="mt-1 text-xs">
             We will help you crop them to a square • Max {maxImages} images
           </p>
         </div>
@@ -184,21 +184,21 @@ export default function ImageDropzone({
 
       {/* Image Previews */}
       {(existingImages.length > 0 || newImages.length > 0) && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4">
+        <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {existingImages.map((url) => (
             <div
               key={url}
-              className="relative group rounded-lg overflow-hidden border border-gray-200"
+              className="group relative overflow-hidden rounded-lg border border-gray-200"
             >
               <img
                 src={url}
                 alt="Existing"
-                className="w-full aspect-square object-cover"
+                className="aspect-square w-full object-cover"
               />
               <button
                 type="button"
                 onClick={() => onRemoveExisting(url)}
-                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100"
               >
                 ✕
               </button>
@@ -208,14 +208,14 @@ export default function ImageDropzone({
           {newImages.map((file, index) => (
             <div
               key={index}
-              className="relative group rounded-lg overflow-hidden border border-blue-200 shadow-[0_0_0_2px_rgba(59,130,246,0.5)]"
+              className="group relative overflow-hidden rounded-lg border border-blue-200 shadow-[0_0_0_2px_rgba(59,130,246,0.5)]"
             >
               <img
                 src={URL.createObjectURL(file)}
                 alt="New upload"
-                className="w-full aspect-square object-cover opacity-80"
+                className="aspect-square w-full object-cover opacity-80"
               />
-              <span className="absolute bottom-1 left-1 bg-blue-600 text-white text-[10px] px-1.5 py-0.5 rounded">
+              <span className="absolute bottom-1 left-1 rounded bg-blue-600 px-1.5 py-0.5 text-[10px] text-white">
                 NEW
               </span>
               <Button
@@ -223,7 +223,7 @@ export default function ImageDropzone({
                 size={"sm"}
                 type="button"
                 onClick={() => onRemoveNew(index)}
-                className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+                className="absolute top-1 right-1 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100"
               >
                 ✕
               </Button>
@@ -235,21 +235,21 @@ export default function ImageDropzone({
       {/* Cropping Modal Overlay */}
       {activeCropItem && (
         <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 p-4">
-          <div className="bg-white rounded-xl shadow-2xl w-full max-w-lg flex flex-col overflow-hidden">
-            <div className="p-4 border-b flex justify-between items-center bg-gray-50">
+          <div className="flex w-full max-w-lg flex-col overflow-hidden rounded-xl bg-white shadow-2xl">
+            <div className="flex items-center justify-between border-b bg-gray-50 p-4">
               <h3 className="font-semibold text-gray-800">
                 Crop Image{" "}
                 {cropQueue.length > 1 ? `(1 of ${cropQueue.length})` : ""}
               </h3>
               <button
                 onClick={cancelCropping}
-                className="text-gray-500 hover:text-red-500 font-bold"
+                className="font-bold text-gray-500 hover:text-red-500"
               >
                 ✕
               </button>
             </div>
 
-            <div className="relative w-full h-100 bg-gray-100">
+            <div className="relative h-100 w-full bg-gray-100">
               <Cropper
                 image={activeCropItem.previewUrl}
                 crop={crop}
@@ -261,7 +261,7 @@ export default function ImageDropzone({
               />
             </div>
 
-            <div className="p-4 bg-white border-t flex items-center justify-between gap-4">
+            <div className="flex items-center justify-between gap-4 border-t bg-white p-4">
               <input
                 type="range"
                 value={zoom}
@@ -276,7 +276,7 @@ export default function ImageDropzone({
                   variant="outline"
                   type="button"
                   size={"sm"}
-                  className="max-w-24 rounded-md bg-red-500 border-none text-white"
+                  className="max-w-24 rounded-md border-none bg-red-500 text-white"
                   onClick={cancelCropping}
                 >
                   Cancel
@@ -286,7 +286,7 @@ export default function ImageDropzone({
                   onClick={saveCroppedImage}
                   disabled={isCropping}
                   size={"sm"}
-                  className=" rounded-md  border-none text-white"
+                  className="rounded-md border-none text-white"
                 >
                   {isCropping ? "Saving..." : "Apply"}
                 </Button>

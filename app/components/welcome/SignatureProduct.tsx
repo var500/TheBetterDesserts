@@ -12,42 +12,39 @@ export default function SignatureProduct() {
   const navigate = useNavigate();
 
   return (
-    <section className="relative bg-[#F5F0E6] min-h-[80vh] py-20 flex justify-center px-4 md:px-8 overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-primary-dark/5 rounded-l-full z-0"></div>
+    <section className="relative flex min-h-[80vh] justify-center overflow-hidden bg-[#F5F0E6] px-4 py-20 md:px-8">
+      <div className="bg-primary-dark/5 absolute top-0 right-0 z-0 h-full w-1/3 rounded-l-full"></div>
 
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-16 lg:gap-24 relative z-10">
-        <div className="w-full md:w-1/2 relative group">
-          <div className="absolute inset-0 bg-primary-dark rounded-2xl transform translate-x-4 translate-y-4 transition-transform duration-500 group-hover:translate-x-6 group-hover:translate-y-6"></div>
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center gap-16 md:flex-row lg:gap-24">
+        <div className="group relative w-full md:w-1/2">
+          <div className="bg-primary-dark absolute inset-0 translate-x-4 translate-y-4 transform rounded-2xl transition-transform duration-500 group-hover:translate-x-6 group-hover:translate-y-6"></div>
 
-          <div className="relative overflow-hidden rounded-2xl shadow-xl border-4 border-[#F5F0E6] bg-white">
+          <div className="relative overflow-hidden rounded-2xl border-4 border-[#F5F0E6] bg-white shadow-xl">
             <img
               src="https://better-dessert.s3.eu-north-1.amazonaws.com/products/c097b797-f590-496b-befe-8235b47f3c99.avif"
               alt="The Signature Caszel"
-              className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
+              className="h-auto w-full object-contain transition-transform duration-700 group-hover:scale-105"
             />
           </div>
 
-          <div className="absolute -bottom-6 hidden sm:flex md:-left-8 bg-white py-3 px-6 rounded-full shadow-xl items-center gap-3 border border-primary-dark/5">
-            <span className="text-yellow-500 text-xl">★</span>
-            <Text
-              as="span"
-              className="font-satoshi font-bold text-primary-dark"
-            >
+          <div className="border-primary-dark/5 absolute -bottom-6 hidden items-center gap-3 rounded-full border bg-white px-6 py-3 shadow-xl sm:flex md:-left-8">
+            <span className="text-xl text-yellow-500">★</span>
+            <Text as="span" className="text-primary-dark font-bold">
               4.9/5
             </Text>
             <Text
               as="span"
-              className="font-satoshi text-xs text-primary-dark/50 whitespace-nowrap"
+              className="text-primary-dark/50 text-xs whitespace-nowrap"
             >
               (2k+ cravings satisfied)
             </Text>
           </div>
         </div>
 
-        <div className="w-full md:w-1/2 flex flex-col items-start text-left pt-8 md:pt-0">
+        <div className="flex w-full flex-col items-start pt-8 text-left md:w-1/2 md:pt-0">
           <Text
             as="span"
-            className="text-sm md:text-base tracking-[0.2em] uppercase text-primary-dark/60 mb-4 font-bold font-satoshi"
+            className="text-primary-dark/60 mb-4 text-sm font-bold tracking-[0.2em] uppercase md:text-base"
           >
             Chef&apos;s Creation
           </Text>
@@ -55,14 +52,14 @@ export default function SignatureProduct() {
           <Text
             as="h2"
             variant={"secondary"}
-            className="text-5xl md:text-7xl  text-primary-dark mb-6 leading-[1.1]"
+            className="text-primary-dark mb-6 text-5xl leading-[1.1] md:text-7xl"
           >
             The Signature <br className="hidden md:block" /> Caszel
           </Text>
 
           <Text
             as="p"
-            className="text-lg md:text-xl font-satoshi font-light text-primary-dark/80 mb-8 max-w-md leading-relaxed"
+            className="text-primary-dark/80 mb-8 max-w-md text-lg leading-relaxed font-light md:text-xl"
           >
             A perfect symphony of roasted cashews and rich hazelnut truffle.
             Crafted without a single grain of white sugar or maida, this is
@@ -80,7 +77,7 @@ export default function SignatureProduct() {
                 disabled={selectedCityLabel !== Locations.GURGAON}
                 onClick={() => navigate("/collection")}
                 variant="default"
-                className="group flex items-center gap-3 px-10 h-14 text-lg font-satoshi disabled:opacity-50 disabled:cursor-not-allowed"
+                className="group flex h-14 items-center gap-3 px-10 text-lg disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {selectedCityLabel === null
                   ? "Select your location"
@@ -92,23 +89,23 @@ export default function SignatureProduct() {
               </Button>
 
               {showToast && selectedCityLabel !== Locations.GURGAON && (
-                <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 bg-primary-dark text-[#F5F0E6] text-xs font-satoshi font-bold px-4 py-2 rounded-md shadow-lg z-50 whitespace-nowrap animate-fade-in-up pointer-events-none">
+                <div className="bg-primary-dark animate-fade-in-up pointer-events-none absolute -bottom-12 left-1/2 z-50 -translate-x-1/2 rounded-md px-4 py-2 text-xs font-bold whitespace-nowrap text-[#F5F0E6] shadow-lg">
                   Available for delivery or pickup only in Gurgaon
-                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-primary-dark rotate-45"></div>
+                  <div className="bg-primary-dark absolute -top-1 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45"></div>
                 </div>
               )}
             </div>
 
             <div className="flex flex-col">
-              <Text
-                as="span"
-                className="text-2xl font-bold text-primary-dark font-satoshi"
-              >
-                ₹599
+              <Text as="span" className="text-primary-dark text-2xl font-bold">
+                ₹550{" "}
+                <Text as={"span"} className="font-thin">
+                  +gst
+                </Text>
               </Text>
               <Text
                 as="span"
-                className="text-xs text-primary-dark/50 font-satoshi uppercase tracking-widest"
+                className="text-primary-dark/50 text-xs tracking-widest uppercase"
               >
                 Pack of 3
               </Text>

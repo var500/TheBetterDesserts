@@ -24,7 +24,7 @@ export default function Details() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen text-gray-500">
+      <div className="flex h-screen items-center justify-center text-gray-500">
         Loading order details...
       </div>
     );
@@ -32,7 +32,7 @@ export default function Details() {
 
   if (!order) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen text-gray-500 gap-4">
+      <div className="flex h-screen flex-col items-center justify-center gap-4 text-gray-500">
         <p>Order not found.</p>
         <Button onClick={() => navigate(-1)} variant="outline">
           Go Back
@@ -63,20 +63,20 @@ export default function Details() {
   };
 
   return (
-    <div className="max-w-7xl pt-4 mx-auto space-y-8 pb-10 px-4 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl space-y-8 px-4 pt-4 pb-10 sm:px-6 lg:px-8">
       {/* --- HEADER --- */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div>
           <button
             onClick={() => navigate(-1)}
-            className="text-sm text-gray-500 hover:text-gray-900 flex items-center gap-1 mb-2 transition"
+            className="mb-2 flex items-center gap-1 text-sm text-gray-500 transition hover:text-gray-900"
           >
-            <Icons.ArrowLeft className="w-4 h-4" /> Back to Orders
+            <Icons.ArrowLeft className="h-4 w-4" /> Back to Orders
           </button>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900 flex items-center gap-3">
+          <h1 className="flex items-center gap-3 text-3xl font-bold tracking-tight text-gray-900">
             Order #{order.id.slice(0, 8).toUpperCase()}
             <span
-              className={`text-xs px-2.5 py-1 rounded-full font-bold tracking-wide ${
+              className={`rounded-full px-2.5 py-1 text-xs font-bold tracking-wide ${
                 order.order_status === "PENDING"
                   ? "bg-yellow-100 text-yellow-800"
                   : order.order_status === "DELIVERED"
@@ -87,13 +87,13 @@ export default function Details() {
               {order.order_status}
             </span>
           </h1>
-          <p className="text-gray-500 mt-1">
+          <p className="mt-1 text-gray-500">
             Placed on {formatDate(order.created_at)}
           </p>
         </div>
 
         {/* Functional Status Dropdown */}
-        <div className="flex gap-2 items-center">
+        <div className="flex items-center gap-2">
           <label htmlFor="status" className="text-sm font-medium text-gray-700">
             Update Status:
           </label>
@@ -102,7 +102,7 @@ export default function Details() {
             value={order.order_status}
             onChange={handleStatusChange}
             disabled={isUpdating}
-            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 disabled:opacity-50"
+            className="block rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"
           >
             <option value="PENDING">Pending</option>
             <option value="PROCESSING">Processing</option>
@@ -114,9 +114,9 @@ export default function Details() {
       </div>
 
       {/* --- TOP CARDS: CUSTOMER & ORDER INFO --- */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <h3 className="text-lg font-semibold mb-4 text-gray-900 border-b pb-2">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+          <h3 className="mb-4 border-b pb-2 text-lg font-semibold text-gray-900">
             Customer Details
           </h3>
           <div className="space-y-3 text-sm text-gray-600">
@@ -137,8 +137,8 @@ export default function Details() {
               <span
                 className={
                   order.user?.wa_opt_in
-                    ? "text-green-600 ml-1"
-                    : "text-red-600 ml-1"
+                    ? "ml-1 text-green-600"
+                    : "ml-1 text-red-600"
                 }
               >
                 {order.user?.wa_opt_in ? "Yes" : "No"}
@@ -147,15 +147,15 @@ export default function Details() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <h3 className="text-lg font-semibold mb-4 text-gray-900 border-b pb-2">
+        <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+          <h3 className="mb-4 border-b pb-2 text-lg font-semibold text-gray-900">
             Delivery & Payment
           </h3>
           <div className="space-y-3 text-sm text-gray-600">
             <p>
               <strong className="text-gray-900">Payment Status:</strong>
               <span
-                className={`ml-2 px-2 py-0.5 rounded text-xs font-medium ${
+                className={`ml-2 rounded px-2 py-0.5 text-xs font-medium ${
                   order.payment_status === "PAID"
                     ? "bg-green-100 text-green-700"
                     : "bg-yellow-100 text-yellow-700"
@@ -189,25 +189,25 @@ export default function Details() {
       </div>
 
       {/* --- ITEMS TABLE --- */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="p-6 border-b border-gray-100">
+      <div className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm">
+        <div className="border-b border-gray-100 p-6">
           <h3 className="text-lg font-semibold text-gray-900">Order Items</h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
-            <thead className="bg-gray-50 text-gray-600 border-b border-gray-100">
+            <thead className="border-b border-gray-100 bg-gray-50 text-gray-600">
               <tr>
                 <th className="px-6 py-4 font-medium">Item</th>
-                <th className="px-6 py-4 font-medium text-center">Quantity</th>
-                <th className="px-6 py-4 font-medium text-right">Unit Price</th>
-                <th className="px-6 py-4 font-medium text-right">Total</th>
+                <th className="px-6 py-4 text-center font-medium">Quantity</th>
+                <th className="px-6 py-4 text-right font-medium">Unit Price</th>
+                <th className="px-6 py-4 text-right font-medium">Total</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
               {order.items?.map((item) => (
                 <tr
                   key={item.id}
-                  className="hover:bg-gray-50/50 transition-colors"
+                  className="transition-colors hover:bg-gray-50/50"
                 >
                   <td className="px-6 py-4 font-medium text-gray-900">
                     {item.product.name}
@@ -238,8 +238,8 @@ export default function Details() {
 
       {/* --- PRICING SUMMARY --- */}
       <div className="flex justify-end">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 w-full sm:w-96">
-          <h3 className="text-lg font-semibold mb-4 text-gray-900 border-b pb-2">
+        <div className="w-full rounded-xl border border-gray-100 bg-white p-6 shadow-sm sm:w-96">
+          <h3 className="mb-4 border-b pb-2 text-lg font-semibold text-gray-900">
             Summary
           </h3>
           <div className="space-y-3 text-sm">
@@ -257,7 +257,7 @@ export default function Details() {
                 <span>-{formatCurrency(order.discount_amount)}</span>
               </div>
             )}
-            <div className="flex justify-between text-lg font-bold text-gray-900 border-t pt-3 mt-3">
+            <div className="mt-3 flex justify-between border-t pt-3 text-lg font-bold text-gray-900">
               <span>Grand Total</span>
               <span>{formatCurrency(order.total_amount)}</span>
             </div>

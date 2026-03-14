@@ -12,41 +12,41 @@ export default function ImageGallery({ images, name }: ImageGalleryProps) {
   // If there are no images, show a placeholder (or return null)
   if (!images || images.length === 0) {
     return (
-      <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-100 rounded-3xl min-h-100">
+      <div className="flex min-h-100 w-full items-center justify-center rounded-3xl bg-gray-100 md:w-1/2">
         <span className="text-gray-400">No image available</span>
       </div>
     );
   }
 
   return (
-    <div className="w-full md:w-1/2 flex flex-col-reverse md:flex-row gap-4 lg:sticky lg:top-24 h-max">
+    <div className="flex h-max w-full flex-col-reverse gap-4 md:w-1/2 md:flex-row lg:sticky lg:top-24">
       {/* Side Thumbnails */}
-      <div className="flex md:flex-col gap-4 w-full md:w-20 shrink-0 overflow-x-auto md:overflow-y-auto no-scrollbar">
+      <div className="no-scrollbar flex w-full shrink-0 gap-4 overflow-x-auto md:w-20 md:flex-col md:overflow-y-auto">
         {images.map((imgUrl, index) => (
           <div
             key={index}
             onClick={() => setSelectedImage(imgUrl)}
-            className={`aspect-square bg-white rounded-xl overflow-hidden cursor-pointer p-1 transition-all ${
+            className={`aspect-square cursor-pointer overflow-hidden rounded-xl bg-white p-1 transition-all ${
               selectedImage === imgUrl
-                ? "border-2 border-primary-dark"
-                : "border-2 border-transparent hover:border-primary-dark/50"
+                ? "border-primary-dark border-2"
+                : "hover:border-primary-dark/50 border-2 border-transparent"
             }`}
           >
             <img
               src={imgUrl}
               alt={`${name} thumbnail ${index + 1}`}
-              className="w-full h-full object-cover rounded-lg"
+              className="h-full w-full rounded-lg object-cover"
             />
           </div>
         ))}
       </div>
 
       {/* Main Image View */}
-      <div className="flex-1 w-full aspect-square md:aspect-3/4 lg:aspect-4/5 max-h-125 lg:max-h-162.5 bg-white rounded-3xl overflow-hidden border border-primary-dark/5 shadow-sm">
+      <div className="border-primary-dark/5 aspect-square max-h-125 w-full flex-1 overflow-hidden rounded-3xl border bg-white shadow-sm lg:max-h-162.5">
         <img
           src={selectedImage}
           alt={name}
-          className="w-full h-full object-cover"
+          className="h-full w-full object-cover"
         />
       </div>
     </div>

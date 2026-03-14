@@ -79,7 +79,7 @@ export default function AdminCoupons() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <Text as="p" className="text-xl font-bold text-gray-500">
           Loading coupons...
         </Text>
@@ -88,20 +88,20 @@ export default function AdminCoupons() {
   }
 
   return (
-    <div className="p-8 max-w-7xl mx-auto space-y-8 font-sans">
+    <div className="mx-auto max-w-7xl space-y-8 p-8 font-sans">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
             Manage Coupons
           </h1>
-          <p className="text-gray-500 mt-1">
+          <p className="mt-1 text-gray-500">
             Create and toggle promotional codes for your customers.
           </p>
         </div>
         <Button
           onClick={() => setShowForm(!showForm)}
-          className={`px-6 py-2 rounded-lg font-bold transition-colors ${
+          className={`rounded-lg px-6 py-2 font-bold transition-colors ${
             showForm
               ? "bg-red-50 text-red-600 hover:bg-red-100"
               : "bg-blue-600 text-white hover:bg-blue-700"
@@ -115,16 +115,16 @@ export default function AdminCoupons() {
       {showForm && (
         <form
           onSubmit={handleCreateSubmit}
-          className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100 grid grid-cols-1 md:grid-cols-3 gap-6 animate-in fade-in slide-in-from-top-4"
+          className="animate-in fade-in slide-in-from-top-4 grid grid-cols-1 gap-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm md:grid-cols-3 md:p-8"
         >
-          <div className="col-span-1 md:col-span-3 pb-2 border-b border-gray-100">
+          <div className="col-span-1 border-b border-gray-100 pb-2 md:col-span-3">
             <h2 className="text-lg font-bold text-gray-900">
               Create a New Offer
             </h2>
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-bold text-gray-700">
               Coupon Code *
             </label>
             <input
@@ -135,12 +135,12 @@ export default function AdminCoupons() {
                 setFormData({ ...formData, code: e.target.value.toUpperCase() })
               }
               placeholder="e.g. SUMMER20"
-              className="w-full p-2.5 border border-gray-300 rounded-xl outline-none focus:border-blue-500 uppercase"
+              className="w-full rounded-xl border border-gray-300 p-2.5 uppercase outline-none focus:border-blue-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-bold text-gray-700">
               Discount % *
             </label>
             <input
@@ -156,12 +156,12 @@ export default function AdminCoupons() {
                 })
               }
               placeholder="20"
-              className="w-full p-2.5 border border-gray-300 rounded-xl outline-none focus:border-blue-500"
+              className="w-full rounded-xl border border-gray-300 p-2.5 outline-none focus:border-blue-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-bold text-gray-700">
               Max Discount Amount (₹)
             </label>
             <input
@@ -174,12 +174,12 @@ export default function AdminCoupons() {
                 })
               }
               placeholder="e.g. 500 (Optional)"
-              className="w-full p-2.5 border border-gray-300 rounded-xl outline-none focus:border-blue-500"
+              className="w-full rounded-xl border border-gray-300 p-2.5 outline-none focus:border-blue-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-bold text-gray-700">
               Min Order Value (₹)
             </label>
             <input
@@ -189,12 +189,12 @@ export default function AdminCoupons() {
                 setFormData({ ...formData, min_order_value: e.target.value })
               }
               placeholder="e.g. 1000 (Optional)"
-              className="w-full p-2.5 border border-gray-300 rounded-xl outline-none focus:border-blue-500"
+              className="w-full rounded-xl border border-gray-300 p-2.5 outline-none focus:border-blue-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-bold text-gray-700">
               Total Usage Limit
             </label>
             <input
@@ -204,12 +204,12 @@ export default function AdminCoupons() {
                 setFormData({ ...formData, usage_limit: e.target.value })
               }
               placeholder="e.g. 100 uses (Optional)"
-              className="w-full p-2.5 border border-gray-300 rounded-xl outline-none focus:border-blue-500"
+              className="w-full rounded-xl border border-gray-300 p-2.5 outline-none focus:border-blue-500"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-bold text-gray-700">
               Valid Until
             </label>
             <input
@@ -218,15 +218,15 @@ export default function AdminCoupons() {
               onChange={(e) =>
                 setFormData({ ...formData, valid_until: e.target.value })
               }
-              className="w-full p-2.5 border border-gray-300 rounded-xl outline-none focus:border-blue-500"
+              className="w-full rounded-xl border border-gray-300 p-2.5 outline-none focus:border-blue-500"
             />
           </div>
 
-          <div className="col-span-1 md:col-span-3 flex justify-end pt-4 mt-2 border-t border-gray-100">
+          <div className="col-span-1 mt-2 flex justify-end border-t border-gray-100 pt-4 md:col-span-3">
             <Button
               type="submit"
               disabled={isCreating}
-              className="px-8 py-2.5 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 disabled:opacity-50"
+              className="rounded-xl bg-gray-900 px-8 py-2.5 font-bold text-white hover:bg-gray-800 disabled:opacity-50"
             >
               {isCreating ? "Generating..." : "Save Coupon"}
             </Button>
@@ -235,17 +235,17 @@ export default function AdminCoupons() {
       )}
 
       {/* Data Table Section */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
-            <thead className="bg-gray-50 text-gray-600 border-b border-gray-100">
+            <thead className="border-b border-gray-100 bg-gray-50 text-gray-600">
               <tr>
                 <th className="px-6 py-4 font-bold">Code</th>
                 <th className="px-6 py-4 font-bold">Offer Details</th>
                 <th className="px-6 py-4 font-bold">Usage</th>
                 <th className="px-6 py-4 font-bold">Expires</th>
                 <th className="px-6 py-4 font-bold">Status</th>
-                <th className="px-6 py-4 font-bold text-right">Actions</th>
+                <th className="px-6 py-4 text-right font-bold">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -263,7 +263,7 @@ export default function AdminCoupons() {
                 coupons.map((coupon) => (
                   <tr
                     key={coupon.id}
-                    className={`hover:bg-gray-50/50 transition-colors ${!coupon.is_active ? "opacity-60 bg-gray-50" : ""}`}
+                    className={`transition-colors hover:bg-gray-50/50 ${!coupon.is_active ? "bg-gray-50 opacity-60" : ""}`}
                   >
                     <td className="px-6 py-4 font-black tracking-widest text-gray-900">
                       {coupon.code}
@@ -272,7 +272,7 @@ export default function AdminCoupons() {
                       <div className="font-bold text-green-700">
                         {coupon.discount_percentage}% OFF
                       </div>
-                      <div className="text-xs text-gray-500 mt-0.5 flex gap-2">
+                      <div className="mt-0.5 flex gap-2 text-xs text-gray-500">
                         {coupon.max_discount_amount && (
                           <span>Up to ₹{coupon.max_discount_amount}</span>
                         )}
@@ -297,10 +297,10 @@ export default function AdminCoupons() {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`px-3 py-1 rounded-full text-xs font-bold ${
+                        className={`rounded-full px-3 py-1 text-xs font-bold ${
                           coupon.is_active
-                            ? "bg-green-100 text-green-800 border border-green-200"
-                            : "bg-gray-100 text-gray-600 border border-gray-200"
+                            ? "border border-green-200 bg-green-100 text-green-800"
+                            : "border border-gray-200 bg-gray-100 text-gray-600"
                         }`}
                       >
                         {coupon.is_active ? "ACTIVE" : "INACTIVE"}
@@ -312,7 +312,7 @@ export default function AdminCoupons() {
                           handleToggle(coupon.id, coupon.is_active)
                         }
                         disabled={isToggling}
-                        className={`text-sm font-bold px-3 py-1.5 rounded-lg transition-colors ${
+                        className={`rounded-lg px-3 py-1.5 text-sm font-bold transition-colors ${
                           coupon.is_active
                             ? "text-red-600 hover:bg-red-50"
                             : "text-blue-600 hover:bg-blue-50"

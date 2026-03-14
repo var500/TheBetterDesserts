@@ -72,27 +72,27 @@ export const BirthdayModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-md bg-black/20">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[90%] overflow-hidden relative animate-fade-in-up border border-primary-dark/10">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 p-4 backdrop-blur-md">
+      <div className="animate-fade-in-up border-primary-dark/10 relative max-h-[90%] w-full max-w-md overflow-hidden rounded-2xl border bg-white shadow-2xl">
         <button
           onClick={onClose}
-          className="cursor-pointer absolute top-4 right-4 text-primary-dark/40 hover:text-primary-dark transition-colors"
+          className="text-primary-dark/40 hover:text-primary-dark absolute top-4 right-4 cursor-pointer transition-colors"
         >
           <Icons.X size={24} />
         </button>
 
         <div className="p-8">
-          <div className="text-center mb-8">
-            <span className="text-4xl block mb-4">🎁</span>
+          <div className="mb-8 text-center">
+            <span className="mb-4 block text-4xl">🎁</span>
             <Text
               as="h2"
-              className="text-3xl font-frista text-primary-dark leading-tight mb-3"
+              className="text-primary-dark mb-3 text-3xl leading-tight"
             >
               Make Your Birthday Month Even Better!
             </Text>
             <Text
               as="p"
-              className="text-primary-dark/70 font-satoshi text-sm md:text-base font-light"
+              className="text-primary-dark/70 text-sm font-light md:text-base"
             >
               Share your birthday to receive an exclusive discount code valid
               for your entire birthday month.
@@ -106,7 +106,7 @@ export const BirthdayModal = ({
                 <div className="space-y-2">
                   <Text
                     as="span"
-                    className="block text-xs font-bold uppercase tracking-wider text-primary-dark/60 font-satoshi"
+                    className="text-primary-dark/60 block text-xs font-bold tracking-wider uppercase"
                   >
                     Email Address
                   </Text>
@@ -114,7 +114,7 @@ export const BirthdayModal = ({
                     type="email"
                     required
                     placeholder="sweets@mail.com"
-                    className="w-full px-4 py-3 bg-white/50 border border-primary-dark/10 rounded-xl focus:ring-2 focus:ring-primary-dark outline-none font-satoshi"
+                    className="border-primary-dark/10 focus:ring-primary-dark w-full rounded-xl border bg-white/50 px-4 py-3 outline-none focus:ring-2"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -125,27 +125,27 @@ export const BirthdayModal = ({
               <div className="space-y-2">
                 <Text
                   as="span"
-                  className="block text-xs font-bold uppercase tracking-wider text-primary-dark/60 font-satoshi"
+                  className="text-primary-dark/60 block text-xs font-bold tracking-wider uppercase"
                 >
                   Date of Birth
                 </Text>
-                <div className="relative w-full sm:w-auto flex-1">
+                <div className="relative w-full flex-1 sm:w-auto">
                   <input
                     type="date"
                     required
                     max={today}
-                    className="w-full px-4 py-3 bg-white/50 border border-primary-dark/10 rounded-xl focus:ring-2 focus:ring-primary-dark outline-none font-satoshi text-primary-dark"
+                    className="border-primary-dark/10 focus:ring-primary-dark text-primary-dark w-full rounded-xl border bg-white/50 px-4 py-3 outline-none focus:ring-2"
                     value={dob}
                     onChange={(e) => setDob(e.target.value)}
                   />
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-primary-dark/50">
-                    <Icons.Calendar className="w-5 h-5" />
+                  <div className="text-primary-dark/50 pointer-events-none absolute top-1/2 right-4 -translate-y-1/2">
+                    <Icons.Calendar className="h-5 w-5" />
                   </div>
                 </div>
               </div>
 
               {updateProfileMutation.isError && (
-                <p className="text-red-500 text-sm text-center">
+                <p className="text-center text-sm text-red-500">
                   Failed to save. Please try again.
                 </p>
               )}
@@ -153,17 +153,17 @@ export const BirthdayModal = ({
               <Button
                 type="submit"
                 disabled={updateProfileMutation.isPending}
-                className="w-full h-12 text-lg font-satoshi font-medium"
+                className="h-12 w-full text-lg font-medium"
               >
                 {updateProfileMutation.isPending
                   ? "Saving..."
                   : "Get My Birthday Treat"}
               </Button>
 
-              <div className="bg-primary-dark/5 p-4 rounded-xl border border-primary-dark/5">
+              <div className="bg-primary-dark/5 border-primary-dark/5 rounded-xl border p-4">
                 <Text
                   as="p"
-                  className="text-[10px] text-primary-dark/50 leading-relaxed text-center font-satoshi"
+                  className="text-primary-dark/50 text-center text-[10px] leading-relaxed"
                 >
                   *To ensure fairness, dates of birth cannot be changed once
                   submitted.
@@ -172,14 +172,11 @@ export const BirthdayModal = ({
             </form>
           ) : (
             // Success Message[cite: 7]
-            <div className="text-center py-10 animate-fade-in flex flex-col items-center">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                <Icons.Check className="w-10 h-10 text-green-600" />
+            <div className="animate-fade-in flex flex-col items-center py-10 text-center">
+              <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
+                <Icons.Check className="h-10 w-10 text-green-600" />
               </div>
-              <Text
-                as="h3"
-                className="text-2xl font-frista text-primary-dark mb-2"
-              >
+              <Text as="h3" className="text-primary-dark mb-2 text-2xl">
                 You&apos;re on the list!
               </Text>
             </div>

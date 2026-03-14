@@ -36,46 +36,46 @@ export const CartSidebar = () => {
     <div className="fixed inset-0 z-100 flex justify-end">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-primary-dark/40 backdrop-blur-sm"
+        className="bg-primary-dark/40 absolute inset-0 backdrop-blur-sm"
         onClick={onClose}
       />
 
       {/* Sidebar Drawer */}
-      <div className="relative w-full max-w-md bg-[#F5F0E6] h-full flex flex-col shadow-2xl animate-in slide-in-from-right duration-300">
+      <div className="animate-in slide-in-from-right relative flex h-full w-full max-w-md flex-col bg-[#F5F0E6] shadow-2xl duration-300">
         {/* Header */}
-        <div className="p-6 border-b border-primary-dark/10 flex items-center justify-between bg-white">
+        <div className="border-primary-dark/10 flex items-center justify-between border-b bg-white p-6">
           <Text
             as="h2"
             variant="primary"
-            className="text-lg font-bold flex items-center gap-2 text-primary-dark tracking-widest uppercase"
+            className="text-primary-dark flex items-center gap-2 text-lg font-bold tracking-widest uppercase"
           >
             Your Bag
-            <span className="text-gray-400 text-sm font-normal">
+            <span className="text-sm font-normal text-gray-400">
               ({cart.length})
             </span>
           </Text>
           <Icons.X
-            className="w-6 h-6 text-primary-dark cursor-pointer hover:text-gray-500 transition-colors"
+            className="text-primary-dark h-6 w-6 cursor-pointer transition-colors hover:text-gray-500"
             onClick={onClose}
           />
         </div>
 
         {/* Cart Items Area */}
-        <div className="flex-1 overflow-y-auto p-6 bg-white">
+        <div className="flex-1 overflow-y-auto bg-white p-6">
           {cart.length === 0 ? (
             // Empty State
-            <div className="h-full flex flex-col items-center justify-center text-gray-400 space-y-6 pt-20">
-              <Icons.ShoppingBag className="w-16 h-16 opacity-20 text-primary-dark" />
+            <div className="flex h-full flex-col items-center justify-center space-y-6 pt-20 text-gray-400">
+              <Icons.ShoppingBag className="text-primary-dark h-16 w-16 opacity-20" />
               <Text
                 as="p"
                 variant="secondary"
-                className="text-2xl text-primary-dark"
+                className="text-primary-dark text-2xl"
               >
                 Your bag is empty
               </Text>
               <button
                 onClick={handleShopNow}
-                className="text-primary-dark text-xs uppercase tracking-widest font-bold border-b border-primary-dark pb-1 hover:text-gray-500 hover:border-gray-500 transition-colors cursor-pointer"
+                className="text-primary-dark border-primary-dark cursor-pointer border-b pb-1 text-xs font-bold tracking-widest uppercase transition-colors hover:border-gray-500 hover:text-gray-500"
               >
                 <Text as="span" variant="primary">
                   Start Shopping
@@ -86,26 +86,26 @@ export const CartSidebar = () => {
             // Filled State
             <div className="space-y-6">
               {cart.map((item: CartItem) => (
-                <div key={item.id} className="flex gap-4 group">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden border border-gray-100 shrink-0">
+                <div key={item.id} className="group flex gap-4">
+                  <div className="h-24 w-24 shrink-0 overflow-hidden rounded-lg border border-gray-100">
                     <img
                       src={item.image[0]}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       alt={item.name}
                     />
                   </div>
 
-                  <div className="flex-1 flex flex-col justify-center">
-                    <div className="flex justify-between items-start mb-1">
+                  <div className="flex flex-1 flex-col justify-center">
+                    <div className="mb-1 flex items-start justify-between">
                       <Text
                         as="h4"
                         variant="primary"
-                        className="text-sm font-bold text-primary-dark pr-4"
+                        className="text-primary-dark pr-4 text-sm font-bold"
                       >
                         {item.name}
                       </Text>
                       <Icons.Trash2
-                        className="w-4 h-4 text-gray-300 cursor-pointer hover:text-red-500 transition-colors shrink-0 mt-0.5"
+                        className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-gray-300 transition-colors hover:text-red-500"
                         onClick={() => removeFromCart(item.id)} // Now uses global action
                       />
                     </div>
@@ -113,28 +113,28 @@ export const CartSidebar = () => {
                     <Text
                       as="p"
                       variant="primary"
-                      className="text-primary-dark/70 text-sm mb-4"
+                      className="text-primary-dark/70 mb-4 text-sm"
                     >
                       Rs. {item.base_price.toLocaleString()}
                     </Text>
 
-                    <div className="flex items-center border border-primary-dark/20 rounded-full w-max overflow-hidden">
+                    <div className="border-primary-dark/20 flex w-max items-center overflow-hidden rounded-full border">
                       <button
-                        className="px-3 py-1 text-primary-dark hover:bg-[#F5F0E6] transition-colors"
+                        className="text-primary-dark px-3 py-1 transition-colors hover:bg-[#F5F0E6]"
                         onClick={() => updateQuantity(item.id, -1)}
                       >
-                        <Icons.Minus className="w-3 h-3" />
+                        <Icons.Minus className="h-3 w-3" />
                       </button>
                       <Text
                         as="span"
                         variant="primary"
-                        className="px-2 py-1 text-xs font-bold text-primary-dark w-6 text-center"
+                        className="text-primary-dark w-6 px-2 py-1 text-center text-xs font-bold"
                       >
                         {item.quantity}
                       </Text>
 
                       <button
-                        className="px-3 py-1 text-primary-dark hover:bg-[#F5F0E6] transition-colors disabled:opacity-30 disabled:hover:bg-transparent disabled:cursor-not-allowed"
+                        className="text-primary-dark px-3 py-1 transition-colors hover:bg-[#F5F0E6] disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent"
                         onClick={() => updateQuantity(item.id, 1)}
                         disabled={item.quantity >= (item.maxPerUser ?? 5)}
                         title={
@@ -143,7 +143,7 @@ export const CartSidebar = () => {
                             : undefined
                         }
                       >
-                        <Icons.Plus className="w-3 h-3" />
+                        <Icons.Plus className="h-3 w-3" />
                       </button>
                     </div>
                   </div>
@@ -155,8 +155,8 @@ export const CartSidebar = () => {
 
         {/* Footer / Checkout Section */}
         {cart.length > 0 && (
-          <div className="p-6 border-t border-primary-dark/10 bg-[#F5F0E6]">
-            <div className="flex justify-between mb-4 font-bold text-lg text-primary-dark">
+          <div className="border-primary-dark/10 border-t bg-[#F5F0E6] p-6">
+            <div className="text-primary-dark mb-4 flex justify-between text-lg font-bold">
               <Text as="span" variant="primary">
                 Total
               </Text>
@@ -168,7 +168,7 @@ export const CartSidebar = () => {
             <Text
               as="p"
               variant="primary"
-              className="text-[10px] text-primary-dark/60 mb-6 uppercase tracking-wider text-center"
+              className="text-primary-dark/60 mb-6 text-center text-[10px] tracking-wider uppercase"
             >
               Shipping & taxes calculated at checkout
             </Text>
@@ -181,7 +181,7 @@ export const CartSidebar = () => {
               >
                 Checkout
               </Text>
-              <Icons.ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              <Icons.ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
           </div>
         )}

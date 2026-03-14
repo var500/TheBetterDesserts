@@ -53,7 +53,7 @@ const InstagramIframe = ({
     <iframe
       src={iframeSrc}
       loading="lazy"
-      className="w-full h-full border-none outline-none bg-white"
+      className="h-full w-full border-none bg-white outline-none"
       scrolling="no"
       allow="encrypted-media"
       title={`Instagram Reel ${id}`}
@@ -70,23 +70,23 @@ export const SweetnessSlider = () => {
   ];
 
   return (
-    <section className="pt-24 bg-white overflow-hidden text-center">
+    <section className="overflow-hidden bg-white pt-24 text-center">
       <Text
         as="h3"
         variant="secondary"
-        className="text-[#1A243F] italic text-3xl md:text-5xl mb-2"
+        className="mb-2 text-3xl text-[#1A243F] italic md:text-5xl"
       >
         Watch the
       </Text>
       <Text
         as="h3"
         variant="secondary"
-        className="text-[#1A243F] font-black text-2xl md:text-5xl tracking-widest uppercase mb-12"
+        className="mb-12 text-2xl font-black tracking-widest text-[#1A243F] uppercase md:text-5xl"
       >
         Sweetness Unfold!
       </Text>
 
-      <div className="px-4 w-full mx-auto">
+      <div className="mx-auto w-full px-4">
         <Swiper
           modules={[Navigation, Pagination]}
           spaceBetween={20}
@@ -111,19 +111,19 @@ export const SweetnessSlider = () => {
             <SwiperSlide key={item.uid}>
               {({ isActive }) => (
                 <div
-                  className={`relative rounded-2xl overflow-hidden shadow-sm border border-gray-100 bg-white transition-all duration-500 ease-out aspect-9/16 w-full ${
+                  className={`relative aspect-9/16 w-full overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-500 ease-out ${
                     isActive
                       ? "scale-100 opacity-100"
                       : "scale-[0.85] opacity-50"
                   }`}
                 >
-                  <div className="absolute top-0 left-0 right-0 h-[15%] z-10 pointer-events-auto" />
-                  <div className="absolute bottom-0 left-0 right-0 h-[15%] z-10 pointer-events-auto" />
+                  <div className="pointer-events-auto absolute top-0 right-0 left-0 z-10 h-[15%]" />
+                  <div className="pointer-events-auto absolute right-0 bottom-0 left-0 z-10 h-[15%]" />
                   {!isActive && (
-                    <div className="absolute inset-0 z-20 pointer-events-auto" />
+                    <div className="pointer-events-auto absolute inset-0 z-20" />
                   )}
 
-                  <div className="w-full h-full">
+                  <div className="h-full w-full">
                     <InstagramIframe id={item.id} isActive={isActive} />
                   </div>
                 </div>

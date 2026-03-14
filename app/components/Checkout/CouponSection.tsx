@@ -23,13 +23,13 @@ export default function CouponSection({
   handleRemoveCoupon,
 }: CouponSectionProps) {
   return (
-    <section className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-primary-dark/5 mb-8">
-      <Text as="h2" className="text-xl font-bold text-primary-dark mb-4">
+    <section className="border-primary-dark/5 mb-8 rounded-3xl border bg-white p-6 shadow-sm md:p-8">
+      <Text as="h2" className="text-primary-dark mb-4 text-xl font-bold">
         Have a Coupon?
       </Text>
       <form
         onSubmit={handleApplyCoupon}
-        className="flex gap-3 flex-col md:flex-wor"
+        className="md:flex-wor flex flex-col gap-3"
       >
         <input
           placeholder="Enter code (e.g., SWEET10)"
@@ -37,7 +37,7 @@ export default function CouponSection({
           onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
           disabled={appliedDiscountPercent > 0}
           className={cn(
-            `flex-1 p-3 border border-gray-200 rounded-xl outline-none focus:border-primary-dark uppercase`,
+            `focus:border-primary-dark flex-1 rounded-xl border border-gray-200 p-3 uppercase outline-none`,
             appliedDiscountPercent ? "opacity-50" : "",
           )}
         />
@@ -45,7 +45,7 @@ export default function CouponSection({
           <Button
             type="button"
             variant="outline"
-            className="rounded-xl hover:text-primary-dark border-red-200 text-red-500 hover:bg-red-50 hover:border-red-300"
+            className="hover:text-primary-dark rounded-xl border-red-200 text-red-500 hover:border-red-300 hover:bg-red-50"
             onClick={handleRemoveCoupon}
           >
             Remove
@@ -64,7 +64,7 @@ export default function CouponSection({
       {couponMessage && (
         <Text
           as="p"
-          className={`text-sm mt-3 font-medium ${appliedDiscountPercent > 0 ? "text-green-600" : "text-red-500"}`}
+          className={`mt-3 text-sm font-medium ${appliedDiscountPercent > 0 ? "text-green-600" : "text-red-500"}`}
         >
           {couponMessage}
         </Text>

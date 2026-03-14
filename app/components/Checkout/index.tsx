@@ -208,11 +208,11 @@ export default function Checkout() {
 
   if (isValidatingCart) {
     return (
-      <div className="min-h-screen bg-[#F5F0E6] flex flex-col items-center justify-center px-4">
-        <Icons.Refresh className="w-12 h-12 animate-spin text-primary-dark mb-4" />
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#F5F0E6] px-4">
+        <Icons.Refresh className="text-primary-dark mb-4 h-12 w-12 animate-spin" />
         <Text
           as="h2"
-          className="text-xl font-bold text-primary-dark tracking-widest uppercase"
+          className="text-primary-dark text-xl font-bold tracking-widest uppercase"
         >
           Just a moment...
         </Text>
@@ -222,17 +222,17 @@ export default function Checkout() {
 
   if (cart.length === 0) {
     return (
-      <div className="min-h-screen bg-[#F5F0E6] flex flex-col items-center justify-center px-4">
-        <Icons.ShoppingBag className="w-24 h-24 text-primary-dark/20 mb-6" />
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#F5F0E6] px-4">
+        <Icons.ShoppingBag className="text-primary-dark/20 mb-6 h-24 w-24" />
         <Text
           as="h2"
-          className="text-4xl md:text-5xl font-frista text-primary-dark mb-4 text-center"
+          className="text-primary-dark mb-4 text-center text-4xl md:text-5xl"
         >
           Oops! Your cart is completely crumb-free.
         </Text>
         <Text
           as="p"
-          className="text-lg text-primary-dark/70 text-center max-w-md mb-8"
+          className="text-primary-dark/70 mb-8 max-w-md text-center text-lg"
         >
           A balanced diet is a brookie in each hand. Let&apos;s go find some
           sweet treats to fill this up!
@@ -240,7 +240,7 @@ export default function Checkout() {
         <Button
           variant="default"
           size="lg"
-          className="rounded-full px-12 font-bold tracking-wider hover:-translate-y-1 transition-transform"
+          className="rounded-full px-12 font-bold tracking-wider transition-transform hover:-translate-y-1"
           onClick={() => navigate("/collection")}
         >
           Explore the Menu
@@ -251,12 +251,12 @@ export default function Checkout() {
 
   // Main Render
   return (
-    <div className="min-h-screen bg-[#F5F0E6] pt-12 pb-24 px-4 md:px-8">
-      <div className="max-w-6xl mx-auto flex flex-col-reverse md:flex-col lg:flex-row gap-0 md:gap-12">
+    <div className="min-h-screen bg-[#F5F0E6] px-4 pt-12 pb-24 md:px-8">
+      <div className="mx-auto flex max-w-6xl flex-col-reverse gap-0 md:flex-col md:gap-12 lg:flex-row">
         <div className="flex-1">
           <Text
             as="h1"
-            className="text-4xl md:text-5xl font-frista text-primary-dark border-b border-primary-dark/10 pb-4 mb-8"
+            className="text-primary-dark border-primary-dark/10 mb-8 border-b pb-4 text-4xl md:text-5xl"
           >
             Checkout
           </Text>
@@ -265,7 +265,7 @@ export default function Checkout() {
           {step === "OTP_VERIFICATION" && <OtpVerificationStep />}
 
           {step === "DELIVERY_AND_PAYMENT" && (
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-8">
+            <div className="animate-in fade-in slide-in-from-bottom-4 space-y-8 duration-500">
               <DeliveryMethodSelector
                 selectedCityId={selectedCityId}
                 deliveryMethod={deliveryMethod}
@@ -282,8 +282,8 @@ export default function Checkout() {
                     />
                   )}
                   {selectedAddr && !isAddressDeliverable && (
-                    <div className="p-4 bg-red-50 border border-red-200 rounded-2xl animate-in fade-in">
-                      <Text as="p" className="text-red-500 font-bold text-sm">
+                    <div className="animate-in fade-in rounded-2xl border border-red-200 bg-red-50 p-4">
+                      <Text as="p" className="text-sm font-bold text-red-500">
                         Sorry, one or more items in your cart cannot be
                         delivered to {selectedAddr.pin_code}. Please select a
                         different address.

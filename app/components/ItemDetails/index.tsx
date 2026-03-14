@@ -136,10 +136,10 @@ export default function Itemdetails({ product }: { product: Product }) {
 
   // --- Render ---
   return (
-    <main className="flex-1 max-w-7xl mx-auto w-full px-4 md:px-8 py-8 md:py-12">
-      <div className="flex flex-col md:flex-row gap-12 lg:gap-20">
+    <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 md:px-8 md:py-12">
+      <div className="flex flex-col gap-12 md:flex-row lg:gap-20">
         <ImageGallery images={product.image} name={product.name} />
-        <div className="w-full md:w-1/2 flex flex-col lg:sticky lg:top-24 h-max">
+        <div className="flex h-max w-full flex-col md:w-1/2 lg:sticky lg:top-24">
           <ProductHeader name={product.name} price={product.base_price} />
 
           <DeliveryAvailability

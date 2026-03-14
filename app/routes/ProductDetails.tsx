@@ -1,6 +1,5 @@
 import { useParams, useNavigate } from "react-router";
 
-import { FeaturesBanner } from "../components/welcome/FeaturesBanner";
 import { YouMayAlsoLike } from "~/components/common/ProductSuggestion";
 
 import { Icons } from "~/components/icons";
@@ -21,11 +20,8 @@ export default function ProductDetails() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F5F0E6] flex items-center justify-center">
-        <Text
-          as="h2"
-          className="text-2xl font-frista text-primary-dark animate-pulse"
-        >
+      <div className="flex min-h-screen items-center justify-center bg-[#F5F0E6]">
+        <Text as="h2" className="text-primary-dark animate-pulse text-2xl">
           Fetching delicious details...
         </Text>
       </div>
@@ -35,15 +31,12 @@ export default function ProductDetails() {
   // 2. 404 NOT FOUND STATE
   if (isError || !product) {
     return (
-      <div className="min-h-screen bg-[#F5F0E6] flex flex-col items-center justify-center px-4 text-center">
-        <Icons.Cookie className="w-24 h-24 text-primary-dark/20 mb-6" />
-        <Text
-          as="h2"
-          className="text-4xl md:text-5xl font-frista text-primary-dark mb-4"
-        >
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[#F5F0E6] px-4 text-center">
+        <Icons.Cookie className="text-primary-dark/20 mb-6 h-24 w-24" />
+        <Text as="h2" className="text-primary-dark mb-4 text-4xl md:text-5xl">
           Oops! That treat crumbled.
         </Text>
-        <Text as="p" className="text-lg text-primary-dark/70 max-w-md mb-8">
+        <Text as="p" className="text-primary-dark/70 mb-8 max-w-md text-lg">
           We couldn&apos;t find the dessert you&apos;re looking for.
         </Text>
         <Button
@@ -61,9 +54,8 @@ export default function ProductDetails() {
   // 3. SUCCESS STATE (Clean and Modular)
   return (
     <Layout>
-      <div className="min-h-screen bg-[#F5F0E6] flex flex-col">
+      <div className="flex min-h-screen flex-col bg-[#F5F0E6]">
         <Itemdetails product={product} />
-        <FeaturesBanner />
         <ProductFAQ faqs={product.faq} />
         <YouMayAlsoLike />
         <BetterIngredients />

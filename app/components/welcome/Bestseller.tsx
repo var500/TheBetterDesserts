@@ -18,11 +18,8 @@ export default function Bestseller({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F5F0E6] flex items-center justify-center">
-        <Text
-          as="h2"
-          className="text-2xl font-frista text-primary-dark animate-pulse"
-        >
+      <div className="flex min-h-screen items-center justify-center bg-[#F5F0E6]">
+        <Text as="h2" className="text-primary-dark animate-pulse text-2xl">
           Baking fresh menu...
         </Text>
       </div>
@@ -31,8 +28,8 @@ export default function Bestseller({
 
   if (isError) {
     return (
-      <div className="min-h-screen bg-[#F5F0E6] flex items-center justify-center">
-        <Text as="p" className="text-red-500 font-satoshi">
+      <div className="flex min-h-screen items-center justify-center bg-[#F5F0E6]">
+        <Text as="p" className="text-red-500">
           Failed to load the menu. Please refresh the page.
         </Text>
       </div>
@@ -40,25 +37,25 @@ export default function Bestseller({
   }
 
   return (
-    <section className="py-24 md:py-32 px-4 md:px-8 border-b border-primary-dark/10 bg-[#F5F0E6]">
-      <div className="max-w-7xl mx-auto flex flex-col items-center">
-        <div className="text-center mb-16 md:mb-20">
+    <section className="border-primary-dark/10 border-b bg-[#F5F0E6] px-4 py-24 md:px-8 md:py-32">
+      <div className="mx-auto flex max-w-7xl flex-col items-center">
+        <div className="mb-16 text-center md:mb-20">
           <Text
             as="h2"
             variant={"secondary"}
-            className="text-primary-dark  text-3xl md:text-4xl mb-1"
+            className="text-primary-dark mb-1 text-3xl md:text-4xl"
           >
             Our
           </Text>
           <Text
             as="h3"
-            className="text-primary-dark  font-black text-4xl md:text-5xl tracking-[0.15em] uppercase"
+            className="text-primary-dark text-4xl font-black tracking-[0.15em] uppercase md:text-5xl"
           >
             Bestsellers
           </Text>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-12 md:gap-x-8 md:gap-y-16 w-full">
+        <div className="grid w-full grid-cols-2 gap-x-4 gap-y-12 md:gap-x-8 md:gap-y-16 lg:grid-cols-4">
           {bestsellers &&
             bestsellers
               .slice(0, 4)
@@ -72,7 +69,7 @@ export default function Bestseller({
             variant="outline"
             onClick={() => navigate("/collection")}
             size="lg"
-            className="px-12 font-bold tracking-wider hover:bg-primary-dark hover:text-[#F5F0E6] transition-all duration-300"
+            className="hover:bg-primary-dark px-12 font-bold tracking-wider transition-all duration-300 hover:text-[#F5F0E6]"
           >
             View More
           </Button>

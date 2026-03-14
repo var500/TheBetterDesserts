@@ -5,15 +5,15 @@ import { CustomerServiceLinks, NavLinks } from "~/constants";
 
 export default function Footer() {
   return (
-    <footer className="bg-primary-dark text-[#F5F0E6] pt-20 pb-10">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-sm">
-          <img src="/brand/betterDesserts.jpeg" className="h-40 w-68 -mx-12" />
+    <footer className="bg-primary-dark pt-20 pb-10 text-[#F5F0E6]">
+      <div className="mx-auto max-w-7xl px-4 md:px-8">
+        <div className="grid grid-cols-1 gap-12 text-sm md:grid-cols-3">
+          <img src="/brand/betterDesserts.jpeg" className="-mx-12 h-40 w-68" />
           <div className="space-y-4">
             <Text
               as="h4"
               variant="primary"
-              className="font-bold uppercase tracking-widest text-lg mb-6"
+              className="mb-6 text-lg font-bold tracking-widest uppercase"
             >
               Links
             </Text>
@@ -21,7 +21,7 @@ export default function Footer() {
               <a
                 key={link?.key}
                 href={link?.value}
-                className="block text-gray-300 hover:text-white transition-colors"
+                className="block text-gray-300 transition-colors hover:text-white"
               >
                 {/* Use Text as a span inside the anchor */}
                 <Text as="span" variant="primary">
@@ -35,7 +35,7 @@ export default function Footer() {
             <Text
               as="h4"
               variant="primary"
-              className="font-bold uppercase tracking-widest text-lg mb-6"
+              className="mb-6 text-lg font-bold tracking-widest uppercase"
             >
               Customer Service
             </Text>
@@ -43,7 +43,7 @@ export default function Footer() {
               <a
                 key={link.key}
                 href={link.value}
-                className="block text-gray-300 hover:text-white transition-colors"
+                className="block text-gray-300 transition-colors hover:text-white"
               >
                 {/* Use Text as a span inside the anchor */}
                 <Text as="span" variant="primary">
@@ -55,26 +55,26 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar - Using Primary Font (Satoshi) */}
-        <div className="mt-20 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] text-gray-400">
+        <div className="mt-20 flex flex-col items-center justify-between gap-6 border-t border-gray-700 pt-8 text-[10px] text-gray-400 md:flex-row">
           <Text
             as="span"
             variant="primary"
-            className="font-bold uppercase tracking-[0.2em]"
+            className="font-bold tracking-[0.2em] uppercase"
           >
             © 2026 THE BETTER DESSERTS. ALL RIGHTS RESERVED.
           </Text>
 
-          <div className="flex items-center flex-row gap-4">
+          <div className="flex flex-row items-center gap-4">
             <Link
               target="_blank"
               to="https://www.instagram.com/thebetterdesserts/"
               className="group flex items-center gap-3"
             >
-              <Icons.instagram className="w-6 h-6 text-white group-hover:text-[#F5F0E6]/70 transition-colors cursor-pointer" />
+              <Icons.instagram className="h-6 w-6 cursor-pointer text-white transition-colors group-hover:text-[#F5F0E6]/70" />
               <Text
                 as="span"
                 variant="primary"
-                className="font-bold uppercase tracking-widest text-white group-hover:text-[#F5F0E6]/70 transition-colors"
+                className="font-bold tracking-widest text-white uppercase transition-colors group-hover:text-[#F5F0E6]/70"
               >
                 Follow on Instagram
               </Text>

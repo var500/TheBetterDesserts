@@ -9,22 +9,22 @@ import "swiper/css/pagination";
 export const GiftingPromo = () => (
   <section
     id="gifting-promo"
-    className="min-h-screen justify-center flex flex-col bg-[#F5F0E6] px-6 md:px-12 border-t border-primary-dark/10 py-16 lg:py-0"
+    className="border-primary-dark/10 flex min-h-screen flex-col justify-center border-t bg-[#F5F0E6] px-6 py-16 md:px-12 lg:py-0"
   >
-    <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+    <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
       {/* Left Side: Swiper Showcase */}
-      <div className="relative flex justify-center w-full">
+      <div className="relative flex w-full justify-center">
         {/* Decorative Corner Frame */}
-        <div className="absolute -top-6 left-4 md:left-12 w-24 h-24 border-t-2 border-l-2 border-primary-dark/20 hidden md:block" />
+        <div className="border-primary-dark/20 absolute -top-6 left-4 hidden h-24 w-24 border-t-2 border-l-2 md:left-12 md:block" />
 
-        <div className="px-4 w-full max-w-70 sm:max-w-sm mx-auto relative">
+        <div className="relative mx-auto w-full max-w-70 px-4 sm:max-w-sm">
           <Swiper
             slidesPerView={1}
             pagination={{ clickable: true }}
             modules={[Pagination, Autoplay]}
             loop={true}
             autoplay={{ delay: 4000, disableOnInteraction: false }}
-            className="w-full h-auto pb-12"
+            className="h-auto w-full pb-12"
             style={
               {
                 "--swiper-pagination-color": "var(--primary-dark)",
@@ -37,7 +37,7 @@ export const GiftingPromo = () => (
               <SwiperSlide key={index}>
                 {({ isActive }) => (
                   <div
-                    className={`rounded-2xl overflow-hidden aspect-[4/5] shadow-xl border border-primary-dark/5 bg-white transition-all duration-700 ease-out ${
+                    className={`border-primary-dark/5 aspect-[4/5] overflow-hidden rounded-2xl border bg-white shadow-xl transition-all duration-700 ease-out ${
                       isActive
                         ? "scale-100 opacity-100"
                         : "scale-[0.85] opacity-40 blur-[2px]"
@@ -46,7 +46,7 @@ export const GiftingPromo = () => (
                     <img
                       src="/products/giftHampers.png"
                       alt="Curated Gift Hampers"
-                      className="w-full h-full object-cover"
+                      className="h-full w-full object-cover"
                     />
                   </div>
                 )}
@@ -60,7 +60,7 @@ export const GiftingPromo = () => (
       <div className="flex flex-col items-start text-left">
         <Text
           as="span"
-          className="text-primary-dark/60 font-bold tracking-[0.25em] text-xs md:text-sm uppercase mb-4 font-satoshi"
+          className="text-primary-dark/60 mb-4 text-xs font-bold tracking-[0.25em] uppercase md:text-sm"
         >
           Bespoke Gifting
         </Text>
@@ -68,13 +68,13 @@ export const GiftingPromo = () => (
         <Text
           as="h2"
           variant={"primary"}
-          className="text-primary-dark   text-4xl md:text-6xl tracking-tight uppercase leading-[1.1] mb-6"
+          className="text-primary-dark mb-6 text-4xl leading-[1.1] tracking-tight uppercase md:text-6xl"
         >
           Send Something, <br />
           <Text
             as={"span"}
             variant={"primary"}
-            className=" normal-case font-frista font-black tracking-wider text-5xl md:text-7xl"
+            className="text-5xl font-black tracking-wider normal-case md:text-7xl"
           >
             Better
           </Text>
@@ -82,10 +82,10 @@ export const GiftingPromo = () => (
 
         <Text
           as="p"
-          className="text-primary-dark/80 mb-6 text-base md:text-xl leading-relaxed font-satoshi font-light"
+          className="text-primary-dark/80 mb-6 text-base leading-relaxed font-light md:text-xl"
         >
           Whether it’s{" "}
-          <strong className="font-bold text-primary-dark">
+          <strong className="text-primary-dark font-bold">
             corporate gifting, festive hampers, or weddings
           </strong>
           , we create indulgent baskets designed to leave a lasting impression.
@@ -93,7 +93,7 @@ export const GiftingPromo = () => (
 
         <Text
           as="p"
-          className="text-primary-dark/50 mb-8 md:mb-10 text-sm md:text-base leading-relaxed italic border-l-2 border-primary-dark/20 pl-6 font-satoshi"
+          className="text-primary-dark/50 border-primary-dark/20 mb-8 border-l-2 pl-6 text-sm leading-relaxed italic md:mb-10 md:text-base"
         >
           &quot;At The Better Desserts, we believe gifting should be more than
           just giving — it should be an experience.&quot;
@@ -101,10 +101,10 @@ export const GiftingPromo = () => (
 
         <Button
           variant="default"
-          className="group w-full sm:w-auto px-10 h-14 text-sm tracking-widest uppercase font-satoshi font-bold rounded-full"
+          className="group h-14 w-full rounded-full px-10 text-sm font-bold tracking-widest uppercase sm:w-auto"
         >
           Explore the Collection
-          <span className="ml-3 group-hover:translate-x-2 transition-transform">
+          <span className="ml-3 transition-transform group-hover:translate-x-2">
             →
           </span>
         </Button>

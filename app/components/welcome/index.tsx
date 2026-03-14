@@ -22,7 +22,7 @@ export default function App() {
   const newLaunch = products?.filter((item) => item.isNewLaunch);
 
   return (
-    <div className="min-h-screen bg-[#F5F0E6] text-primary-dark font-sans selection:bg-primary-dark selection:text-[#F5F0E6]">
+    <div className="text-primary-dark selection:bg-primary-dark min-h-screen bg-[#F5F0E6] font-sans selection:text-[#F5F0E6]">
       <main className="pb-0">
         <Hero newLaunchProducts={newLaunch} />
         {!selectedCityId ? <LocationSelector /> : null}

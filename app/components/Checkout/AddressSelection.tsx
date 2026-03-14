@@ -83,46 +83,46 @@ export default function AddressSelection({
   };
 
   return (
-    <section className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-primary-dark/5 animate-in fade-in slide-in-from-bottom-2 mb-8">
-      <Text as="h2" className="text-2xl font-bold text-primary-dark mb-6">
+    <section className="border-primary-dark/5 animate-in fade-in slide-in-from-bottom-2 mb-8 rounded-3xl border bg-white p-6 shadow-sm md:p-8">
+      <Text as="h2" className="text-primary-dark mb-6 text-2xl font-bold">
         Delivery Address
       </Text>
 
       {!isFormOpen ? (
         <div className="space-y-4">
           {addresses.length === 0 ? (
-            <Text as="p" className="text-sm text-primary-dark/60 pb-2">
+            <Text as="p" className="text-primary-dark/60 pb-2 text-sm">
               No saved addresses found.
             </Text>
           ) : (
             addresses.map((addr) => (
               <label
                 key={addr.id}
-                className={`flex items-start p-4 border rounded-2xl cursor-pointer transition-all ${
+                className={`flex cursor-pointer items-start rounded-2xl border p-4 transition-all ${
                   selectedAddressId === addr.id
                     ? "border-primary-dark bg-primary-dark/5"
-                    : "border-gray-200 hover:border-primary-dark/30"
+                    : "hover:border-primary-dark/30 border-gray-200"
                 }`}
               >
                 <input
                   type="radio"
                   name="address"
-                  className="mt-1 mr-4 w-4 h-4 appearance-none rounded-full border-2 border-gray-300 bg-white checked:border-primary-dark checked:bg-primary-dark checked:bg-clip-content p-0.75 transition-all cursor-pointer"
+                  className="checked:border-primary-dark checked:bg-primary-dark mt-1 mr-4 h-4 w-4 cursor-pointer appearance-none rounded-full border-2 border-gray-300 bg-white p-0.75 transition-all checked:bg-clip-content"
                   checked={selectedAddressId === addr.id}
                   onChange={() => setSelectedAddressId(addr.id as string)}
                 />
                 <div>
-                  <Text as="p" className="font-bold text-primary-dark">
+                  <Text as="p" className="text-primary-dark font-bold">
                     {addr.first_name} {addr.last_name}
                   </Text>
-                  <Text as="p" className="text-sm text-primary-dark/70 mt-1">
+                  <Text as="p" className="text-primary-dark/70 mt-1 text-sm">
                     {addr.house_no}, {addr.street_address}
                   </Text>
-                  <Text as="p" className="text-sm text-primary-dark/70">
+                  <Text as="p" className="text-primary-dark/70 text-sm">
                     {addr.city}, {addr.state} - {addr.pin_code}
                   </Text>
 
-                  <div className="flex gap-4 mt-3">
+                  <div className="mt-3 flex gap-4">
                     <button
                       type="button"
                       onClick={(e) => handleOpenEdit(e, addr)}
@@ -154,9 +154,9 @@ export default function AddressSelection({
       ) : (
         <form
           onSubmit={handleSave}
-          className="space-y-4 animate-in fade-in slide-in-from-top-4"
+          className="animate-in fade-in slide-in-from-top-4 space-y-4"
         >
-          <div className="text-primary-dark grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="text-primary-dark grid grid-cols-1 gap-4 md:grid-cols-2">
             <input
               required
               placeholder="First Name"
@@ -164,7 +164,7 @@ export default function AddressSelection({
               onChange={(e) =>
                 setFormData({ ...formData, first_name: e.target.value })
               }
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:border-primary-dark"
+              className="focus:border-primary-dark w-full rounded-xl border border-gray-200 p-3 outline-none"
             />
             <input
               required
@@ -173,11 +173,11 @@ export default function AddressSelection({
               onChange={(e) =>
                 setFormData({ ...formData, last_name: e.target.value })
               }
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:border-primary-dark"
+              className="focus:border-primary-dark w-full rounded-xl border border-gray-200 p-3 outline-none"
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <input
               required
               placeholder="House/Flat No."
@@ -185,7 +185,7 @@ export default function AddressSelection({
               onChange={(e) =>
                 setFormData({ ...formData, house_no: e.target.value })
               }
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:border-primary-dark"
+              className="focus:border-primary-dark w-full rounded-xl border border-gray-200 p-3 outline-none"
             />
             <input
               required
@@ -194,11 +194,11 @@ export default function AddressSelection({
               onChange={(e) =>
                 setFormData({ ...formData, street_address: e.target.value })
               }
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:border-primary-dark md:col-span-2"
+              className="focus:border-primary-dark w-full rounded-xl border border-gray-200 p-3 outline-none md:col-span-2"
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <input
               required
               placeholder="City"
@@ -206,7 +206,7 @@ export default function AddressSelection({
               onChange={(e) =>
                 setFormData({ ...formData, city: e.target.value })
               }
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:border-primary-dark"
+              className="focus:border-primary-dark w-full rounded-xl border border-gray-200 p-3 outline-none"
             />
             <input
               required
@@ -215,7 +215,7 @@ export default function AddressSelection({
               onChange={(e) =>
                 setFormData({ ...formData, state: e.target.value })
               }
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:border-primary-dark"
+              className="focus:border-primary-dark w-full rounded-xl border border-gray-200 p-3 outline-none"
             />
             <input
               required
@@ -228,7 +228,7 @@ export default function AddressSelection({
                 })
               }
               maxLength={6}
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:border-primary-dark"
+              className="focus:border-primary-dark w-full rounded-xl border border-gray-200 p-3 outline-none"
             />
             <input
               required
@@ -241,10 +241,10 @@ export default function AddressSelection({
                 })
               }
               maxLength={10}
-              className="w-full p-3 border border-gray-200 rounded-xl outline-none focus:border-primary-dark"
+              className="focus:border-primary-dark w-full rounded-xl border border-gray-200 p-3 outline-none"
             />
           </div>
-          <div className="flex items-center gap-4 pl-2 w-full">
+          <div className="flex w-full items-center gap-4 pl-2">
             <input
               id="default-checkbox"
               type="checkbox"
@@ -252,18 +252,18 @@ export default function AddressSelection({
               onChange={(e) =>
                 setFormData({ ...formData, is_default: e.target.checked })
               }
-              className=" mr-4 w-4 h-4 shrink-0 appearance-none rounded-sm border-2 border-gray-300 bg-white checked:bg-primary-dark checked:border-primary-dark checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox=%220%200%2016%2016%22%20fill=%22white%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath%20d=%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22/%3E%3C/svg%3E')] checked:bg-center checked:bg-no-repeat transition-all cursor-pointer"
+              className="checked:bg-primary-dark checked:border-primary-dark mr-4 h-4 w-4 shrink-0 cursor-pointer appearance-none rounded-sm border-2 border-gray-300 bg-white transition-all checked:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox=%220%200%2016%2016%22%20fill=%22white%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cpath%20d=%22M12.207%204.793a1%201%200%20010%201.414l-5%205a1%201%200%2001-1.414%200l-2-2a1%201%200%20011.414-1.414L6.5%209.086l4.293-4.293a1%201%200%20011.414%200z%22/%3E%3C/svg%3E')] checked:bg-center checked:bg-no-repeat"
             />
             <label
               htmlFor="default-checkbox"
-              className="cursor-pointer text-primary-dark select-none"
+              className="text-primary-dark cursor-pointer select-none"
             >
               Set as default Address?
             </label>
           </div>
 
-          <div className="flex md:flex-row flex-col gap-4 pt-2">
-            <div className="flex md:flex-row flex-col gap-4 pt-2">
+          <div className="flex flex-col gap-4 pt-2 md:flex-row">
+            <div className="flex flex-col gap-4 pt-2 md:flex-row">
               <Button
                 type="button"
                 variant="ghost"
@@ -274,7 +274,7 @@ export default function AddressSelection({
               <Button
                 type="submit"
                 variant="default"
-                className="rounded-xl flex-1"
+                className="flex-1 rounded-xl"
                 disabled={isMutating}
               >
                 {isMutating

@@ -46,11 +46,8 @@ export default function Shop() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F5F0E6] flex items-center justify-center">
-        <Text
-          as="h2"
-          className="text-2xl font-frista text-primary-dark animate-pulse"
-        >
+      <div className="flex min-h-screen items-center justify-center bg-[#F5F0E6]">
+        <Text as="h2" className="text-primary-dark animate-pulse text-2xl">
           Baking fresh menu...
         </Text>
       </div>
@@ -59,8 +56,8 @@ export default function Shop() {
 
   if (isError || !products) {
     return (
-      <div className="min-h-screen bg-[#F5F0E6] flex items-center justify-center">
-        <Text as="p" className="text-red-500 font-satoshi">
+      <div className="flex min-h-screen items-center justify-center bg-[#F5F0E6]">
+        <Text as="p" className="text-red-500">
           Failed to load the menu. Please refresh the page.
         </Text>
       </div>
@@ -68,25 +65,22 @@ export default function Shop() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F0E6] pt-12 pb-24 px-4 md:px-8">
-      <div className="max-w-6xl mx-auto flex flex-col gap-12">
-        <header className="text-center space-y-6 max-w-2xl mx-auto">
-          <Text
-            as="h1"
-            className="text-5xl md:text-7xl font-frista text-primary-dark"
-          >
+    <div className="min-h-screen bg-[#F5F0E6] px-4 pt-12 pb-24 md:px-8">
+      <div className="mx-auto flex max-w-6xl flex-col gap-12">
+        <header className="mx-auto max-w-2xl space-y-6 text-center">
+          <Text as="h1" className="text-primary-dark text-5xl md:text-7xl">
             Our Menu
           </Text>
 
           {!isMounted ? null : !selectedCityId ? (
             <PinCodeSelector />
           ) : (
-            <Text as="p" className="text-lg text-primary-dark/70">
+            <Text as="p" className="text-primary-dark/70 text-lg">
               Showing menu available for{" "}
               {selectedCityLabel === "GURGAON"
                 ? "Pickup / delivery in"
                 : "delivery in"}{" "}
-              <span className="font-bold text-primary-dark uppercase">
+              <span className="text-primary-dark font-bold uppercase">
                 {selectedCityId.replace("-", " ")}
               </span>
             </Text>
@@ -94,13 +88,13 @@ export default function Shop() {
         </header>
 
         {selectedCityId && (
-          <main className="flex flex-col gap-16 w-full">
+          <main className="flex w-full flex-col gap-16">
             {categoriesWithProducts.map((category) => (
               <section key={category.id} className="flex flex-col gap-6">
-                <div className="border-b border-primary-dark/10 pb-4">
+                <div className="border-primary-dark/10 border-b pb-4">
                   <Text
                     as="h2"
-                    className="text-3xl md:text-4xl font-frista text-primary-dark"
+                    className="text-primary-dark text-3xl md:text-4xl"
                   >
                     {category.title}
                   </Text>
@@ -109,7 +103,7 @@ export default function Shop() {
                   </Text>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
                   {category.products.map((product: Product) => (
                     <ProductCard
                       key={product.id}

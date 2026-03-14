@@ -59,7 +59,7 @@ export default function FAQInputManager({
   return (
     <div className="space-y-4">
       <div>
-        <div className="flex justify-between items-center mb-2">
+        <div className="mb-2 flex items-center justify-between">
           <label className="block text-sm font-medium text-gray-700">
             Frequently Asked Questions
           </label>
@@ -69,7 +69,7 @@ export default function FAQInputManager({
         </div>
 
         {/* Add New FAQ Form */}
-        <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3">
+        <div className="space-y-3 rounded-lg border border-gray-200 bg-gray-50 p-4">
           <div>
             <input
               type="text"
@@ -78,9 +78,9 @@ export default function FAQInputManager({
               onChange={(e) => setQInput(e.target.value)}
               maxLength={MAX_Q_CHARS}
               disabled={faqs.length >= MAX_FAQS}
-              className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none text-sm font-medium"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-medium shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
             />
-            <div className="text-right mt-1 text-xs text-gray-500">
+            <div className="mt-1 text-right text-xs text-gray-500">
               {MAX_Q_CHARS - qInput.length} chars left
             </div>
           </div>
@@ -92,9 +92,9 @@ export default function FAQInputManager({
               onChange={(e) => setAInput(e.target.value)}
               maxLength={MAX_A_CHARS}
               disabled={faqs.length >= MAX_FAQS}
-              className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none text-sm"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
             />
-            <div className="text-right mt-1 text-xs text-gray-500">
+            <div className="mt-1 text-right text-xs text-gray-500">
               {MAX_A_CHARS - aInput.length} chars left
             </div>
           </div>
@@ -120,24 +120,24 @@ export default function FAQInputManager({
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="p-3 border border-gray-200 rounded-md bg-white shadow-sm"
+              className="rounded-md border border-gray-200 bg-white p-3 shadow-sm"
             >
               {editingIndex === index ? (
                 // EDIT MODE
-                <div className="space-y-2 w-full">
+                <div className="w-full space-y-2">
                   <input
                     type="text"
                     value={editQ}
                     onChange={(e) => setEditQ(e.target.value)}
                     maxLength={MAX_Q_CHARS}
-                    className="w-full border-gray-300 rounded-md shadow-sm px-3 py-2 border outline-none text-sm font-medium"
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm font-medium shadow-sm outline-none"
                   />
                   <textarea
                     rows={2}
                     value={editA}
                     onChange={(e) => setEditA(e.target.value)}
                     maxLength={MAX_A_CHARS}
-                    className="w-full border-gray-300 rounded-md shadow-sm px-3 py-2 border outline-none text-sm"
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm outline-none"
                   />
                   <div className="flex justify-end gap-2 pt-1">
                     <button
@@ -151,7 +151,7 @@ export default function FAQInputManager({
                       type="button"
                       onClick={handleEditSave}
                       disabled={!editQ.trim() || !editA.trim()}
-                      className="text-sm text-blue-600 font-medium hover:text-blue-800"
+                      className="text-sm font-medium text-blue-600 hover:text-blue-800"
                     >
                       Save
                     </button>
@@ -159,20 +159,20 @@ export default function FAQInputManager({
                 </div>
               ) : (
                 // VIEW MODE
-                <div className="flex gap-4 items-start">
+                <div className="flex items-start gap-4">
                   <div className="flex-1">
-                    <p className="text-sm font-semibold text-gray-900 mb-1">
+                    <p className="mb-1 text-sm font-semibold text-gray-900">
                       Q: {faq.question}
                     </p>
-                    <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                    <p className="text-sm whitespace-pre-wrap text-gray-700">
                       A: {faq.answer}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 shrink-0">
+                  <div className="flex shrink-0 items-center gap-2">
                     <button
                       type="button"
                       onClick={() => handleEditStart(index)}
-                      className="text-gray-400 hover:text-blue-600 transition-colors"
+                      className="text-gray-400 transition-colors hover:text-blue-600"
                       title="Edit"
                     >
                       <svg
@@ -192,7 +192,7 @@ export default function FAQInputManager({
                     <button
                       type="button"
                       onClick={() => handleDelete(index)}
-                      className="text-gray-400 hover:text-red-600 transition-colors"
+                      className="text-gray-400 transition-colors hover:text-red-600"
                       title="Delete"
                     >
                       <svg

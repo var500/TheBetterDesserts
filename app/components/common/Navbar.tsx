@@ -52,22 +52,22 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
 
   return (
     <>
-      <nav className="sticky top-0 left-0 right-0 z-40 bg-[#F5F0E6] h-20 px-4 md:px-8 flex items-center justify-between transition-all duration-300">
+      <nav className="sticky top-0 right-0 left-0 z-40 flex h-20 items-center justify-between bg-[#F5F0E6] px-4 transition-all duration-300 md:px-8">
         {/* Left Section: Menu & Links */}
-        <div className="flex items-center gap-6 flex-1">
+        <div className="flex flex-1 items-center gap-6">
           <Icons.Menu
-            className="w-6 h-6 md:hidden cursor-pointer text-primary-dark"
+            className="text-primary-dark h-6 w-6 cursor-pointer md:hidden"
             onClick={() => setIsMobileMenuOpen(true)}
           />
-          <div className="hidden md:flex items-center gap-6 text-sm font-bold tracking-wider text-primary-dark">
-            <Link to="/" className="hover:text-gray-500 transition-colors">
+          <div className="text-primary-dark hidden items-center gap-6 text-sm font-bold tracking-wider md:flex">
+            <Link to="/" className="transition-colors hover:text-gray-500">
               <Text as="span" variant="secondary">
                 Home
               </Text>
             </Link>
             <Link
               to="/collection"
-              className="hover:text-gray-500 transition-colors"
+              className="transition-colors hover:text-gray-500"
             >
               <Text as="span" variant="secondary">
                 Shop
@@ -75,13 +75,13 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
             </Link>
             <Link
               to="/#gifting-promo"
-              className="hover:text-gray-500 transition-colors"
+              className="transition-colors hover:text-gray-500"
             >
               <Text as="span" variant="secondary">
                 Gifting
               </Text>
             </Link>
-            <Link to="/about" className="hover:text-gray-500 transition-colors">
+            <Link to="/about" className="transition-colors hover:text-gray-500">
               <Text as="span" variant="secondary">
                 Our Story
               </Text>
@@ -94,17 +94,17 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
         <Text
           as="div"
           variant="secondary"
-          className={`text-2xl text-primary-dark leading-[1.1] flex flex-col items-center flex-1 transition-opacity duration-500 ease-in-out ${
+          className={`text-primary-dark flex flex-1 flex-col items-center text-2xl leading-[1.1] transition-opacity duration-500 ease-in-out ${
             isScrolled
-              ? "opacity-100 pointer-events-auto"
-              : "opacity-0 pointer-events-none"
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none opacity-0"
           }`}
         >
-          <img src="/brand/logo.png" className="object-contain max-h-8" />
+          <img src="/brand/logo.png" className="max-h-8 object-contain" />
         </Text>
 
         {/* Right Section: Icons */}
-        <div className="flex items-center gap-4 text-primary-dark flex-1 justify-end">
+        <div className="text-primary-dark flex flex-1 items-center justify-end gap-4">
           {user?.name === "Admin" ? (
             <Button
               variant={"rounded"}
@@ -116,26 +116,26 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
             </Button>
           ) : null}
           <Icons.Search
-            className="w-5 h-5 cursor-pointer hover:text-gray-500 transition-colors"
+            className="h-5 w-5 cursor-pointer transition-colors hover:text-gray-500"
             onClick={onOpenSearch}
           />
           <div
-            className="relative cursor-pointer hover:text-gray-500 transition-colors"
+            className="relative cursor-pointer transition-colors hover:text-gray-500"
             onClick={onAuthClick}
           >
-            <Icons.User className={`w-5 h-5 ${user ? "text-green-600" : ""}`} />
+            <Icons.User className={`h-5 w-5 ${user ? "text-green-600" : ""}`} />
             {user && (
-              <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-500 rounded-full border border-white"></div>
+              <div className="absolute -top-1 -right-1 h-2 w-2 rounded-full border border-white bg-green-500"></div>
             )}
           </div>
           <div
-            className="relative cursor-pointer hover:text-gray-500 transition-colors"
+            className="relative cursor-pointer transition-colors hover:text-gray-500"
             // FIX 3: Call the function safely inside the onClick
             onClick={() => setIsCartOpen(true)}
           >
-            <Icons.ShoppingBag className="w-5 h-5" />
+            <Icons.ShoppingBag className="h-5 w-5" />
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-primary-dark text-[#F5F0E6] text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+              <span className="bg-primary-dark absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-bold text-[#F5F0E6]">
                 <Text as="span" variant="primary">
                   {cartCount}
                 </Text>
@@ -150,31 +150,31 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
 
       {/* Overlay Backdrop */}
       <div
-        className={`fixed inset-0 bg-primary-dark/40 backdrop-blur-sm z-50 md:hidden transition-opacity duration-300 ${
-          isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        className={`bg-primary-dark/40 fixed inset-0 z-50 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+          isMobileMenuOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
       {/* Menu Drawer */}
       <div
-        className={`fixed top-0 left-0 bottom-0 w-[80%] max-w-sm bg-[#F5F0E6] z-[60] md:hidden transform transition-transform duration-300 ease-out flex flex-col shadow-2xl ${
+        className={`fixed top-0 bottom-0 left-0 z-[60] flex w-[80%] max-w-sm transform flex-col bg-[#F5F0E6] shadow-2xl transition-transform duration-300 ease-out md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         {/* Drawer Header */}
-        <div className="h-20 px-6 flex items-center justify-between border-b border-primary-dark/10">
+        <div className="border-primary-dark/10 flex h-20 items-center justify-between border-b px-6">
           <Text
             as="div"
             variant="secondary"
-            className="text-xl text-primary-dark leading-tight flex flex-col"
+            className="text-primary-dark flex flex-col text-xl leading-tight"
           >
-            <img src="/brand/logo.png" className="object-contain max-h-8" />
+            <img src="/brand/logo.png" className="max-h-8 object-contain" />
           </Text>
 
           <button
             onClick={() => setIsMobileMenuOpen(false)}
-            className="p-2 -mr-2 text-primary-dark hover:text-gray-500 transition-colors cursor-pointer"
+            className="text-primary-dark -mr-2 cursor-pointer p-2 transition-colors hover:text-gray-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +194,7 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
         </div>
 
         {/* Drawer Links */}
-        <div className="flex flex-col px-6 py-8 gap-6 overflow-y-auto">
+        <div className="flex flex-col gap-6 overflow-y-auto px-6 py-8">
           {[
             { name: "Our Story", href: "/about" },
             { name: "Home", href: "/#home" },
@@ -205,7 +205,7 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
               key={link.name}
               href={link.href}
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-2xl text-primary-dark hover:text-gray-500 transition-colors border-b border-primary-dark/5 pb-4"
+              className="text-primary-dark border-primary-dark/5 border-b pb-4 text-2xl transition-colors hover:text-gray-500"
             >
               <Text as="span" variant="primary">
                 {link.name}
@@ -216,8 +216,8 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
         </div>
 
         {/* Drawer Bottom Action */}
-        <div className="mt-auto p-6 bg-primary-dark text-[#F5F0E6]">
-          <Text as="p" variant="primary" className="text-sm opacity-80 mb-4">
+        <div className="bg-primary-dark mt-auto p-6 text-[#F5F0E6]">
+          <Text as="p" variant="primary" className="mb-4 text-sm opacity-80">
             Craving something specific?
           </Text>
           <button
@@ -225,7 +225,7 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
               setIsMobileMenuOpen(false);
               onOpenSearch();
             }}
-            className="w-full py-4 border border-[#F5F0E6] hover:bg-[#F5F0E6] hover:text-primary-dark transition-colors duration-300 uppercase tracking-widest text-xs font-bold rounded-sm"
+            className="hover:text-primary-dark w-full rounded-sm border border-[#F5F0E6] py-4 text-xs font-bold tracking-widest uppercase transition-colors duration-300 hover:bg-[#F5F0E6]"
           >
             <Text as="span" variant="primary">
               Search Desserts

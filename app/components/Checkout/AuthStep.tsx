@@ -28,8 +28,8 @@ export function ContactStep() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-primary-dark/10 mb-8 animate-in fade-in">
-      <Text as="h2" className="text-2xl font-frista text-primary-dark mb-2">
+    <div className="border-primary-dark/10 animate-in fade-in mb-8 rounded-2xl border bg-white p-6 shadow-sm">
+      <Text as="h2" className="text-primary-dark mb-2 text-2xl">
         Contact Information
       </Text>
       <Text as="p" className="text-primary-dark/60 mb-6 text-sm">
@@ -44,7 +44,7 @@ export function ContactStep() {
             value={contactEmail}
             onChange={(e) => setContactEmail(e.target.value)}
             placeholder="Enter your email"
-            className="w-full p-3 rounded-xl border border-primary-dark/20 focus:outline-none focus:border-primary-dark"
+            className="border-primary-dark/20 focus:border-primary-dark w-full rounded-xl border p-3 focus:outline-none"
           />
         </div>
         <Button
@@ -80,8 +80,8 @@ export function OtpVerificationStep() {
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-primary-dark/10 mb-8 animate-in fade-in slide-in-from-right-4">
-      <Text as="h2" className="text-2xl font-frista text-primary-dark mb-2">
+    <div className="border-primary-dark/10 animate-in fade-in slide-in-from-right-4 mb-8 rounded-2xl border bg-white p-6 shadow-sm">
+      <Text as="h2" className="text-primary-dark mb-2 text-2xl">
         Verify your Email
       </Text>
       <Text as="p" className="text-primary-dark/60 mb-6 text-sm">
@@ -90,7 +90,7 @@ export function OtpVerificationStep() {
         <button
           type="button"
           onClick={() => setStep("CONTACT")}
-          className="text-blue-500 ml-2 hover:underline"
+          className="ml-2 text-blue-500 hover:underline"
         >
           Edit
         </button>
@@ -105,7 +105,7 @@ export function OtpVerificationStep() {
             value={otp}
             onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
             placeholder="6-digit code"
-            className="w-full p-3 text-center tracking-widest text-xl rounded-xl border border-primary-dark/20 focus:outline-none focus:border-primary-dark"
+            className="border-primary-dark/20 focus:border-primary-dark w-full rounded-xl border p-3 text-center text-xl tracking-widest focus:outline-none"
           />
         </div>
         <Button

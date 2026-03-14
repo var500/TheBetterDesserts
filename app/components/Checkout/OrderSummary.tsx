@@ -87,23 +87,23 @@ export default function OrderSummary({
 
   return (
     <div className="w-full lg:w-100">
-      <div className="sticky top-24 bg-white p-6 md:p-8 rounded-3xl shadow-lg border border-primary-dark/5 mb-10 md:mb-0">
-        <Text as="h2" className="text-2xl font-bold text-primary-dark mb-6">
+      <div className="border-primary-dark/5 sticky top-24 mb-10 rounded-3xl border bg-white p-6 shadow-lg md:mb-0 md:p-8">
+        <Text as="h2" className="text-primary-dark mb-6 text-2xl font-bold">
           Order Summary
         </Text>
 
-        <div className="space-y-4 mb-6 max-h-75 overflow-y-auto pr-2">
+        <div className="mb-6 max-h-75 space-y-4 overflow-y-auto pr-2">
           {cart.map((item) => (
             <div
               key={item.id}
-              className="group relative flex gap-4 items-center"
+              className="group relative flex items-center gap-4"
             >
               {/* Image */}
-              <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 shrink-0">
+              <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-gray-100">
                 <img
                   src={item.image[0]}
                   alt={item.name}
-                  className="w-full h-full object-cover"
+                  className="h-full w-full object-cover"
                 />
               </div>
 
@@ -111,18 +111,18 @@ export default function OrderSummary({
               <div className="flex-1">
                 <Text
                   as="h4"
-                  className="font-bold text-sm text-primary-dark line-clamp-1 pr-6"
+                  className="text-primary-dark line-clamp-1 pr-6 text-sm font-bold"
                 >
                   {item.name}
                 </Text>
-                <div className="flex items-center gap-3 mt-1">
-                  <Text as="p" className="text-xs text-primary-dark/60">
+                <div className="mt-1 flex items-center gap-3">
+                  <Text as="p" className="text-primary-dark/60 text-xs">
                     Qty: {item.quantity}
                   </Text>
 
                   <button
                     onClick={() => removeFromCart(item.id)}
-                    className="text-[10px] cursor-pointer uppercase font-bold tracking-wider text-red-500/70 hover:text-red-600 transition-colors"
+                    className="cursor-pointer text-[10px] font-bold tracking-wider text-red-500/70 uppercase transition-colors hover:text-red-600"
                   >
                     Remove
                   </button>
@@ -132,7 +132,7 @@ export default function OrderSummary({
               {/* Price */}
               <Text
                 as="p"
-                className="font-bold text-sm text-primary-dark shrink-0"
+                className="text-primary-dark shrink-0 text-sm font-bold"
               >
                 ₹{(item.base_price * item.quantity).toLocaleString()}
               </Text>
@@ -140,8 +140,8 @@ export default function OrderSummary({
           ))}
         </div>
 
-        <div className="border-t border-gray-100 pt-4 space-y-3">
-          <div className="flex justify-between text-primary-dark/70">
+        <div className="space-y-3 border-t border-gray-100 pt-4">
+          <div className="text-primary-dark/70 flex justify-between">
             <Text as="p">Subtotal</Text>
             <Text as="p" className="font-medium">
               ₹{subtotal.toLocaleString()}
@@ -158,7 +158,7 @@ export default function OrderSummary({
           )}
 
           {isAddressDeliverable && (
-            <div className="flex justify-between text-primary-dark/70">
+            <div className="text-primary-dark/70 flex justify-between">
               <Text as="p">Shipping</Text>
               {deliveryMethod === "pickup" ? (
                 <Text as="p" className="font-medium text-green-600">
@@ -181,17 +181,17 @@ export default function OrderSummary({
           )}
         </div>
 
-        <div className="border-t border-primary-dark/10 mt-4 pt-4 flex justify-between items-center">
-          <Text as="h3" className="text-xl font-black text-primary-dark">
+        <div className="border-primary-dark/10 mt-4 flex items-center justify-between border-t pt-4">
+          <Text as="h3" className="text-primary-dark text-xl font-black">
             Total
           </Text>
-          <Text as="h3" className="text-xl font-black text-primary-dark">
+          <Text as="h3" className="text-primary-dark text-xl font-black">
             ₹{total.toLocaleString()}
           </Text>
         </div>
 
         <div
-          className={`relative group w-full mt-8 ${
+          className={`group relative mt-8 w-full ${
             isCheckoutDisabled ? "cursor-not-allowed" : ""
           }`}
         >
@@ -199,7 +199,7 @@ export default function OrderSummary({
             variant="default"
             size="sm-to-default"
             onClick={handleCheckoutClick}
-            className={`w-full rounded-2xl font-bold text-lg ${
+            className={`w-full rounded-2xl text-lg font-bold ${
               isCheckoutDisabled || isProcessing
                 ? "pointer-events-none opacity-80"
                 : ""
@@ -210,9 +210,9 @@ export default function OrderSummary({
           </Button>
 
           {isCheckoutDisabled && (
-            <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-max max-w-xs px-4 py-2.5 bg-primary-dark text-white text-xs font-bold tracking-wide rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-10 shadow-xl pointer-events-none">
+            <div className="bg-primary-dark pointer-events-none invisible absolute top-full left-1/2 z-10 mt-3 w-max max-w-xs -translate-x-1/2 rounded-xl px-4 py-2.5 text-xs font-bold tracking-wide text-white opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
               {tooltipMessage}
-              <div className="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-primary-dark" />
+              <div className="border-b-primary-dark absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent" />
             </div>
           )}
         </div>

@@ -18,11 +18,11 @@ export function ProductFAQ({ faqs }: ProductFAQProps) {
   };
 
   return (
-    <section className="py-16 px-4 md:px-8 max-w-3xl mx-auto w-full">
+    <section className="mx-auto w-full max-w-3xl px-4 py-16 md:px-8">
       <Text
         variant={"secondary"}
         as="h3"
-        className="text-3xl md:text-5xl  tracking-wider text-primary-dark mb-10 text-center"
+        className="text-primary-dark mb-10 text-center text-3xl tracking-wider md:text-5xl"
       >
         FAQs
       </Text>
@@ -34,24 +34,24 @@ export function ProductFAQ({ faqs }: ProductFAQProps) {
           return (
             <div
               key={index}
-              className="bg-primary-dark/5 rounded-2xl border border-primary-dark/10 overflow-hidden transition-all duration-200"
+              className="bg-primary-dark/5 border-primary-dark/10 overflow-hidden rounded-2xl border transition-all duration-200"
             >
               {/* Question / Clickable Header */}
               <button
                 onClick={() => toggleFAQ(index)}
-                className="w-full flex items-center justify-between p-6 text-left focus:outline-none"
+                className="flex w-full items-center justify-between p-6 text-left focus:outline-none"
               >
                 <Text
                   as="h4"
                   variant={"primary"}
-                  className="text-lg font-playfair tracking-wide  font-semibold text-primary-dark pr-4"
+                  className="font-playfair text-primary-dark pr-4 text-lg font-semibold tracking-wide"
                 >
                   {faq.question}
                 </Text>
 
                 {/* Plus / Minus Icon */}
                 <div
-                  className={`shrink-0 text-primary-dark/60 transition-transform duration-300 ${isOpen ? "rotate-45" : "rotate-0"}`}
+                  className={`text-primary-dark/60 shrink-0 transition-transform duration-300 ${isOpen ? "rotate-45" : "rotate-0"}`}
                 >
                   <svg
                     width="24"

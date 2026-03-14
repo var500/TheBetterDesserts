@@ -4,30 +4,33 @@ import { Text } from "~/components/ui/text";
 
 export default function ContactUs() {
   return (
-    <div className="bg-[#F5F0E6] text-primary-dark min-h-screen py-24 px-4 md:px-8 lg:px-12 font-satoshi selection:bg-primary-dark selection:text-[#F5F0E6]">
-      <div className="max-w-6xl mx-auto">
+    <div className="text-primary-dark selection:bg-primary-dark min-h-screen bg-[#F5F0E6] px-4 py-24 selection:text-[#F5F0E6] md:px-8 lg:px-12">
+      <div className="mx-auto max-w-6xl">
         {/* Page Header */}
-        <div className="text-center mb-16 md:mb-24">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-frista text-primary-dark tracking-wide">
+        <div className="mb-16 text-center md:mb-24">
+          <Text
+            as={"h1"}
+            className="text-primary-dark text-5xl tracking-wide md:text-6xl lg:text-7xl"
+          >
             Contact Us
-          </h1>
+          </Text>
           <p>For general Queries or Builk Orders</p>
         </div>
 
         {/* 3-Column Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
           {/* Card 1: Address */}
-          <div className="bg-white border border-primary-dark/10 flex flex-col h-full shadow-sm">
-            <div className="p-6 md:p-8 border-b border-primary-dark/10 flex justify-between items-center">
-              <Text as={"h2"} className="text-2xl text-primary-dark">
+          <div className="border-primary-dark/10 flex h-full flex-col border bg-white shadow-sm">
+            <div className="border-primary-dark/10 flex items-center justify-between border-b p-6 md:p-8">
+              <Text as={"h2"} className="text-primary-dark text-2xl">
                 Address
               </Text>
-              <Icons.Target className="w-5 h-5 text-primary-dark/60" />{" "}
+              <Icons.Target className="text-primary-dark/60 h-5 w-5" />{" "}
               {/* Or MapPin icon */}
             </div>
-            <div className="p-6 md:p-8 flex-1 flex flex-col justify-between">
+            <div className="flex flex-1 flex-col justify-between p-6 md:p-8">
               <div className="space-y-2">
-                <p className="text-primary-dark/80 font-medium leading-relaxed">
+                <p className="text-primary-dark/80 leading-relaxed font-medium">
                   Second floor, S-10
                   <br />
                   Baani square, Gurgaon,
@@ -35,23 +38,23 @@ export default function ContactUs() {
                   Haryana 122018
                 </p>
               </div>
-              <p className="text-primary-dark/60 text-sm mt-8">
+              <p className="text-primary-dark/60 mt-8 text-sm">
                 (7 days a week, 10am-9pm)
               </p>
             </div>
           </div>
 
           {/* Card 2: Reach Us (Combined Email & Phone) */}
-          <div className="bg-white border border-primary-dark/10 flex flex-col h-full shadow-sm">
-            <div className="p-6 md:p-8 border-b border-primary-dark/10 flex justify-between items-center">
-              <Text as={"h2"} className="text-2xl text-primary-dark">
+          <div className="border-primary-dark/10 flex h-full flex-col border bg-white shadow-sm">
+            <div className="border-primary-dark/10 flex items-center justify-between border-b p-6 md:p-8">
+              <Text as={"h2"} className="text-primary-dark text-2xl">
                 Reach Us
               </Text>
-              <Icons.Mail className="w-5 h-5 text-primary-dark/60" />
+              <Icons.Mail className="text-primary-dark/60 h-5 w-5" />
             </div>
-            <div className="p-6 md:p-8 space-y-6 flex-1">
+            <div className="flex-1 space-y-6 p-6 md:p-8">
               <div>
-                <Text as={"p"} className="text-sm text-primary-dark">
+                <Text as={"p"} className="text-primary-dark text-sm">
                   Email us at
                 </Text>
                 <Link
@@ -65,16 +68,16 @@ export default function ContactUs() {
           </div>
 
           {/* Card 3: Social Media */}
-          <div className="bg-white border border-primary-dark/10 flex flex-col h-full shadow-sm">
-            <div className="p-6 md:p-8 border-b border-primary-dark/10 flex justify-between items-center">
-              <Text as={"h2"} className="text-2xl text-primary-dark">
+          <div className="border-primary-dark/10 flex h-full flex-col border bg-white shadow-sm">
+            <div className="border-primary-dark/10 flex items-center justify-between border-b p-6 md:p-8">
+              <Text as={"h2"} className="text-primary-dark text-2xl">
                 Contact
               </Text>
-              <Icons.Share2 className="w-5 h-5 text-primary-dark/60" />
+              <Icons.Share2 className="text-primary-dark/60 h-5 w-5" />
             </div>
-            <div className="p-6 md:p-8 space-y-6 flex-1">
+            <div className="flex-1 space-y-6 p-6 md:p-8">
               <div>
-                <p className="text-primary-dark/60 text-sm mb-1">For Support</p>
+                <p className="text-primary-dark/60 mb-1 text-sm">For Support</p>
                 <a
                   href="tel:+919958605163"
                   className="text-primary-dark font-bold hover:underline"
@@ -83,7 +86,7 @@ export default function ContactUs() {
                 </a>
               </div>
               <div>
-                <p className="text-primary-dark/60 text-sm mb-1">
+                <p className="text-primary-dark/60 mb-1 text-sm">
                   Business & Bulk Inquiries
                 </p>
                 <a

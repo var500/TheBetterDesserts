@@ -57,14 +57,14 @@ export const CityPicker = () => {
       {/* Slim Trigger Button */}
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center border-primary-dark border gap-1.5 cursor-pointer hover:bg-primary-dark/5 px-3 py-1.5 rounded-md transition-all duration-300"
+        className="group border-primary-dark hover:bg-primary-dark/5 flex cursor-pointer items-center gap-1.5 rounded-md border px-3 py-1.5 transition-all duration-300"
       >
         <Icons.MapPin size={14} className="text-primary-dark/70" />
 
         <div className="flex items-baseline gap-1.5">
           <Text
             as="span"
-            className="text-xs font-satoshi font-bold text-primary-dark tracking-wide uppercase"
+            className="text-primary-dark text-xs font-bold tracking-wide uppercase"
           >
             {/* 4. This will now show either the city or "Select City" */}
             {displayLabel}
@@ -81,17 +81,17 @@ export const CityPicker = () => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 w-48 bg-[#F5F0E6] border border-primary-dark/10 rounded-xl shadow-lg overflow-hidden z-50 animate-fade-in-up">
-          <div className="py-1 flex flex-col">
+        <div className="border-primary-dark/10 animate-fade-in-up absolute top-full left-0 z-50 mt-2 w-48 overflow-hidden rounded-xl border bg-[#F5F0E6] shadow-lg">
+          <div className="flex flex-col py-1">
             {AVAILABLE_LOCATIONS.map((loc) => (
               <button
                 key={loc.id}
                 onClick={() => handleSelectLocation(loc.id, loc.value)}
-                className="w-full text-left px-4 py-2.5 hover:bg-primary-dark/5 transition-colors flex items-center justify-between group/item"
+                className="hover:bg-primary-dark/5 group/item flex w-full items-center justify-between px-4 py-2.5 text-left transition-colors"
               >
                 <Text
                   as="span"
-                  className={`font-satoshi font-bold text-xs tracking-widest transition-colors ${
+                  className={`text-xs font-bold tracking-widest transition-colors ${
                     selectedCityId === loc.id
                       ? "text-primary-dark"
                       : "text-primary-dark/60 group-hover/item:text-primary-dark"

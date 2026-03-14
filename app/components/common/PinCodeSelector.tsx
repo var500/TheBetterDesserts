@@ -27,41 +27,41 @@ export default function PinCodeSelector() {
     }
   };
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-primary-dark/10 mt-8">
-      <Text as="h3" className=" font-bold text-primary-dark mb-2">
+    <div className="border-primary-dark/10 mt-8 rounded-2xl border bg-white p-6 shadow-sm">
+      <Text as="h3" className="text-primary-dark mb-2 font-bold">
         Check Delivery Availability
       </Text>
-      <Text as="p" className="text-sm text-primary-dark/70  mb-4">
+      <Text as="p" className="text-primary-dark/70 mb-4 text-sm">
         Enter your pincode to see fresh desserts and cookies available in your
         area.
       </Text>
 
       <form
         onSubmit={handleCheckPincode}
-        className="flex flex-col md:flex-row gap-3 items-center"
+        className="flex flex-col items-center gap-3 md:flex-row"
       >
-        <div className="relative flex-1 w-full">
-          <Icons.MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary-dark/40" />
+        <div className="relative w-full flex-1">
+          <Icons.MapPin className="text-primary-dark/40 absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <input
             type="text"
             maxLength={6}
             placeholder="Enter 6-digit Pincode"
             value={pincode}
             onChange={(e) => setPincode(e.target.value.replace(/\D/g, ""))}
-            className="w-full pl-10 pr-4 py-3 text-primary-dark bg-white border border-primary-dark/10 rounded-xl text-sm focus:ring-2 focus:ring-primary-dark focus:border-transparent outline-none transition-all"
+            className="text-primary-dark border-primary-dark/10 focus:ring-primary-dark w-full rounded-xl border bg-white py-3 pr-4 pl-10 text-sm transition-all outline-none focus:border-transparent focus:ring-2"
           />
         </div>
         <Button
           type="submit"
           variant="default"
           size="sm-to-default"
-          className="px-8 whitespace-nowrap rounded-2xl w-full md:w-auto md:h-12"
+          className="w-full rounded-2xl px-8 whitespace-nowrap md:h-12 md:w-auto"
         >
           Check
         </Button>
       </form>
       {pincodeError && (
-        <Text as="p" className="text-red-500 text-xs mt-2 text-left ">
+        <Text as="p" className="mt-2 text-left text-xs text-red-500">
           {pincodeError}
         </Text>
       )}

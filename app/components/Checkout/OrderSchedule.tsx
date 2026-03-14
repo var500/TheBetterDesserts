@@ -110,8 +110,8 @@ export default function OrderSchedule({
   }, [scheduledDate]);
 
   return (
-    <section className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-primary-dark/5 animate-in fade-in slide-in-from-bottom-2 mb-8">
-      <Text as="h2" className="text-2xl font-bold text-primary-dark mb-2">
+    <section className="border-primary-dark/5 animate-in fade-in slide-in-from-bottom-2 mb-8 rounded-3xl border bg-white p-6 shadow-sm md:p-8">
+      <Text as="h2" className="text-primary-dark mb-2 text-2xl font-bold">
         {deliveryMethod === "delivery" ? "Delivery Schedule" : "Pickup Time"}
       </Text>
       <Text as="p" className="text-primary-dark/70 mb-6">
@@ -122,17 +122,17 @@ export default function OrderSchedule({
 
       <div className="flex flex-col gap-6">
         {/* 3-Day Button Selector */}
-        <div className="grid grid-cols-3 gap-3 w-full">
+        <div className="grid w-full grid-cols-3 gap-3">
           {dateOptions.map((opt) => {
             const isSelected = scheduledDate === opt.value;
             return (
               <button
                 key={opt.value}
                 onClick={() => setScheduledDate(opt.value)}
-                className={`py-2 md:py-3 px-1 md:px-2 text-xs md:text-sm font-bold rounded-2xl border transition-all duration-200 ${
+                className={`rounded-2xl border px-1 py-2 text-xs font-bold transition-all duration-200 md:px-2 md:py-3 md:text-sm ${
                   isSelected
-                    ? "bg-primary-dark border-primary-dark text-white shadow-md scale-[1.02]"
-                    : "bg-transparent border-gray-200 text-primary-dark/70 hover:border-primary-dark/40 hover:bg-primary-dark/5"
+                    ? "bg-primary-dark border-primary-dark scale-[1.02] text-white shadow-md"
+                    : "text-primary-dark/70 hover:border-primary-dark/40 hover:bg-primary-dark/5 border-gray-200 bg-transparent"
                 }`}
               >
                 {opt.label}
@@ -143,7 +143,7 @@ export default function OrderSchedule({
 
         {/* Time Slot Picker */}
         {/* Custom Theme Dropdown Picker */}
-        <div className="w-full max-w-80 relative">
+        <div className="relative w-full max-w-80">
           <button
             type="button"
             disabled={
@@ -152,7 +152,7 @@ export default function OrderSchedule({
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             // Using onBlur to close the menu if the user clicks away
             onBlur={() => setTimeout(() => setIsDropdownOpen(false), 200)}
-            className="w-full p-4 flex justify-between items-center border border-gray-200 rounded-2xl text-base font-bold text-primary-dark focus:border-primary-dark outline-none transition-all bg-white disabled:bg-gray-50 disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed"
+            className="text-primary-dark focus:border-primary-dark flex w-full cursor-pointer items-center justify-between rounded-2xl border border-gray-200 bg-white p-4 text-base font-bold transition-all outline-none disabled:cursor-not-allowed disabled:bg-gray-50 disabled:opacity-60"
           >
             <span>
               {!scheduledDate
@@ -183,7 +183,7 @@ export default function OrderSchedule({
 
           {/* The Custom Dropdown Menu */}
           {isDropdownOpen && availableSlots.length > 0 && (
-            <ul className="absolute top-full left-0 w-full mt-2 bg-primary-light text-primary-dark border border-primary-dark/10 rounded-2xl shadow-xl z-20 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+            <ul className="bg-primary-light text-primary-dark border-primary-dark/10 animate-in fade-in slide-in-from-top-2 absolute top-full left-0 z-20 mt-2 w-full overflow-hidden rounded-2xl border shadow-xl duration-200">
               {availableSlots.map((slot) => (
                 <li
                   key={slot}
@@ -191,7 +191,7 @@ export default function OrderSchedule({
                     setScheduledSlot(slot);
                     setIsDropdownOpen(false);
                   }}
-                  className={`p-4 cursor-pointer font-bold text-base transition-colors ${
+                  className={`cursor-pointer p-4 text-base font-bold transition-colors ${
                     scheduledSlot === slot
                       ? "bg-primary-dark/10" // Slight highlight for the currently selected item
                       : "hover:bg-primary-dark hover:text-white"
@@ -209,7 +209,7 @@ export default function OrderSchedule({
       {isToday && availableSlots.length === 0 && (
         <Text
           as="p"
-          className="text-red-500 font-medium text-sm mt-4 animate-in fade-in"
+          className="animate-in fade-in mt-4 text-sm font-medium text-red-500"
         >
           No more {deliveryMethod} slots available for today. Please select
           tomorrow to view the earliest available times.
@@ -218,9 +218,9 @@ export default function OrderSchedule({
 
       {/* Confirmation Success Message */}
       {scheduledDate && scheduledSlot && (
-        <div className="mt-6 p-4 bg-green-50/50 border border-green-100 rounded-2xl flex items-start gap-3 animate-in fade-in slide-in-from-top-2">
+        <div className="animate-in fade-in slide-in-from-top-2 mt-6 flex items-start gap-3 rounded-2xl border border-green-100 bg-green-50/50 p-4">
           <svg
-            className="w-5 h-5 text-green-600 shrink-0 mt-0.5"
+            className="mt-0.5 h-5 w-5 shrink-0 text-green-600"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -234,7 +234,7 @@ export default function OrderSchedule({
           </svg>
           <Text
             as="p"
-            className="text-green-800 text-sm md:text-base leading-relaxed"
+            className="text-sm leading-relaxed text-green-800 md:text-base"
           >
             Great! Your order will be{" "}
             {deliveryMethod === "delivery" ? "delivered" : "ready for pickup"}{" "}

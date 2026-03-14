@@ -119,13 +119,13 @@ export const AuthModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 backdrop-blur-md bg-black/20">
+    <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/20 p-4 backdrop-blur-md">
       <div className="absolute inset-0" onClick={onClose} />
-      <div className="relative w-full max-w-md bg-white rounded-2xl p-8 shadow-2xl animate-fade-in-up border border-primary-dark/10">
+      <div className="animate-fade-in-up border-primary-dark/10 relative w-full max-w-md rounded-2xl border bg-white p-8 shadow-2xl">
         {/* Fixed Cursor Pointer for Close Button */}
         <button
           onClick={onClose}
-          className="cursor-pointer absolute top-4 right-4 text-primary-dark/40 hover:text-primary-dark transition-colors"
+          className="text-primary-dark/40 hover:text-primary-dark absolute top-4 right-4 cursor-pointer transition-colors"
           aria-label="Close modal"
         >
           <Icons.X size={24} />
@@ -133,21 +133,18 @@ export const AuthModal = ({
 
         {user ? (
           // --- LOGGED IN VIEW ---
-          <div className="text-center space-y-6">
-            <div className="w-20 h-20 bg-[#F5F0E6] rounded-full flex items-center justify-center mx-auto text-primary-dark">
-              <Icons.User className="w-10 h-10" />
+          <div className="space-y-6 text-center">
+            <div className="text-primary-dark mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#F5F0E6]">
+              <Icons.User className="h-10 w-10" />
             </div>
             <div>
               <Text
                 as="h2"
-                className="text-3xl font-frista text-primary-dark leading-tight mb-1"
+                className="text-primary-dark mb-1 text-3xl leading-tight"
               >
                 Welcome Back!
               </Text>
-              <Text
-                as="p"
-                className="text-primary-dark/70 font-satoshi text-sm"
-              >
+              <Text as="p" className="text-primary-dark/70 text-sm">
                 Logged in as:{" "}
                 {user.name ? (
                   <span className="font-mono">
@@ -164,32 +161,32 @@ export const AuthModal = ({
               <Button
                 variant="outline"
                 onClick={() => navigate("/profile")}
-                className="w-full h-12 text-lg font-satoshi font-medium flex items-center justify-center gap-2"
+                className="flex h-12 w-full items-center justify-center gap-2 text-lg font-medium"
               >
-                Order History <Icons.ChevronRight className="w-4 h-4" />
+                Order History <Icons.ChevronRight className="h-4 w-4" />
               </Button>
               <Button
                 variant={"destructive"}
                 onClick={onSignOut}
-                className="w-full h-12 text-lg font-satoshi font-medium flex items-center justify-center gap-2"
+                className="flex h-12 w-full items-center justify-center gap-2 text-lg font-medium"
               >
-                Sign Out <Icons.LogOut className="w-4 h-4" />
+                Sign Out <Icons.LogOut className="h-4 w-4" />
               </Button>
             </div>
           </div>
         ) : (
           // --- AUTHENTICATION FLOW ---
-          <div className="text-center space-y-6">
+          <div className="space-y-6 text-center">
             <div>
               <Text
                 as="h2"
-                className="text-3xl font-frista text-primary-dark leading-tight mb-2"
+                className="text-primary-dark mb-2 text-3xl leading-tight"
               >
                 {step === "email" ? "Join the Club" : "Enter OTP"}
               </Text>
               <Text
                 as="p"
-                className="text-primary-dark/70 font-satoshi text-sm md:text-base font-light"
+                className="text-primary-dark/70 text-sm font-light md:text-base"
               >
                 {step === "email"
                   ? "Enter your email to receive a secure login code."
@@ -202,7 +199,7 @@ export const AuthModal = ({
                 <div className="space-y-2 text-left">
                   <Text
                     as="span"
-                    className="block text-xs font-bold uppercase tracking-wider text-primary-dark/60 font-satoshi"
+                    className="text-primary-dark/60 block text-xs font-bold tracking-wider uppercase"
                   >
                     Email Address
                   </Text>
@@ -212,12 +209,12 @@ export const AuthModal = ({
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 bg-white/50 border border-primary-dark/10 rounded-xl focus:ring-2 focus:ring-primary-dark outline-none font-satoshi"
+                    className="border-primary-dark/10 focus:ring-primary-dark w-full rounded-xl border bg-white/50 px-4 py-3 outline-none focus:ring-2"
                   />
                 </div>
 
                 {isSendError && (
-                  <p className="text-red-500 text-sm text-left">
+                  <p className="text-left text-sm text-red-500">
                     Failed to send OTP. Please try again.
                   </p>
                 )}
@@ -225,10 +222,10 @@ export const AuthModal = ({
                 <Button
                   type="submit"
                   disabled={isSending}
-                  className="w-full h-12 text-lg font-satoshi font-medium flex justify-center items-center gap-2"
+                  className="flex h-12 w-full items-center justify-center gap-2 text-lg font-medium"
                 >
                   {isSending ? "Sending..." : "Send Login Code"}
-                  {!isSending && <Icons.ArrowRight className="w-4 h-4" />}
+                  {!isSending && <Icons.ArrowRight className="h-4 w-4" />}
                 </Button>
               </form>
             ) : (
@@ -241,13 +238,13 @@ export const AuthModal = ({
                     required
                     value={otp}
                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-                    className="w-full text-center text-3xl tracking-[0.5em] py-3 bg-white/50 border border-primary-dark/10 rounded-xl focus:ring-2 focus:ring-primary-dark outline-none font-mono text-primary-dark"
+                    className="border-primary-dark/10 focus:ring-primary-dark text-primary-dark w-full rounded-xl border bg-white/50 py-3 text-center font-mono text-3xl tracking-[0.5em] outline-none focus:ring-2"
                     placeholder="••••••"
                   />
                 </div>
 
                 {isVerifyError && (
-                  <p className="text-red-500 text-sm">
+                  <p className="text-sm text-red-500">
                     Invalid or expired OTP. Please try again.
                   </p>
                 )}
@@ -255,13 +252,13 @@ export const AuthModal = ({
                 <Button
                   type="submit"
                   disabled={otp.length !== 6 || isVerifying}
-                  className="w-full h-12 text-lg font-satoshi font-medium"
+                  className="h-12 w-full text-lg font-medium"
                 >
                   {isVerifying ? "Verifying..." : "Verify & Login"}
                 </Button>
 
                 {/* Resend Logic */}
-                <div className="text-sm text-primary-dark/70 pt-2 font-satoshi">
+                <div className="text-primary-dark/70 pt-2 text-sm">
                   {timer > 0 ? (
                     <p>
                       Resend code in <span className="font-bold">{timer}s</span>
@@ -275,8 +272,8 @@ export const AuthModal = ({
                       type="button"
                       onClick={handleResendOtp}
                       disabled={isSending}
-                      className={`cursor-pointer bg-white shadow-none text-primary-dark font-bold hover:underline transition-all ${
-                        isSending ? "opacity-50 cursor-not-alowed" : ""
+                      className={`text-primary-dark cursor-pointer bg-white font-bold shadow-none transition-all hover:underline ${
+                        isSending ? "cursor-not-alowed opacity-50" : ""
                       }`}
                     >
                       {isSending ? "Sending..." : "Resend OTP"}{" "}
@@ -289,10 +286,10 @@ export const AuthModal = ({
               </form>
             )}
 
-            <div className="bg-primary-dark/5 p-4 rounded-xl border border-primary-dark/5 mt-6">
+            <div className="bg-primary-dark/5 border-primary-dark/5 mt-6 rounded-xl border p-4">
               <Text
                 as="p"
-                className="text-[10px] text-primary-dark/50 leading-relaxed text-center font-satoshi uppercase tracking-widest"
+                className="text-primary-dark/50 text-center text-[10px] leading-relaxed tracking-widest uppercase"
               >
                 Secure session management enabled
               </Text>

@@ -13,15 +13,15 @@ export default function ProductDescription({
   availableLocations,
 }: ProductDescriptionProps) {
   return (
-    <div className="border-t border-primary-dark/10 pt-6">
-      <div className="flex justify-between items-center mb-4 cursor-pointer">
+    <div className="border-primary-dark/10 border-t pt-6">
+      <div className="mb-4 flex cursor-pointer items-center justify-between">
         <Text
           as="h4"
-          className="font-bold text-primary-dark flex items-center gap-2"
+          className="text-primary-dark flex items-center gap-2 font-bold"
         >
-          <Icons.MessageSquare className="w-5 h-5" /> Description
+          <Icons.MessageSquare className="h-5 w-5" /> Description
         </Text>
-        <Icons.Minus className="w-5 h-5 text-primary-dark/50" />
+        <Icons.Minus className="text-primary-dark/50 h-5 w-5" />
       </div>
       <Text
         as="p"

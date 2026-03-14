@@ -39,16 +39,16 @@ export default function OrderCard({ order, onReorder }: OrderCardProps) {
   const isDelivered = order.order_status === "DELIVERED";
 
   return (
-    <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-primary-dark/5 flex flex-col gap-6">
+    <div className="border-primary-dark/5 flex flex-col gap-6 rounded-3xl border bg-white p-6 shadow-sm md:p-8">
       {/* Top Section: Order Details */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+      <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
         <div>
-          <div className="flex items-center gap-3 mb-2">
-            <Text as="h3" className="text-lg font-bold text-primary-dark">
+          <div className="mb-2 flex items-center gap-3">
+            <Text as="h3" className="text-primary-dark text-lg font-bold">
               Order #{order.id.slice(-6).toUpperCase()}
             </Text>
             <span
-              className={`px-3 py-1 text-xs font-bold rounded-full ${
+              className={`rounded-full px-3 py-1 text-xs font-bold ${
                 isDelivered
                   ? "bg-green-100 text-green-700"
                   : "bg-orange-100 text-orange-700"
@@ -64,17 +64,17 @@ export default function OrderCard({ order, onReorder }: OrderCardProps) {
 
           {/* Conditional Delivery Date */}
           {isDelivered && order.delivery_date && (
-            <Text as="p" className="text-green-600 font-semibold text-sm mt-1">
+            <Text as="p" className="mt-1 text-sm font-semibold text-green-600">
               Delivered on {new Date(order.delivery_date).toLocaleDateString()}
             </Text>
           )}
 
-          <div className="flex flex-wrap gap-2 mt-4">
-            <div className="flex flex-wrap gap-2 mt-4">
+          <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-2">
               {order.items.map((item, idx: number) => (
                 <span
                   key={idx}
-                  className="text-xs bg-[#F5F0E6] text-primary-dark px-3 py-1 rounded-full border border-primary-dark/10"
+                  className="text-primary-dark border-primary-dark/10 rounded-full border bg-[#F5F0E6] px-3 py-1 text-xs"
                 >
                   {/* Access the newly included product name! */}
                   {item.quantity}x {item.product.name}
@@ -84,14 +84,14 @@ export default function OrderCard({ order, onReorder }: OrderCardProps) {
           </div>
         </div>
 
-        <div className="flex flex-col items-end gap-3 w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0 border-primary-dark/10">
-          <Text as="p" className="font-black text-xl text-primary-dark">
+        <div className="border-primary-dark/10 flex w-full flex-col items-end gap-3 border-t pt-4 md:w-auto md:border-t-0 md:pt-0">
+          <Text as="p" className="text-primary-dark text-xl font-black">
             ₹{order.total_amount}
           </Text>
           <Button
             variant="outline"
             onClick={onReorder}
-            className="w-full md:w-auto rounded-xl border-primary-dark text-primary-dark hover:bg-primary-dark hover:text-white transition-all"
+            className="border-primary-dark text-primary-dark hover:bg-primary-dark w-full rounded-xl transition-all hover:text-white md:w-auto"
           >
             Repeat Order
           </Button>
@@ -100,12 +100,12 @@ export default function OrderCard({ order, onReorder }: OrderCardProps) {
 
       {/* Bottom Section: Feedback UI (Only show if delivered and not yet rated) */}
       {isDelivered && !feedbackSubmitted && (
-        <div className="pt-6 border-t border-primary-dark/10 mt-2 animate-in fade-in">
-          <Text as="h4" className="font-bold text-primary-dark mb-3">
+        <div className="border-primary-dark/10 animate-in fade-in mt-2 border-t pt-6">
+          <Text as="h4" className="text-primary-dark mb-3 font-bold">
             How was your order?
           </Text>
 
-          <div className="flex gap-2 mb-4">
+          <div className="mb-4 flex gap-2">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
                 key={star}
@@ -113,10 +113,10 @@ export default function OrderCard({ order, onReorder }: OrderCardProps) {
                 onClick={() => setRating(star)}
                 onMouseEnter={() => setHoverRating(star)}
                 onMouseLeave={() => setHoverRating(0)}
-                className="focus:outline-none transition-transform hover:scale-110"
+                className="transition-transform hover:scale-110 focus:outline-none"
               >
                 <svg
-                  className={`w-8 h-8 ${
+                  className={`h-8 w-8 ${
                     star <= (hoverRating || rating)
                       ? "text-yellow-400"
                       : "text-gray-300"
@@ -133,12 +133,12 @@ export default function OrderCard({ order, onReorder }: OrderCardProps) {
 
           {/* Reveal textarea once they click a star */}
           {rating > 0 && (
-            <div className="space-y-3 animate-in slide-in-from-top-2">
+            <div className="animate-in slide-in-from-top-2 space-y-3">
               <textarea
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 placeholder="Tell us what you loved (or what we can improve)..."
-                className="w-full p-3 border border-primary-dark/20 rounded-xl outline-none focus:border-primary-dark text-sm bg-gray-50 resize-none h-24"
+                className="border-primary-dark/20 focus:border-primary-dark h-24 w-full resize-none rounded-xl border bg-gray-50 p-3 text-sm outline-none"
               />
               <Button
                 onClick={handleFeedbackSubmit}
@@ -154,10 +154,10 @@ export default function OrderCard({ order, onReorder }: OrderCardProps) {
 
       {/* Feedback Success State */}
       {feedbackSubmitted && (
-        <div className="pt-4 border-t border-primary-dark/10 mt-2">
+        <div className="border-primary-dark/10 mt-2 border-t pt-4">
           <Text
             as="p"
-            className="text-green-600 font-bold flex items-center gap-2"
+            className="flex items-center gap-2 font-bold text-green-600"
           >
             ✓ Feedback submitted successfully!
           </Text>

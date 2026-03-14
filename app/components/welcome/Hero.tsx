@@ -21,14 +21,14 @@ export const Hero = ({
 
   return (
     // 1. Adjusted Height: 75vh on mobile, 85vh on md screens
-    <section className="relative h-[75vh] md:h-[85vh] overflow-hidden w-full flex">
+    <section className="relative flex h-[75vh] w-full overflow-hidden md:h-[85vh]">
       <Swiper
         slidesPerView={1}
         pagination={{ clickable: true }}
-        modules={[Pagination, Autoplay]}
+        modules={[Pagination]}
         loop={true}
         autoplay={{ delay: 4000, disableOnInteraction: false }}
-        className="w-full h-full pb-8 md:pb-0" // Added pb-8 on mobile so pagination dots don't overlap text
+        className="h-full w-full pb-8 md:pb-0" // Added pb-8 on mobile so pagination dots don't overlap text
         style={
           {
             "--swiper-pagination-color": "#F5F0E6",
@@ -37,13 +37,13 @@ export const Hero = ({
         }
       >
         {/* SLIDE 1: Main Brand Logo */}
-        <SwiperSlide className="relative overflow-hidden bg-primary-dark">
-          <div className="relative z-10 flex flex-col items-center justify-center w-full h-full px-6 gap-0 md:gap-10 text-center select-none">
+        <SwiperSlide className="bg-primary-dark relative overflow-hidden">
+          <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-0 px-6 text-center select-none md:gap-10">
             <img
               src="/brand/betterDesserts.jpeg"
               alt="Brand Logo"
               // Standardized mobile image size
-              className="object-contain w-90 h-90 md:w-[70%] md:h-[70%]"
+              className="h-90 w-90 object-contain md:h-[70%] md:w-[70%]"
             />
             <Button
               variant={"light"}
@@ -58,50 +58,50 @@ export const Hero = ({
         {/* SLIDE 2: What Makes Us Better (USPs) */}
         <SwiperSlide>
           {/* Changed px-12 to px-6 on mobile, adjusted flex direction so image stays prominent */}
-          <div className="bg-primary-dark flex flex-col-reverse md:flex-row items-center justify-center w-full h-full px-6 md:px-24 gap-6 md:gap-10 pb-8 md:pb-0">
-            <div className="w-full flex flex-col justify-center text-[#F5F0E6] text-center md:text-left">
+          <div className="bg-primary-dark flex h-full w-full flex-col-reverse items-center justify-center gap-6 px-6 pb-8 md:flex-row md:gap-10 md:px-24 md:pb-0">
+            <div className="flex w-full flex-col justify-center text-center text-[#F5F0E6] md:text-left">
               <Text
                 variant={"secondary"}
                 as={"h2"}
-                className="text-3xl md:text-6xl leading-tight"
+                className="text-3xl leading-tight md:text-6xl"
               >
                 What makes us
               </Text>
               <Text
                 as={"span"}
                 variant={"secondary"}
-                className="text-3xl md:text-6xl mb-6 md:mb-8"
+                className="mb-6 text-3xl md:mb-8 md:text-6xl"
               >
                 Better?
               </Text>
 
               {/* Centered list on mobile, left-aligned on desktop */}
-              <ul className="text-base md:text-2xl font-playfair space-y-2 md:space-y-4 font-light inline-block text-left mx-auto md:mx-0 w-fit">
+              <ul className="font-playfair mx-auto inline-block w-fit space-y-2 text-left text-base font-light md:mx-0 md:space-y-4 md:text-2xl">
                 <li className="flex items-center gap-3">
-                  <Icons.X className="text-red-400 w-4 h-4 md:w-6 md:h-6" /> No
+                  <Icons.X className="h-4 w-4 text-red-400 md:h-6 md:w-6" /> No
                   White Sugar
                 </li>
                 <li className="flex items-center gap-3">
-                  <Icons.X className="text-red-400 w-4 h-4 md:w-6 md:h-6" /> No
+                  <Icons.X className="h-4 w-4 text-red-400 md:h-6 md:w-6" /> No
                   Maida
                 </li>
                 <li className="flex items-center gap-3">
-                  <Icons.X className="text-red-400 w-4 h-4 md:w-6 md:h-6" /> No
+                  <Icons.X className="h-4 w-4 text-red-400 md:h-6 md:w-6" /> No
                   Palm Oil
                 </li>
                 <li className="flex items-center gap-3">
-                  <Icons.Check className="text-green-400 w-4 h-4 md:w-6 md:h-6" />{" "}
+                  <Icons.Check className="h-4 w-4 text-green-400 md:h-6 md:w-6" />{" "}
                   100% Eggless
                 </li>
               </ul>
             </div>
 
             {/* Image Section - reduced height on mobile */}
-            <div className="w-full md:w-5/12 h-48 sm:h-56 md:h-[70%] rounded-t-full rounded-b-xl overflow-hidden relative shadow-2xl mt-4 md:mt-0">
+            <div className="relative mt-4 h-48 w-full overflow-hidden rounded-t-full rounded-b-xl shadow-2xl sm:h-56 md:mt-0 md:h-[70%] md:w-5/12">
               <img
                 src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=1065&auto=format&fit=crop"
                 alt="Almond flour and oats"
-                className="object-cover w-full h-full"
+                className="h-full w-full object-cover"
               />
             </div>
           </div>
@@ -109,11 +109,11 @@ export const Hero = ({
 
         {/* SLIDE 3: The Better Cakes */}
         <SwiperSlide className="relative overflow-hidden bg-[#efe7d4]">
-          <div className="relative z-10 flex flex-col items-center justify-center w-full h-full px-6 gap-0 md:gap-10 text-center select-none">
+          <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-0 px-6 text-center select-none md:gap-10">
             <img
               src="/brand/betterCakes.jpeg"
               alt="Better Cakes Logo"
-              className="object-contain w-90 h-90 md:w-[70%] md:h-[70%]"
+              className="h-90 w-90 object-contain md:h-[70%] md:w-[70%]"
             />
             <Button variant={"default"} size={"sm-to-default"}>
               Shop Now
@@ -128,45 +128,45 @@ export const Hero = ({
               key={item.id}
               className="bg-primary-dark relative overflow-hidden"
             >
-              <div className="absolute top-0 right-0 w-96 h-96 bg-[#F5F0E6] opacity-5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3" />
+              <div className="absolute top-0 right-0 h-96 w-96 translate-x-1/3 -translate-y-1/3 rounded-full bg-[#F5F0E6] opacity-5 blur-3xl" />
 
-              <div className="flex flex-col md:flex-row items-center justify-center w-full h-full px-6 md:px-24 gap-6 md:gap-16 relative z-10 pb-8 md:pb-0">
+              <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-6 px-6 pb-8 md:flex-row md:gap-16 md:px-24 md:pb-0">
                 {/* Image Section - smaller arch on mobile */}
-                <div className="w-full md:w-1/2 flex justify-center md:justify-end mt-8 md:mt-0">
-                  <div className="w-full sm:w-[85%] md:w-[75%] h-52 sm:h-64 md:h-[75%] max-h-[500px] rounded-t-[70px] md:rounded-t-[100px] rounded-b-2xl md:rounded-b-3xl overflow-hidden relative shadow-[0_20px_50px_rgba(0,0,0,0.4)] border border-[#F5F0E6]/10 group">
+                <div className="mt-8 flex w-full justify-center md:mt-0 md:w-1/2 md:justify-end">
+                  <div className="group relative h-52 max-h-125 w-full overflow-hidden rounded-2xl border border-[#F5F0E6]/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] sm:h-64 sm:w-[85%] md:h-[75%] md:w-[75%] md:rounded-3xl">
                     <img
                       src={
                         item.image?.[0] ||
                         "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=987"
                       }
                       alt={item.name}
-                      className="object-cover w-full h-full transition-transform duration-1000 group-hover:scale-110"
+                      className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-80" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent opacity-80" />
                   </div>
                 </div>
 
                 {/* Text Section - Scaled down font sizes for mobile */}
-                <div className="w-full md:w-1/2 flex flex-col justify-center items-center md:items-start text-center md:text-left text-[#F5F0E6]">
+                <div className="flex w-full flex-col items-center justify-center text-center text-[#F5F0E6] md:w-1/2 md:items-start md:text-left">
                   <div className="mb-3 md:mb-6">
                     <Badge
                       variant="primary"
-                      className="bg-[#F5F0E6]/10 text-[#F5F0E6] border border-[#F5F0E6]/20 backdrop-blur-md px-3 py-1 md:px-4 md:py-1.5 text-[10px] md:text-sm uppercase tracking-[0.2em]"
+                      className="border border-[#F5F0E6]/20 bg-[#F5F0E6]/10 px-3 py-1 text-[10px] tracking-[0.2em] text-[#F5F0E6] uppercase backdrop-blur-md md:px-4 md:py-1.5 md:text-sm"
                     >
-                      ★ New Launch
+                      New Launch
                     </Badge>
                   </div>
 
                   <Text
                     as="h2"
-                    className="text-4xl md:text-6xl lg:text-7xl font-frista leading-[1.1] mb-3 md:mb-6 drop-shadow-md max-w-lg"
+                    className="mb-3 max-w-lg text-4xl leading-[1.1] drop-shadow-md md:mb-6 md:text-6xl lg:text-7xl"
                   >
                     {item.name}
                   </Text>
 
                   <Text
                     as="p"
-                    className="text-sm md:text-lg lg:text-xl font-light opacity-80 mb-6 md:mb-10 max-w-md line-clamp-3 md:line-clamp-4 leading-relaxed"
+                    className="mb-6 line-clamp-3 max-w-md text-sm leading-relaxed font-light opacity-80 md:mb-10 md:line-clamp-4 md:text-lg lg:text-xl"
                   >
                     {item.unitDescription ||
                       "Rich, decadent, and completely guilt-free. Experience the perfect blend of premium ingredients."}
@@ -175,7 +175,7 @@ export const Hero = ({
                   <Button
                     variant="orderNow"
                     size="sm-to-default"
-                    className="group relative rounded-full px-6 py-4 md:px-8 md:py-6 text-sm md:text-lg shadow-xl hover:shadow-2xl transition-all duration-300 mx-auto md:mx-0"
+                    className="group relative mx-auto rounded-full px-6 py-4 text-sm shadow-xl transition-all duration-300 hover:shadow-2xl md:mx-0 md:px-8 md:py-6 md:text-lg"
                     onClick={() => navigate(`/product/${item.id}`)}
                   >
                     <span className="flex items-center gap-2 md:gap-3">
@@ -204,40 +204,40 @@ export const Hero = ({
 
         {/* SLIDE 5: Gurgaon cleanest dessert branch */}
         <SwiperSlide>
-          <div className="flex flex-col-reverse md:flex-row items-center justify-center w-full h-full px-6 md:px-24 gap-6 md:gap-10 pb-8 md:pb-0">
+          <div className="flex h-full w-full flex-col-reverse items-center justify-center gap-6 px-6 pb-8 md:flex-row md:gap-10 md:px-24 md:pb-0">
             {/* Image Section - reduced height for mobile */}
-            <div className="w-full md:w-1/2 h-48 sm:h-56 md:h-[70%] rounded-xl md:rounded-2xl overflow-hidden relative shadow-2xl mt-4 md:mt-0">
+            <div className="relative mt-4 h-48 w-full overflow-hidden rounded-xl shadow-2xl sm:h-56 md:mt-0 md:h-[70%] md:w-1/2 md:rounded-2xl">
               <img
                 src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=987&auto=format&fit=crop"
                 alt="Clean Dessert Kitchen Gurgaon"
-                className="object-cover h-full w-full"
+                className="h-full w-full object-cover"
               />
             </div>
 
             {/* Content Section */}
-            <div className="text-center md:text-left w-full md:w-1/2 flex flex-col justify-center text-primary-dark">
+            <div className="text-primary-dark flex w-full flex-col justify-center text-center md:w-1/2 md:text-left">
               <Text
                 as={"h2"}
-                className="text-3xl md:text-6xl lg:text-7xl font-playfair leading-[1.1]"
+                className="font-playfair text-3xl leading-[1.1] md:text-6xl lg:text-7xl"
               >
                 Gurgaon’s
               </Text>
               <Text
                 as={"h2"}
-                className="text-3xl md:text-6xl lg:text-7xl font-playfair leading-[1.1]"
+                className="font-playfair text-3xl leading-[1.1] md:text-6xl lg:text-7xl"
               >
                 Cleanest Dessert
               </Text>
               <Text
                 as={"h2"}
-                className="text-3xl md:text-6xl lg:text-7xl font-playfair mb-4 md:mb-6 leading-[1.1]"
+                className="font-playfair mb-4 text-3xl leading-[1.1] md:mb-6 md:text-6xl lg:text-7xl"
               >
                 Brand
               </Text>
 
               <Text
                 as={"p"}
-                className="text-sm md:text-lg lg:text-xl font-light opacity-90 mb-6 md:mb-8 max-w-md mx-auto md:mx-0"
+                className="mx-auto mb-6 max-w-md text-sm font-light opacity-90 md:mx-0 md:mb-8 md:text-lg lg:text-xl"
               >
                 Experience desserts crafted in a spotless, hygienic environment.
                 Every treat is prepared with premium ingredients, strict quality
@@ -250,7 +250,7 @@ export const Hero = ({
                 className={buttonVariants({
                   variant: "default",
                   size: "sm-to-default",
-                  className: "w-fit mx-auto md:mx-0 px-8",
+                  className: "mx-auto w-fit px-8 md:mx-0",
                 })}
               >
                 Visit Us

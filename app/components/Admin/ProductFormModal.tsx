@@ -112,8 +112,8 @@ export default function ProductFormModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="bg-white rounded-xl shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div className="p-6 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white z-10">
+      <div className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white shadow-lg">
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-100 bg-white p-6">
           <h2 className="text-xl font-semibold">
             {initialData ? "Edit Product" : "Add New Product"}
           </h2>
@@ -125,11 +125,11 @@ export default function ProductFormModal({
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 p-6">
           {/* Basic Info */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="mb-1 block text-sm font-medium text-gray-700">
                 Name *
               </label>
               <input
@@ -139,11 +139,11 @@ export default function ProductFormModal({
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
-                className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="mb-1 block text-sm font-medium text-gray-700">
                 Base Price (₹) *
               </label>
               <input
@@ -157,12 +157,12 @@ export default function ProductFormModal({
                     base_price: Number(e.target.value),
                   })
                 }
-                className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
 
             <div className="md:col-span-1">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="mb-1 block text-sm font-medium text-gray-700">
                 Unit Description
               </label>
               <textarea
@@ -171,11 +171,11 @@ export default function ProductFormModal({
                 onChange={(e) =>
                   setFormData({ ...formData, unitDescription: e.target.value })
                 }
-                className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="mb-1 block text-sm font-medium text-gray-700">
                 Category *
               </label>
               <select
@@ -184,7 +184,7 @@ export default function ProductFormModal({
                 onChange={(e) =>
                   setFormData({ ...formData, category: e.target.value })
                 }
-                className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none bg-white"
+                className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
               >
                 <option value="" disabled>
                   Select Category
@@ -197,7 +197,7 @@ export default function ProductFormModal({
               </select>
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="mb-1 block text-sm font-medium text-gray-700">
                 Product Description
               </label>
               <textarea
@@ -206,7 +206,7 @@ export default function ProductFormModal({
                 onChange={(e) =>
                   setFormData({ ...formData, description: e.target.value })
                 }
-                className="w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500 px-3 py-2 border outline-none"
+                className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm outline-none focus:border-blue-500 focus:ring-blue-500"
               />
             </div>
           </div>
@@ -235,16 +235,16 @@ export default function ProductFormModal({
 
           {/* Inventory & Zones */}
           <div>
-            <h3 className="text-lg font-medium mb-3">
+            <h3 className="mb-3 text-lg font-medium">
               Zone Stock Availability
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               {formData.availability.map((avail, index) => (
                 <div
                   key={avail.zone}
-                  className="bg-gray-50 p-3 rounded-lg border border-gray-200"
+                  className="rounded-lg border border-gray-200 bg-gray-50 p-3"
                 >
-                  <label className="block text-xs font-semibold text-gray-500 mb-1">
+                  <label className="mb-1 block text-xs font-semibold text-gray-500">
                     {avail.zone.replace("_", " ")}
                   </label>
                   <input
@@ -256,7 +256,7 @@ export default function ProductFormModal({
                       newAvail[index].stock_count = Number(e.target.value);
                       setFormData({ ...formData, availability: newAvail });
                     }}
-                    className="w-full border-gray-300 rounded-md shadow-sm px-3 py-1.5 text-sm border outline-none"
+                    className="w-full rounded-md border border-gray-300 px-3 py-1.5 text-sm shadow-sm outline-none"
                   />
                 </div>
               ))}
@@ -267,38 +267,38 @@ export default function ProductFormModal({
 
           {/* Toggles */}
           <div className="flex gap-6">
-            <label className="flex items-center gap-2 cursor-pointer">
+            <label className="flex cursor-pointer items-center gap-2">
               <input
                 type="checkbox"
                 checked={formData.is_active}
                 onChange={(e) =>
                   setFormData({ ...formData, is_active: e.target.checked })
                 }
-                className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                className="h-4 w-4 rounded border-gray-300 text-blue-600"
               />
               <span className="text-sm font-medium text-gray-700">Active</span>
             </label>
-            <label className="flex items-center gap-2 cursor-pointer">
+            <label className="flex cursor-pointer items-center gap-2">
               <input
                 type="checkbox"
                 checked={formData.isNewLaunch}
                 onChange={(e) =>
                   setFormData({ ...formData, isNewLaunch: e.target.checked })
                 }
-                className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                className="h-4 w-4 rounded border-gray-300 text-blue-600"
               />
               <span className="text-sm font-medium text-gray-700">
                 New Launch
               </span>
             </label>
-            <label className="flex items-center gap-2 cursor-pointer">
+            <label className="flex cursor-pointer items-center gap-2">
               <input
                 type="checkbox"
                 checked={formData.is_bestseller}
                 onChange={(e) =>
                   setFormData({ ...formData, is_bestseller: e.target.checked })
                 }
-                className="w-4 h-4 text-blue-600 rounded border-gray-300"
+                className="h-4 w-4 rounded border-gray-300 text-blue-600"
               />
               <span className="text-sm font-medium text-gray-700">
                 Bestseller
@@ -307,12 +307,12 @@ export default function ProductFormModal({
           </div>
 
           {/* Footer */}
-          <div className="pt-4 border-t border-gray-100 flex justify-end gap-3 sticky bottom-0 bg-white">
+          <div className="sticky bottom-0 flex justify-end gap-3 border-t border-gray-100 bg-white pt-4">
             <Button
               type="button"
               variant={"default"}
               onClick={onClose}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+              className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
               Cancel
             </Button>
@@ -320,7 +320,7 @@ export default function ProductFormModal({
               variant={"default"}
               type="submit"
               disabled={isPending}
-              className="cursor-pointer px-4 py-2 text-sm font-medium  rounded-md disabled:opacity-50"
+              className="cursor-pointer rounded-md px-4 py-2 text-sm font-medium disabled:opacity-50"
             >
               {isPending
                 ? "Saving..."

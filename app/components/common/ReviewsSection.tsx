@@ -8,42 +8,42 @@ const REVIEWS = [
 ];
 
 export const ReviewsSection = () => (
-  <section className="py-24 bg-white px-4 md:px-8 text-center border-t border-primary-dark/10">
-    <div className="max-w-7xl mx-auto">
+  <section className="border-primary-dark/10 border-t bg-white px-4 py-24 text-center md:px-8">
+    <div className="mx-auto max-w-7xl">
       <Text
         as="h2"
-        className="text-primary-dark font-satoshi font-black text-3xl md:text-4xl tracking-tight uppercase mb-4"
+        className="text-primary-dark mb-4 text-3xl font-black tracking-tight uppercase md:text-4xl"
       >
         Warning: These Reviews <br className="md:hidden" />
-        <span className="font-frista normal-case italic text-4xl md:text-5xl block md:inline md:ml-3">
+        <span className="block text-4xl normal-case italic md:ml-3 md:inline md:text-5xl">
           May Cause Cravings
         </span>
       </Text>
 
       <Text
         as="p"
-        className="text-primary-dark/70 mb-16 max-w-2xl mx-auto text-base md:text-lg font-satoshi font-light leading-relaxed"
+        className="text-primary-dark/70 mx-auto mb-16 max-w-2xl text-base leading-relaxed font-light md:text-lg"
       >
         We asked our customers what they think—and the responses were as sweet
         as our cookies. From flavor fanatics to dessert connoisseurs,
         everyone&apos;s found a favorite.
       </Text>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+      <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
         {REVIEWS.map((img, idx) => (
           <div
             key={idx}
-            className="group relative aspect-square bg-white p-3 shadow-md border border-primary-dark/5 rounded-xl transition-all duration-500 hover:-rotate-2 hover:scale-105 hover:shadow-xl"
+            className="group border-primary-dark/5 relative aspect-square rounded-xl border bg-white p-3 shadow-md transition-all duration-500 hover:scale-105 hover:-rotate-2 hover:shadow-xl"
           >
-            <div className="w-full h-full overflow-hidden rounded-lg bg-gray-100">
+            <div className="h-full w-full overflow-hidden rounded-lg bg-gray-100">
               <img
                 src={img}
                 alt="Customer Review"
-                className="w-full h-full object-cover transition-transform duration-700 "
+                className="h-full w-full object-cover transition-transform duration-700"
               />
             </div>
 
-            <div className="absolute top-5 right-5 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="absolute top-5 right-5 opacity-0 transition-opacity group-hover:opacity-100">
               <span className="text-red-400">♥</span>
             </div>
           </div>
