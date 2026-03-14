@@ -25,7 +25,7 @@ export const Hero = ({
       <Swiper
         slidesPerView={1}
         pagination={{ clickable: true }}
-        modules={[Pagination]}
+        modules={[Pagination, Autoplay]}
         loop={true}
         autoplay={{ delay: 4000, disableOnInteraction: false }}
         className="h-full w-full pb-8 md:pb-0" // Added pb-8 on mobile so pagination dots don't overlap text
