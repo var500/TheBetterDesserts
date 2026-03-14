@@ -1,15 +1,15 @@
 import { useState, useMemo, useEffect } from "react";
-import { Link } from "react-router";
+
 import { useCityStore } from "~/store/useCityStore";
 import { Text } from "../ui/text";
 
-import { Card } from "../ui/card";
 import { useCartStore } from "~/store/cartStore";
 
 import PinCodeSelector from "../common/PinCodeSelector";
 import { useProducts } from "~/hooks/useProducts";
 import type { Product } from "~/common/types";
-import { AddToCartButton } from "./AddToCartButton";
+
+import { ProductCard } from "./ProductCard";
 
 export default function Shop() {
   const { selectedCityId, selectedCityLabel } = useCityStore();
@@ -111,54 +111,11 @@ export default function Shop() {
 
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
                   {category.products.map((product: Product) => (
-                    <Card key={product.id} variant="default" radius="default">
-                      <Link
-                        to={`/product/${product.id}`}
-                        className="relative aspect-square overflow-hidden bg-[#E8E3D9] block"
-                      >
-                        <img
-                          src={product.image[0]}
-                          alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                      </Link>
-
-                      <div className="p-4 flex flex-col flex-1 justify-between gap-4 ">
-                        <div>
-                          <Link to={`/product/${product.id}`}>
-                            <Text
-                              as="h3"
-                              className="font-bold text-primary-dark line-clamp-2 hover:underline"
-                            >
-                              {product.name}
-                            </Text>
-                          </Link>
-
-                          {product.unitDescription && (
-                            <div className=" mb-1 mt-2 w-max inline-flex items-center">
-                              <Text
-                                as="span"
-                                className="text-[11px] uppercase tracking-wider font-semibold text-primary-dark/60"
-                              >
-                                {product.unitDescription}
-                              </Text>
-                            </div>
-                          )}
-
-                          <Text
-                            as="p"
-                            className="text-sm text-primary-dark/80 mt-1 font-bold"
-                          >
-                            ₹{product.base_price}
-                          </Text>
-                        </div>
-
-                        <AddToCartButton
-                          product={product}
-                          addToCart={addToCart}
-                        />
-                      </div>
-                    </Card>
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      addToCart={addToCart}
+                    />
                   ))}
                 </div>
               </section>

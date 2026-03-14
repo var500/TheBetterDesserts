@@ -18,7 +18,6 @@ export const Hero = ({
   newLaunchProducts?: Product[];
 }) => {
   const navigate = useNavigate();
-  console.log("newLaunchProducts", newLaunchProducts);
 
   return (
     // 1. Adjusted Height: 75vh on mobile, 85vh on md screens

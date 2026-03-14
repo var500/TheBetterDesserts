@@ -20,7 +20,7 @@ export default function App() {
   const { data: products, isLoading, isError } = useProducts();
   const bestsellers = products?.filter((item) => item.is_bestseller);
   const newLaunch = products?.filter((item) => item.isNewLaunch);
-  console.log(products);
+
   return (
     <div className="min-h-screen bg-[#F5F0E6] text-primary-dark font-sans selection:bg-primary-dark selection:text-[#F5F0E6]">
       <main className="pb-0">

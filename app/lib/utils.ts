@@ -44,3 +44,73 @@ export const getZoneFromPincode = (pincode: string): Zone => {
 
   return "PAN_INDIA";
 };
+
+export const createImage = (url: string): Promise<HTMLImageElement> =>
+  new Promise((resolve, reject) => {
+    const image = new Image();
+    image.addEventListener("load", () => resolve(image));
+    image.addEventListener("error", (error) => reject(error));
+    image.setAttribute("crossOrigin", "anonymous");
+    image.src = url;
+  });
+
+export async function getCroppedImg(
+  imageSrc: string,
+  pixelCrop: { x: number; y: number; width: number; height: number },
+  fileName: string = "cropped-image.jpg",
+): Promise<File | null> {
+  const image = await createImage(imageSrc);
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) return null;
+
+  // --- COMPRESSION SETTINGS ---
+  const MAX_DIMENSION = 1080; // Max width/height for web-friendly images
+  const COMPRESSION_QUALITY = 0.85; // 85% quality reduces file size massively with no visible loss
+
+  // Calculate the scale factor if the cropped area is larger than our max dimension
+  let outputWidth = pixelCrop.width;
+  let outputHeight = pixelCrop.height;
+
+  if (outputWidth > MAX_DIMENSION) {
+    outputHeight = Math.round((outputHeight * MAX_DIMENSION) / outputWidth);
+    outputWidth = MAX_DIMENSION;
+  }
+
+  // Set the canvas to the new, smaller dimensions
+  canvas.width = outputWidth;
+  canvas.height = outputHeight;
+
+  // Draw the image, scaling it down in the process to fit the new canvas
+  ctx.drawImage(
+    image,
+    pixelCrop.x, // start X on original image
+    pixelCrop.y, // start Y on original image
+    pixelCrop.width, // width to crop from original
+    pixelCrop.height, // height to crop from original
+    0, // place at X=0 on canvas
+    0, // place at Y=0 on canvas
+    outputWidth, // scale to this width
+    outputHeight, // scale to this height
+  );
+
+  return new Promise((resolve) => {
+    // Export with the tuned compression quality
+    canvas.toBlob(
+      (blob) => {
+        if (!blob) {
+          resolve(null);
+          return;
+        }
+
+        // Ensure the file extension is updated to .jpg if it was originally a .png
+        const newFileName = fileName.replace(/\.[^/.]+$/, "") + ".jpg";
+        const file = new File([blob], newFileName, { type: "image/jpeg" });
+        resolve(file);
+      },
+      "image/jpeg",
+      COMPRESSION_QUALITY,
+    );
+  });
+}

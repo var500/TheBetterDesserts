@@ -119,8 +119,6 @@ export default function Checkout() {
       })),
     };
 
-    console.log(payload);
-
     validateCart(payload, {
       onError: (err: ValidateCartErrorResponse) => {
         if (err.errors && err.errors.length > 0) {
