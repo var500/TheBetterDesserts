@@ -1,15 +1,27 @@
 import { useCityStore } from "~/store/useCityStore";
 import { Button } from "../ui/button";
 import { Text } from "../ui/text";
-import { Locations } from "~/common/types";
+import { Locations, type Product } from "~/common/types";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Icons } from "../icons";
 
-export default function SignatureProduct() {
+export default function SignatureProduct({
+  item,
+  isLoading,
+}: {
+  item: Product | null;
+  isLoading: boolean;
+}) {
   const { selectedCityLabel } = useCityStore();
   const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
+
+  const imgSource = item
+    ? item.image[2]
+    : "https://better-dessert.s3.eu-north-1.amazonaws.com/products/18db2412-a3d1-4762-ab07-f375c42554e8.jpg";
+
+  const isButtonDisabled = isLoading || selectedCityLabel !== Locations.GURGAON;
 
   return (
     <section className="relative flex min-h-[80vh] justify-center overflow-hidden bg-[#F5F0E6] px-4 py-20 md:px-8">
@@ -21,7 +33,7 @@ export default function SignatureProduct() {
 
           <div className="relative aspect-square overflow-hidden rounded-2xl border-4 border-[#F5F0E6] bg-white shadow-xl">
             <img
-              src="https://better-dessert.s3.eu-north-1.amazonaws.com/products/18db2412-a3d1-4762-ab07-f375c42554e8.jpg"
+              src={imgSource}
               alt="The Signature Caszel"
               loading="lazy"
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -80,16 +92,18 @@ export default function SignatureProduct() {
               onMouseLeave={() => setShowToast(false)}
             >
               <Button
-                disabled={selectedCityLabel !== Locations.GURGAON}
-                onClick={() => navigate("/collection")}
+                disabled={isButtonDisabled}
+                onClick={() => navigate(`/product/${item?.id}`)}
                 variant="default"
                 className="group flex h-14 items-center gap-3 px-10 text-lg disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {selectedCityLabel === null
-                  ? "Select your location"
-                  : selectedCityLabel !== Locations.GURGAON
-                    ? "Not deliverable"
-                    : "Shop Now"}
+                {isLoading
+                  ? "Loading.."
+                  : selectedCityLabel === null
+                    ? "Select your location"
+                    : selectedCityLabel !== Locations.GURGAON
+                      ? "Not deliverable"
+                      : "Shop Now"}
 
                 <Icons.ChevronRight className="transition-transform duration-300 group-hover:translate-x-2" />
               </Button>
@@ -102,24 +116,28 @@ export default function SignatureProduct() {
               )}
             </div>
 
-            <div className="flex flex-col">
-              <Text
-                as="span"
-                variant={"primary"}
-                className="text-primary-dark text-2xl font-bold"
-              >
-                ₹550{" "}
-                <Text as={"span"} className="text-sm font-thin md:text-base">
-                  +gst
+            {isLoading ? (
+              <Icons.Refresh className="text-primary-dark h-3 w-3 animate-spin" />
+            ) : (
+              <div className="flex flex-col">
+                <Text
+                  as="span"
+                  variant={"primary"}
+                  className="text-primary-dark text-2xl font-bold"
+                >
+                  ₹ {item?.base_price}{" "}
+                  <Text as={"span"} className="text-sm font-thin md:text-base">
+                    +gst
+                  </Text>
                 </Text>
-              </Text>
-              <Text
-                as="span"
-                className="text-primary-dark text-xs tracking-widest uppercase"
-              >
-                Pack of 3
-              </Text>
-            </div>
+                <Text
+                  as="span"
+                  className="text-primary-dark text-xs tracking-widest uppercase"
+                >
+                  Pack of 3
+                </Text>{" "}
+              </div>
+            )}
           </div>
         </div>
       </div>

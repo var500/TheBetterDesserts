@@ -21,10 +21,7 @@ import AddressManager from "./AddressManager";
 
 import { useCoupon } from "~/hooks/useCoupon";
 import { useValidateCart } from "~/hooks/useProducts";
-import type {
-  CartValidationError,
-  ValidateCartErrorResponse,
-} from "~/common/types";
+import type { CartValidationError } from "~/common/types";
 
 const mockCalculateShipping = async (
   destinationPincode: string,
@@ -98,16 +95,25 @@ export default function Checkout() {
     (sum, item) => sum + item.base_price * item.quantity,
     0,
   );
-  const total = subtotal - backendDiscountAmount + (shippingFee || 0);
+
+  const discountedSubtotal = subtotal - backendDiscountAmount;
+  const currentShipping = shippingFee || 0;
+  const taxableAmount = discountedSubtotal + currentShipping;
+
+  const gstAmount = taxableAmount * 0.05;
+
+  const total = taxableAmount + gstAmount;
   const { mutate: validateCart, isPending: isValidatingCart } =
     useValidateCart();
-  const { setIsCartOpen } = useCartStore();
 
   useEffect(() => {
     if (cart.length === 0) return;
 
-    const zoneToCheck =
-      deliveryMethod === "delivery" ? deliveryZone : "STORE_PICKUP_ZONE";
+    let zoneToCheck = deliveryZone;
+
+    if (deliveryMethod === "pickup") {
+      zoneToCheck = "GURGAON";
+    }
 
     if (deliveryMethod === "delivery" && !zoneToCheck) return;
 
@@ -120,29 +126,21 @@ export default function Checkout() {
     };
 
     validateCart(payload, {
-      onError: (err: ValidateCartErrorResponse) => {
-        if (err.errors && err.errors.length > 0) {
-          err.errors.forEach((errorItem: CartValidationError) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      onError: (err: any) => {
+        if (err?.response?.errors && err.response.errors.length > 0) {
+          err.response.errors.forEach((errorItem: CartValidationError) => {
             toast.error(errorItem.message);
           });
+        } else if (err?.message) {
+          toast.error(err.message);
         } else {
           toast.error("Some items in your cart are no longer available.");
         }
-
-        navigate("/collection");
-        setIsCartOpen(true);
       },
     });
-  }, [
-    cart,
-    deliveryZone,
-    deliveryMethod,
-    validateCart,
-    navigate,
-    setIsCartOpen,
-  ]);
+  }, [cart, deliveryZone, deliveryMethod]);
 
-  // Flow Step
   useEffect(() => {
     if (user?.uid && step !== "DELIVERY_AND_PAYMENT") {
       setStep("DELIVERY_AND_PAYMENT");
@@ -282,11 +280,14 @@ export default function Checkout() {
                     />
                   )}
                   {selectedAddr && !isAddressDeliverable && (
-                    <div className="animate-in fade-in rounded-2xl border border-red-200 bg-red-50 p-4">
-                      <Text as="p" className="text-sm font-bold text-red-500">
+                    <div className="animate-in fade-in rounded-2xl border border-red-200 bg-red-50 p-4 text-center">
+                      <Text
+                        as="p"
+                        variant={"primary"}
+                        className="text-sm text-red-500"
+                      >
                         Sorry, one or more items in your cart cannot be
-                        delivered to {selectedAddr.pin_code}. Please select a
-                        different address.
+                        delivered to {selectedAddr.pin_code}.
                       </Text>
                     </div>
                   )}
@@ -326,6 +327,7 @@ export default function Checkout() {
           shippingFee={shippingFee}
           isCalculatingShipping={isCalculatingShipping}
           total={total}
+          gstAmount={gstAmount}
           deliveryMethod={deliveryMethod}
           selectedAddressId={selectedAddressId}
           scheduledDate={scheduledDate}

@@ -13,10 +13,7 @@ export default function Details() {
   const { token } = useAuthStore();
 
   // 1. Fetch order details using your existing hook
-  const { data: order, isLoading } = useOrderDetails(
-    orderId,
-    token ?? undefined,
-  );
+  const { data: order, isLoading } = useOrderDetails(orderId);
 
   // 2. Bring in the mutation to update the status
   const { mutate: updateStatus, isPending: isUpdating } =
@@ -214,10 +211,10 @@ export default function Details() {
                   </td>
                   <td className="px-6 py-4 text-center">{item.quantity}</td>
                   <td className="px-6 py-4 text-right">
-                    {formatCurrency(item.product.price)}
+                    {formatCurrency(item.product.base_price)}
                   </td>
                   <td className="px-6 py-4 text-right font-medium">
-                    {formatCurrency(item.product.price * item.quantity)}
+                    {formatCurrency(item.product.base_price * item.quantity)}
                   </td>
                 </tr>
               ))}

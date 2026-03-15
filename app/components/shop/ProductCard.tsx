@@ -63,7 +63,8 @@ export const ProductCard = memo(
               <div className="mt-2 mb-1 inline-flex w-max items-center">
                 <Text
                   as="span"
-                  className="text-primary-dark/60 text-[11px] font-semibold tracking-wider uppercase"
+                  variant={"primary"}
+                  className="text-primary-dark text-[11px] font-semibold tracking-wider uppercase"
                 >
                   {product.unitDescription}
                 </Text>
@@ -72,6 +73,7 @@ export const ProductCard = memo(
 
             <Text
               as="p"
+              variant={"primary"}
               className="text-primary-dark/80 mt-1 text-sm font-bold"
             >
               ₹{product.base_price}

@@ -18,7 +18,7 @@ export default function ProductsTable() {
     refetch,
     isFetching,
   } = useAdminProducts(token);
-  const { remove, update } = useProductMutations(token);
+  const { remove, update } = useProductMutations();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(
@@ -238,7 +238,6 @@ export default function ProductsTable() {
       <ProductFormModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        token={token!}
         initialData={editingProduct}
         categories={categories}
       />

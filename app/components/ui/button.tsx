@@ -30,7 +30,8 @@ const buttonVariants = cva(
         default: "px-10 py-4 text-sm md:text-base h-10",
         sm: "px-6 py-2 text-xs",
         lg: "px-14 py-6 text-base md:text-lg",
-        "sm-to-default": "px-6 py-2 text-xs md:px-10 md:py-4 md:text-base",
+        "sm-to-default":
+          "px-6 py-2 text-xs md:px-10 md:py-4 md:text-sm 3xl:text-base",
       },
     },
     defaultVariants: {

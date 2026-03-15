@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text } from "../ui/text";
 import { Button } from "../ui/button";
 import type { Address } from "~/common/types";
+import { toast } from "react-toastify";
 
 // Update this type in your ~/common/types file as well!
 
@@ -21,6 +22,7 @@ interface AddressSelectionProps {
 }
 
 const EMPTY_ADDRESS = {
+  user_id: "",
   first_name: "",
   last_name: "",
   phone_number: "",
@@ -59,11 +61,45 @@ export default function AddressSelection({
     setIsFormOpen(true);
   };
 
-  const handleDelete = async (e: React.MouseEvent, addressId: string) => {
-    e.stopPropagation();
-    if (window.confirm("Are you sure you want to delete this address?")) {
-      await onDeleteAddress(addressId);
-    }
+  const handleDelete = (e: React.MouseEvent, addressId: string) => {
+    e.stopPropagation(); // Keep this so clicking the delete button doesn't select the address!
+
+    toast(
+      ({ closeToast }) => (
+        <div className="flex flex-col gap-3">
+          <p className="text-sm font-medium text-gray-800">
+            Are you sure you want to delete this address?
+          </p>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={closeToast}
+              className="rounded-md bg-gray-100 px-3 py-1.5 text-xs font-medium text-gray-600 transition hover:bg-gray-200"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={async () => {
+                // We make this onClick async to wait for your deletion to finish
+                await onDeleteAddress(addressId);
+                closeToast();
+              }}
+              className="rounded-md bg-red-600 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-red-700"
+            >
+              Yes, Delete
+            </button>
+          </div>
+        </div>
+      ),
+      {
+        // These settings make the toast behave like a strict modal prompt
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        closeButton: false,
+        position: "top-center",
+        toastId: `delete-address-confirm-${addressId}`, // Prevents duplicate toasts if they double-click
+      },
+    );
   };
 
   const handleSave = async (e: React.FormEvent) => {

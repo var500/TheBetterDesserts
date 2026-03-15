@@ -46,6 +46,7 @@
 }
 
 @theme {
+  --breakpoint-xs: 20rem;
   --font-mono: "Momo Signature", cursive;
   --font-frista: "Frista", ui-serif, serif;
   --font-satoshi: "Satoshi", ui-sans-serif, system-ui, sans-serif;

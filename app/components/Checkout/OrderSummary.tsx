@@ -15,6 +15,7 @@ interface OrderSummaryProps {
   selectedAddressId: string | null;
   scheduledDate: string;
   scheduledSlot: string;
+  gstAmount: number;
   isAddressDeliverable: boolean;
   couponCode?: string | null;
 }
@@ -26,6 +27,7 @@ export default function OrderSummary({
   shippingFee,
   isCalculatingShipping,
   total,
+  gstAmount,
   deliveryMethod,
   selectedAddressId,
   scheduledDate,
@@ -179,6 +181,17 @@ export default function OrderSummary({
               )}
             </div>
           )}
+
+          <div className="text-primary-dark/70 flex justify-between pt-1">
+            <Text as="p">GST (5%)</Text>
+            <Text as="p" className="font-medium">
+              ₹
+              {gstAmount.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
+            </Text>
+          </div>
         </div>
 
         <div className="border-primary-dark/10 mt-4 flex items-center justify-between border-t pt-4">

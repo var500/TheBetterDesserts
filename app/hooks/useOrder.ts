@@ -11,6 +11,7 @@ import {
   updateAdminOrderStatus,
 } from "~/api/order";
 import type { PaginatedAdminOrdersResponse } from "~/common/types";
+import { useAuthStore } from "~/store/authStore";
 
 export const useReorder = (currentCatalogProducts: any[]) => {
   const { addToCart } = useCartStore();
@@ -57,22 +58,35 @@ export const useReorder = (currentCatalogProducts: any[]) => {
   return { handleReorder };
 };
 
-export const useOrderDetails = (
-  orderId: string | undefined,
-  token: string | undefined,
-) => {
+export const useOrderDetails = (orderId: string | undefined) => {
+  const { token } = useAuthStore();
   return useQuery({
     queryKey: ["order", orderId],
-    queryFn: () => fetchOrderById(orderId!, token!),
+    queryFn: () => {
+      if (!token) {
+        throw new Error(
+          "Authentication token is missing. Please log in again.",
+        );
+      }
+      return fetchOrderById(orderId!, token!);
+    },
     enabled: !!orderId && !!token,
   });
 };
 
-export const useOrderHistory = (token: string | null) => {
+export const useOrderHistory = () => {
+  const { token } = useAuthStore();
   return useQuery({
     queryKey: ["orderHistory"],
-    queryFn: () => fetchUserOrders(token!),
-    enabled: !!token, // Only run if the user is logged in
+    queryFn: () => {
+      if (!token) {
+        throw new Error(
+          "Authentication token is missing. Please log in again.",
+        );
+      }
+      return fetchUserOrders(token!);
+    },
+    enabled: !!token,
   });
 };
 

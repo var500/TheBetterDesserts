@@ -6,6 +6,7 @@ export interface Product {
   base_price: number;
   image: string[];
   faq: { question: string; answer: string }[];
+  ingredients: { name: string; description: string; id: string }[];
   unitDescription: string;
   isAvailable: boolean;
   availableIn: Zone[];
@@ -261,6 +262,7 @@ export interface CreateProductPayload {
   base_price: number;
   image_url: string[];
   faq: FAQItem[];
+  ingredients: IngredientsItem[];
   category: string; // The category_id string
   weight_grams?: number | null;
   unitDescription?: string | null;
@@ -282,6 +284,7 @@ export interface AdminProduct {
   base_price: number | string; // Decimal from Prisma sometimes serializes as string
   image: string[];
   faq: FAQItem[];
+  ingredients: IngredientsItem[];
   unitDescription: string | null;
   desctiption: string | null;
   description: string | null;
@@ -307,4 +310,10 @@ export interface AdminProduct {
 export interface FAQItem {
   question: string;
   answer: string;
+}
+
+export interface IngredientsItem {
+  name: string;
+  id: string;
+  description: string;
 }

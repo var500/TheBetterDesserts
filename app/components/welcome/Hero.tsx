@@ -21,7 +21,7 @@ export const Hero = ({
 
   return (
     // 1. Adjusted Height: 75vh on mobile, 85vh on md screens
-    <section className="relative flex h-[75vh] w-full overflow-hidden md:h-[85vh]">
+    <section className="relative flex h-[80vh] w-full overflow-hidden md:h-[85vh]">
       <Swiper
         slidesPerView={1}
         pagination={{ clickable: true }}
@@ -38,7 +38,7 @@ export const Hero = ({
       >
         {/* SLIDE 1: Main Brand Logo */}
         <SwiperSlide className="bg-primary-dark relative overflow-hidden">
-          <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-0 px-6 text-center select-none md:gap-10">
+          <div className="relative z-10 flex h-full w-full flex-col items-center justify-around py-6 text-center select-none">
             <img
               src="/brand/betterDesserts.jpeg"
               alt="Brand Logo"
@@ -111,7 +111,7 @@ export const Hero = ({
         <SwiperSlide className="relative overflow-hidden bg-[#efe7d4]">
           <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-0 px-6 text-center select-none md:gap-10">
             <img
-              src="/brand/betterCakes.jpeg"
+              src="/brand/betterCakes.png"
               alt="Better Cakes Logo"
               className="h-90 w-90 object-contain md:h-[70%] md:w-[70%]"
             />
@@ -148,7 +148,7 @@ export const Hero = ({
 
                 {/* Text Section - Scaled down font sizes for mobile */}
                 <div className="flex w-full flex-col items-center justify-center text-center text-[#F5F0E6] md:w-1/2 md:items-start md:text-left">
-                  <div className="mb-3 md:mb-6">
+                  <div className="md:mb-6">
                     <Badge
                       variant="primary"
                       className="border border-[#F5F0E6]/20 bg-[#F5F0E6]/10 px-3 py-1 text-[10px] tracking-[0.2em] text-[#F5F0E6] uppercase backdrop-blur-md md:px-4 md:py-1.5 md:text-sm"

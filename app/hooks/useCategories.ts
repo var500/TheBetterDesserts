@@ -1,11 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
+// ~/hooks/useCategories.ts
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { createCategory, getAll } from "~/api/cateogry";
 
-export const useCategories = () => {
-  return useQuery({
-    queryKey: ["categories"],
-    queryFn: async () => {
-      const response = await fetch("/catalogue/categories");
-      return response.json();
-    },
+export const useCreateCategory = () => {
+  return useMutation({
+    mutationFn: async (data: { title: string; description?: string }) =>
+      createCategory(data),
+  });
+};
+
+export const useGetAllCateogry = () => {
+  return useQuery<{ id: string; title: string; description: string }[]>({
+    queryKey: ["all-category"],
+    queryFn: () => getAll(),
   });
 };

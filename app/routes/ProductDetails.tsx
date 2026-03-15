@@ -5,11 +5,11 @@ import { YouMayAlsoLike } from "~/components/common/ProductSuggestion";
 import { Icons } from "~/components/icons";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
-import BetterIngredients from "~/components/welcome/Ingredients";
 import { Layout } from "~/components/Layout/Layout";
 import Itemdetails from "~/components/ItemDetails";
 import { useGetProductById } from "~/hooks/useProducts";
-import { ProductFAQ } from "~/components/ItemDetails/ProductFAQ";
+import { ProductFAQ } from "~/components/common/Faqs";
+import { ProductIngredients } from "~/components/ItemDetails/ProductIngredients";
 
 export default function ProductDetails() {
   const { id } = useParams<{ id: string }>();
@@ -56,9 +56,11 @@ export default function ProductDetails() {
     <Layout>
       <div className="flex min-h-screen flex-col bg-[#F5F0E6]">
         <Itemdetails product={product} />
+        {product.ingredients.length ? (
+          <ProductIngredients ingredients={product.ingredients} />
+        ) : null}
         <ProductFAQ faqs={product.faq} />
         <YouMayAlsoLike />
-        <BetterIngredients />
       </div>
     </Layout>
   );

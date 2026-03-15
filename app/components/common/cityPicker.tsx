@@ -6,7 +6,6 @@ import { Locations } from "~/common/types";
 import { Icons } from "../icons";
 import { useLocation } from "react-router";
 
-// 1. Added 'label' back so the UI displays nicely formatted names
 const AVAILABLE_LOCATIONS = [
   { id: "gurgaon", label: "GURGAON", value: Locations.GURGAON },
   { id: "delhi-ncr", label: "DELHI / NCR", value: Locations.DELHI_NCR },
@@ -81,7 +80,7 @@ export const CityPicker = () => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="border-primary-dark/10 animate-fade-in-up absolute top-full left-0 z-50 mt-2 w-48 overflow-hidden rounded-xl border bg-[#F5F0E6] shadow-lg">
+        <div className="border-primary-dark/10 animate-fade-in-up absolute bottom-full left-0 z-50 mb-2 w-48 overflow-hidden rounded-xl border bg-[#F5F0E6] shadow-lg md:top-full md:bottom-auto md:mt-2 md:mb-0">
           <div className="flex flex-col py-1">
             {AVAILABLE_LOCATIONS.map((loc) => (
               <button

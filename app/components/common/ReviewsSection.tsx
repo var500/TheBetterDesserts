@@ -21,14 +21,29 @@ export const ReviewsSection = () => (
         </span>
       </Text>
 
+      {/* Floating Badge (Unchanged) */}
+
       <Text
         as="p"
-        className="text-primary-dark/70 mx-auto mb-16 max-w-2xl text-base leading-relaxed font-light md:text-lg"
+        className="text-primary-dark/70 mx-auto max-w-2xl text-base leading-relaxed font-light md:text-lg"
       >
         We asked our customers what they think—and the responses were as sweet
         as our cookies. From flavor fanatics to dessert connoisseurs,
         everyone&apos;s found a favorite.
       </Text>
+
+      <div className="border-primary-dark/5 z-10 mx-auto my-6 hidden w-fit items-center gap-3 rounded-full border bg-white px-6 py-3 shadow-xl sm:flex">
+        <span className="text-xl text-yellow-500">★</span>
+        <Text as="span" className="text-primary-dark font-bold">
+          4.9/5
+        </Text>
+        <Text
+          as="span"
+          className="text-primary-dark/80 text-xs whitespace-nowrap"
+        >
+          (3k+ Desserts Delivered)
+        </Text>
+      </div>
 
       <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
         {REVIEWS.map((img, idx) => (

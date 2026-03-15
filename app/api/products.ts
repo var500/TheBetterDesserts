@@ -1,6 +1,7 @@
 import type {
   AdminProduct,
   FormDataValue,
+  IngredientsItem,
   Product,
   UpdateProductPayload,
   ValidateCartError,
@@ -128,5 +129,41 @@ export const validateCart = async (payload: ValidateCartPayload) => {
     return Promise.reject(errorData as ValidateCartError);
   }
 
+  return response.json();
+};
+
+export const getIngredientsAdmin = async (
+  token: string,
+): Promise<IngredientsItem[]> => {
+  const response = await fetch(`${BACKEND_API_URL}/ingredients/admin`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) throw new Error("Failed to fetch ingredients");
+  return response.json();
+};
+
+export const getIngredientsUser = async (): Promise<IngredientsItem[]> => {
+  const response = await fetch(`${BACKEND_API_URL}/ingredients`, {
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!response.ok) throw new Error("Failed to fetch ingredients");
+  return response.json();
+};
+
+export const createIngredients = async (
+  payload: Omit<IngredientsItem, "id">,
+  token: string,
+): Promise<IngredientsItem> => {
+  const response = await fetch(`${BACKEND_API_URL}/ingredients`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) throw new Error("Failed to fetch ingredients");
   return response.json();
 };

@@ -34,7 +34,7 @@ export default function DeliveryAvailability({
 
       <form
         onSubmit={handleCheckPincode}
-        className="mb-4 flex items-center gap-4"
+        className="mb-4 flex flex-col items-center gap-4 md:flex-row"
       >
         <div className="relative flex-1">
           <Icons.MapPin className="text-primary-dark/40 absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2" />
@@ -44,13 +44,13 @@ export default function DeliveryAvailability({
             placeholder="Enter 6-digit pincode"
             value={pincode}
             onChange={handlePincodeChange}
-            className="text-primary-dark focus:border-primary-dark w-full rounded-2xl border border-gray-200 bg-white py-4 pr-4 pl-11 text-base font-bold tracking-widest transition-all outline-none"
+            className="text-primary-dark focus:border-primary-dark w-full rounded-2xl border border-gray-200 bg-white py-4 pr-4 pl-11 text-xs font-bold tracking-widest transition-all outline-none md:text-base"
           />
         </div>
         <Button
           type="submit"
           variant="outline"
-          className="text-primary-dark hover:border-primary-dark h-auto rounded-2xl border-gray-200 px-6 py-4 text-sm font-bold tracking-widest uppercase"
+          className="text-primary-dark hover:border-primary-dark h-auto w-full rounded-2xl border-gray-200 px-3 py-3 text-sm font-bold tracking-widest uppercase md:w-fit md:px-6 md:py-4"
         >
           Check <Icons.ArrowRight className="ml-2 inline h-4 w-4" />
         </Button>

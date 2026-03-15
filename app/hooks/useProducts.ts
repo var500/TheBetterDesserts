@@ -10,6 +10,7 @@ import {
   validateCart,
 } from "~/api/products";
 import type { UpdateProductPayload, ValidateCartPayload } from "~/common/types";
+import { useAuthStore } from "~/store/authStore";
 import { useCityStore } from "~/store/useCityStore";
 
 export const useProducts = () => {
@@ -37,15 +38,21 @@ export const useAdminProducts = (token: string | null | undefined) => {
   });
 };
 
-export const useProductMutations = (token: string | null | undefined) => {
+export const useProductMutations = () => {
   const queryClient = useQueryClient();
-
+  const { token } = useAuthStore();
   const invalidate = () =>
     queryClient.invalidateQueries({ queryKey: ["adminProducts"] });
 
   const create = useMutation({
-    mutationFn: (data: UpdateProductPayload & { images?: File[] }) =>
-      createProduct(data, token!),
+    mutationFn: (data: UpdateProductPayload & { images?: File[] }) => {
+      if (!token) {
+        throw new Error(
+          "Authentication token is missing. Please log in again.",
+        );
+      }
+      return createProduct(data, token);
+    },
     onSuccess: () => {
       toast.success("Product created!");
       invalidate();
