@@ -12,10 +12,12 @@ export default [
   route("collection", "./routes/Collection.tsx"),
   route("/checkout", "./routes/Checkout.tsx"),
   route("/contact", "./routes/Contact.tsx"),
-  route("/shipping-policy", "./routes/Shipping.tsx"),
+  route("/policies/shipping-policy", "./routes/Shipping.tsx"),
   route("/order-confirmation", "./routes/order-confirmation.tsx"),
   route("/product/:id", "./routes/ProductDetails.tsx"),
   route("/admin/login", "./routes/AdminLogin.tsx"),
+  route("/policies/refund-policy", "./routes/Refund.tsx"),
+  route("/policies/privacy-policy", "./routes/Privacy.tsx"),
 
   layout("./routes/AdminGuard.tsx", [
     route("/admin/dashboard", "./routes/AdminDashboard.tsx"),

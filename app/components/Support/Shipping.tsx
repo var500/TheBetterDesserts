@@ -39,7 +39,7 @@ export default function Shipping() {
           </section>
 
           {/* Core Policies Grid */}
-          <div className="grid grid-cols-1 gap-x-12 gap-y-10">
+          <div className="items grid grid-cols-1 gap-x-12 gap-y-10">
             {/* Payment Policy */}
             <div className="flex gap-4">
               <Icons.ShieldCheck className="text-primary-dark/60 h-6 w-6 shrink-0" />
@@ -53,6 +53,22 @@ export default function Shipping() {
                 <Text as="p" className="text-primary-dark/70 leading-relaxed">
                   All treats are baked fresh on order, hence we do not offer
                   Cash on Delivery (COD) options.
+                </Text>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <Icons.Truck className="text-primary-dark/60 h-6 w-6 shrink-0" />
+              <div>
+                <Text
+                  as="h3"
+                  className="mb-2 text-lg font-bold tracking-wider uppercase"
+                >
+                  Shipping Charges
+                </Text>
+                <Text as="p" className="text-primary-dark/70 leading-relaxed">
+                  We offer free shipping on all orders above ₹999. For orders
+                  below this amount, a standard delivery fee suggested from our
+                  delivery partner applies at checkout.
                 </Text>
               </div>
             </div>
@@ -75,6 +91,23 @@ export default function Shipping() {
             </div>
           </div>
 
+          <div className="flex gap-4">
+            <Icons.MapPin className="text-primary-dark/60 h-6 w-6 shrink-0" />
+            <div>
+              <Text
+                as="h3"
+                className="mb-2 text-lg font-bold tracking-wider uppercase"
+              >
+                Failed Deliveries
+              </Text>
+              <Text as="p" className="text-primary-dark/70 leading-relaxed">
+                As our products are perishable, couriers will only attempt
+                delivery once. We cannot offer refunds for failed deliveries due
+                to an incorrect address or unavailability at the location.
+              </Text>
+            </div>
+          </div>
+
           {/* International Policy Footer */}
           <div className="border-primary-dark/10 rounded-2xl border bg-[#F5F0E6] p-6 text-center">
             <Text
@@ -84,27 +117,6 @@ export default function Shipping() {
               <Icons.Globe className="h-4 w-4" />
               Note: We currently do not ship outside India.
             </Text>
-          </div>
-        </div>
-
-        {/* Quick Links / CTA */}
-        <div className="space-y-4 text-center">
-          <Text as="p" className="text-primary-dark/60 font-medium">
-            Have more questions?
-          </Text>
-          <div className="flex justify-center gap-6">
-            <a
-              href="/contact"
-              className="text-primary-dark font-bold underline underline-offset-4 transition-opacity hover:opacity-70"
-            >
-              Contact Us
-            </a>
-            <a
-              href="/faq"
-              className="text-primary-dark font-bold underline underline-offset-4 transition-opacity hover:opacity-70"
-            >
-              FAQs
-            </a>
           </div>
         </div>
       </div>

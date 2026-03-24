@@ -60,7 +60,7 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
             onClick={() => setIsMobileMenuOpen(true)}
           />
           <div className="text-primary-dark hidden items-center gap-6 text-base font-bold tracking-wider md:flex">
-            <Link to="/" className="transition-colors hover:text-gray-500">
+            <Link to="/#home" className="transition-colors hover:text-gray-500">
               <Text as="span" variant="secondary">
                 Home
               </Text>

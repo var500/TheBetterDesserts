@@ -186,9 +186,9 @@ export const NavLinks = [
 ];
 
 export const CustomerServiceLinks = [
-  { key: "Shipping Policy", value: "/shipping-policy" },
-  { key: "Refund Policy", value: "/refund-policy" },
-  { key: "Privacy Policies", value: "/privacy-policy" },
+  { key: "Shipping Policy", value: "/policies/shipping-policy" },
+  { key: "Refund Policy", value: "/policies/refund-policy" },
+  { key: "Privacy Policies", value: "/policies/privacy-policy" },
 ];
 
 export const HomeFAQs = [

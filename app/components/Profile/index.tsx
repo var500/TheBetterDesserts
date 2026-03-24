@@ -6,17 +6,17 @@ import { toast } from "react-toastify";
 import OrderCard from "./OrderCard";
 import { useProducts } from "~/hooks/useProducts";
 import { useOrderHistory, useReorder } from "~/hooks/useOrder";
-import { useUpdateProfile } from "~/hooks/useUser"; // <-- Import the new hook!
+import { useUpdateProfile } from "~/hooks/useUser";
 
 export default function MyAccountPage() {
-  const { user, token } = useAuthStore();
+  const { user } = useAuthStore();
   const [activeTab, setActiveTab] = useState<"profile" | "orders">("orders");
 
   const { data: currentCatalog = [], isLoading: isLoadingProducts } =
     useProducts();
   const { handleReorder } = useReorder(currentCatalog);
   const { data: orderHistory = [], isLoading: isLoadingOrders } =
-    useOrderHistory(token as string);
+    useOrderHistory();
 
   // Initialize the mutation
   const { mutate: updateProfile, isPending: isUpdating } = useUpdateProfile();

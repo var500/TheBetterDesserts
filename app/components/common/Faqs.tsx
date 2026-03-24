@@ -24,7 +24,7 @@ export function ProductFAQ({ faqs }: ProductFAQProps) {
         as="h3"
         className="text-primary-dark mb-10 text-center text-3xl tracking-wider md:text-5xl"
       >
-        FAQs
+        Frequently asked questions
       </Text>
 
       <div className="flex flex-col gap-4">
