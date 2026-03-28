@@ -57,7 +57,7 @@ export default function DeliveryAvailability({
         </Button>
       </form>
 
-      {/* SUCCESS STATE UI - Now only shows the message, no date picker! */}
+      {/* SUCCESS STATE UI */}
       {isPincodeValid === true && (
         <div className="animate-in fade-in space-y-4">
           <div className="flex items-center gap-3 rounded-2xl border border-gray-100 bg-white px-5 py-4 shadow-sm">
@@ -76,16 +76,22 @@ export default function DeliveryAvailability({
       {isPincodeValid === false && (
         <div className="animate-in fade-in mt-4 rounded-2xl border border-[#FFD6D6] bg-[#FFF0F0] p-5">
           <Text as="p" className="text-sm leading-relaxed text-[#A32A2A]">
-            Delivery is not available for this product in your location. You can
-            check our{" "}
-            <button
-              type="button"
-              onClick={onPanIndiaClick}
-              className="cursor-pointer font-bold uppercase underline underline-offset-4 transition-colors hover:text-red-900"
-            >
-              PAN INDIA PRODUCTS
-            </button>{" "}
-            which is available for PAN INDIA DELIVERY.
+            {pincodeMessage === "Please enter a valid 6-digit pincode." ? (
+              pincodeMessage
+            ) : (
+              <>
+                Delivery is not available for this product in your location. You
+                can check our{" "}
+                <button
+                  type="button"
+                  onClick={onPanIndiaClick}
+                  className="cursor-pointer font-bold uppercase underline underline-offset-4 transition-colors hover:text-red-900"
+                >
+                  PAN INDIA PRODUCTS
+                </button>{" "}
+                which is available for PAN INDIA DELIVERY.
+              </>
+            )}
           </Text>
         </div>
       )}

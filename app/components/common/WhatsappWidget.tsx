@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { WhatsappLink } from "~/lib/utils";
 import { Text } from "../ui/text";
-
-// Import your Text component if you want to use it inside the modal!
-// import { Text } from "../ui/text";
 
 export default function WhatsAppWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const whatsappLink = WhatsappLink();
   return (
-    <div className="fixed right-6 bottom-6 z-50 flex cursor-pointer flex-col items-end md:right-10 md:bottom-10">
+    <div className="pointer-events-none fixed right-6 bottom-6 z-50 flex cursor-pointer flex-col items-end md:right-10 md:bottom-10">
       {/* The Popup Modal */}
       <div
         className={`mb-4 w-[320px] origin-bottom-right rounded-2xl border-2 border-[#25D366] bg-white p-6 shadow-2xl transition-all duration-300 ease-out ${
           isOpen
-            ? "scale-100 opacity-100"
+            ? "pointer-events-auto scale-100 opacity-100"
             : "pointer-events-none scale-90 opacity-0"
         }`}
       >
@@ -58,11 +55,11 @@ export default function WhatsAppWidget() {
       {/* Floating Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 focus:outline-none"
+        // 3. Added pointer-events-auto here so the button is always clickable
+        className="group pointer-events-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-transform hover:scale-110 focus:outline-none"
         aria-label={isOpen ? "Close chat widget" : "Open chat widget"}
       >
         {isOpen ? (
-          // Close (X) Icon
           <svg
             className="h-8 w-8 rotate-0 transition-transform duration-300"
             fill="none"
@@ -77,7 +74,6 @@ export default function WhatsAppWidget() {
             />
           </svg>
         ) : (
-          // WhatsApp Icon
           <svg
             className="h-9 w-9 transition-transform duration-300"
             fill="currentColor"

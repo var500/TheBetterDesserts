@@ -22,7 +22,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (user && user.dob_date) return;
-    console.log(user);
+
     const hasSeenModal = localStorage.getItem("hasSeenBirthdayModal");
     if (hasSeenModal === "true") return;
 

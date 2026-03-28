@@ -1,6 +1,6 @@
 // ~/components/shop/ItemDetails.tsx
 import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router"; // 👈 Import useParams
+import { useNavigate } from "react-router";
 import { useCartStore } from "~/store/cartStore";
 import { useCityStore } from "~/store/useCityStore";
 import { Locations, type Product } from "~/common/types";
@@ -19,8 +19,6 @@ export default function Itemdetails({ product }: { product: Product }) {
   const navigate = useNavigate();
   const { addToCart, cart } = useCartStore();
   const { setCity, selectedCityLabel } = useCityStore();
-
-  // 👇 Fetch the product dynamically!
 
   const [quantity, setQuantity] = useState(1);
   const [pincode, setPincode] = useState("");
@@ -86,7 +84,8 @@ export default function Itemdetails({ product }: { product: Product }) {
 
   const handlePincodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPincode(e.target.value.replace(/\D/g, ""));
-    if (isPincodeValid !== null) setIsPincodeValid(null);
+    setIsPincodeValid(null);
+    setPincodeMessage("");
   };
 
   const handleCheckPincode = (e: React.FormEvent) => {
