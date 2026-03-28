@@ -9,6 +9,7 @@ import Footer from "../common/Footer";
 import { useAuthStore } from "~/store/authStore";
 import BirthdayModal from "../promotional/BirthdayModal";
 import { useNavigate } from "react-router";
+import WhatsAppWidget from "../common/WhatsappWidget";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   const { user, setAuth, signOut } = useAuthStore();
@@ -20,8 +21,8 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
   const [isBirthdayModalOpen, setIsBirthdayModalOpen] = useState(false);
 
   useEffect(() => {
-    if (user && user.dob) return;
-
+    if (user && user.dob_date) return;
+    console.log(user);
     const hasSeenModal = localStorage.getItem("hasSeenBirthdayModal");
     if (hasSeenModal === "true") return;
 
@@ -75,6 +76,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
           setAuth(userData, token);
         }}
       />
+      <WhatsAppWidget />
     </>
   );
 };

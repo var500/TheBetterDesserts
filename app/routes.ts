@@ -12,6 +12,7 @@ export default [
   route("collection", "./routes/Collection.tsx"),
   route("/checkout", "./routes/Checkout.tsx"),
   route("/contact", "./routes/Contact.tsx"),
+  route("/gifting", "./routes/Gifting.tsx"),
   route("/policies/shipping-policy", "./routes/Shipping.tsx"),
   route("/order-confirmation", "./routes/order-confirmation.tsx"),
   route("/product/:id", "./routes/ProductDetails.tsx"),

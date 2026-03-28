@@ -213,3 +213,48 @@ export const HomeFAQs = [
       "Because every ingredient is chosen with intention. “Better” means more than health—it’s about taste, quality, and care in every bite.",
   },
 ];
+
+export const hampersData = [
+  {
+    id: "bundle-1",
+    badge: "Ships Pan India",
+    subtitle: "Sweet & Savoury",
+    title: "The Better Bundle",
+    description:
+      "A joyful curation of cookies, crackers, fudge, and spreads — crafted to delight every kind of snacker.",
+    image: "/products/giftHampers.png",
+    features: [
+      "No Maida, Dairy & Preservatives",
+      "Loved By Children",
+      "Mix of Sweet & Savoury",
+    ],
+  },
+  {
+    id: "bundle-2",
+    badge: "Bestseller",
+    subtitle: "Pure Indulgence",
+    title: "The Chocolate Box",
+    description:
+      "For the ultimate cocoa lover. Featuring our signature double chocolate cookies, hazelnut spread, and rich brownies.",
+    image: "/products/giftHampers.png",
+    features: [
+      "100% Organic Cacao",
+      "Refined Sugar Free",
+      "Perfect for Gifting",
+    ],
+  },
+  {
+    id: "bundle-3",
+    badge: "Festive Special",
+    subtitle: "Mindful Snacking",
+    title: "The Wholesome Hamper",
+    description:
+      "A guilt-free assortment of our best baked goods, packed with fiber, nuts, and natural sweeteners.",
+    image: "/products/giftHampers.png",
+    features: [
+      "Gluten-Free Options",
+      "High in Protein",
+      "No Artificial Flavors",
+    ],
+  },
+];

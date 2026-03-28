@@ -27,7 +27,6 @@ export default function Itemdetails({ product }: { product: Product }) {
   const [pincodeMessage, setPincodeMessage] = useState("");
   const [isPincodeValid, setIsPincodeValid] = useState<boolean | null>(null);
 
-  // ❌ Removed SHOP_CATEGORIES logic. We now use product.availableIn directly!
   const availableLocations = useMemo(() => {
     return product?.availableIn || [];
   }, [product]);
@@ -57,7 +56,7 @@ export default function Itemdetails({ product }: { product: Product }) {
   }, [selectedCityLabel, availableLocations]);
 
   // --- Derived Values & Limits ---
-  const absoluteMax = product.maxPerUser ?? 5;
+  const absoluteMax = product.maxPerUser ?? 10;
 
   const cartQuantity =
     cart.find((item) => item.id === product.id)?.quantity ?? 0;
@@ -140,7 +139,11 @@ export default function Itemdetails({ product }: { product: Product }) {
       <div className="flex flex-col gap-12 md:flex-row lg:gap-20">
         <ImageGallery images={product.image} name={product.name} />
         <div className="flex h-max w-full flex-col md:w-1/2 lg:sticky lg:top-24">
-          <ProductHeader name={product.name} price={product.base_price} />
+          <ProductHeader
+            name={product.name}
+            price={product.base_price}
+            unitDescription={product.unitDescription}
+          />
 
           <DeliveryAvailability
             pincode={pincode}

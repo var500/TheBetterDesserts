@@ -1,12 +1,16 @@
-import React from "react";
 import { Text } from "../ui/text";
 
 interface ProductHeaderProps {
   name: string;
+  unitDescription: string;
   price: number;
 }
 
-export default function ProductHeader({ name, price }: ProductHeaderProps) {
+export default function ProductHeader({
+  name,
+  price,
+  unitDescription,
+}: ProductHeaderProps) {
   return (
     <>
       <Text
@@ -18,9 +22,16 @@ export default function ProductHeader({ name, price }: ProductHeaderProps) {
       <Text
         as="p"
         variant={"primary"}
-        className="text-primary-dark/90 mb-6 text-2xl font-bold tracking-wide"
+        className="text-primary-dark/90 text-2xl font-bold tracking-wide"
       >
         ₹{price}
+      </Text>
+      <Text
+        as="p"
+        variant={"primary"}
+        className="text-primary-dark text-sm leading-relaxed font-medium whitespace-pre-line"
+      >
+        {unitDescription ? `${unitDescription}\n\n` : ""}
       </Text>
     </>
   );

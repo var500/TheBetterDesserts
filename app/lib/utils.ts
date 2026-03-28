@@ -114,3 +114,15 @@ export async function getCroppedImg(
     );
   });
 }
+
+const whatsappNumber = "919211988622";
+
+export const WhatsappLink = (message?: string) => {
+  let link;
+  if (message) {
+    const whatsappMessage = encodeURIComponent(message);
+    link = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+    return link;
+  }
+  return `https://wa.me/${whatsappNumber}`;
+};

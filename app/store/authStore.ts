@@ -2,12 +2,14 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 export interface User {
-  name: string;
+  fname: string;
+  lname: string;
   uid: string;
   email?: string;
   role?: string;
-  dob?: string;
-  phoneNumber?: string;
+  dob_date?: string;
+  phone_number?: string;
+  wa_opt_in?: boolean;
 }
 
 interface AuthState {
@@ -26,12 +28,14 @@ export const useAuthStore = create<AuthState>()(
       setAuth: (userData, token) =>
         set({
           user: {
-            name: userData.name || "",
+            fname: userData.fname || "",
+            lname: userData.lname || "",
             uid: userData.uid!,
             email: userData.email,
             role: userData.role,
-            dob: userData.dob,
-            phoneNumber: userData.phoneNumber,
+            dob_date: userData.dob_date,
+            phone_number: userData.phone_number,
+            wa_opt_in: userData.wa_opt_in,
           },
           token: token,
         }),

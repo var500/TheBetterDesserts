@@ -11,12 +11,14 @@ import { toast } from "react-toastify";
 
 interface CheckoutContainerProps {
   userId: string;
+  token: string;
   selectedAddressId: string | null;
   setSelectedAddressId: (id: string | null) => void;
 }
 
 export default function AddressManager({
   userId,
+  token,
   selectedAddressId,
   setSelectedAddressId,
 }: CheckoutContainerProps) {
@@ -32,7 +34,10 @@ export default function AddressManager({
 
   const handleAddNewAddress = async (newAddressData: Omit<Address, "id">) => {
     try {
-      const savedAddress = await addAddress({ userId, data: newAddressData });
+      const savedAddress = await addAddress({
+        token,
+        data: newAddressData,
+      });
       toast.success("Address added successfully");
       if (savedAddress?.id) setSelectedAddressId(savedAddress.id);
     } catch (error) {
@@ -46,7 +51,7 @@ export default function AddressManager({
     updatedData: Omit<Address, "id">,
   ) => {
     try {
-      await updateAddress({ userId, addressId, data: updatedData });
+      await updateAddress({ addressId, token, data: updatedData });
       toast.success("Address updated successfully");
     } catch (error) {
       toast.error("Failed to update address.");
@@ -56,7 +61,7 @@ export default function AddressManager({
 
   const handleDeleteAddress = async (addressId: string) => {
     try {
-      await deleteAddress({ userId, addressId });
+      await deleteAddress({ token, addressId });
       toast.success("Address deleted");
       if (selectedAddressId === addressId) {
         setSelectedAddressId(null);

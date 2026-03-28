@@ -44,7 +44,9 @@ export default function CartActions({
             type="button"
             className="text-primary-dark/60 hover:text-primary-dark flex h-full w-10 items-center justify-center rounded-r-2xl transition-colors hover:bg-gray-50 disabled:opacity-50"
             onClick={() => handleQuantityChange(1)}
-            disabled={quantity >= allowedToAdd || isOutOfStock}
+            disabled={
+              quantity >= allowedToAdd || isOutOfStock || !isPincodeValid
+            }
           >
             <Icons.Plus className="h-4 w-4" />
           </button>

@@ -22,7 +22,6 @@ interface AddressSelectionProps {
 }
 
 const EMPTY_ADDRESS = {
-  user_id: "",
   first_name: "",
   last_name: "",
   phone_number: "",
@@ -225,7 +224,7 @@ export default function AddressSelection({
             />
             <input
               required
-              placeholder="Complete Street Address"
+              placeholder="Address"
               value={formData.street_address}
               onChange={(e) =>
                 setFormData({ ...formData, street_address: e.target.value })
@@ -301,6 +300,7 @@ export default function AddressSelection({
           <div className="flex flex-col gap-4 pt-2 md:flex-row">
             <div className="flex flex-col gap-4 pt-2 md:flex-row">
               <Button
+                size={"sm"}
                 type="button"
                 variant="ghost"
                 onClick={() => setIsFormOpen(false)}
@@ -310,6 +310,7 @@ export default function AddressSelection({
               <Button
                 type="submit"
                 variant="default"
+                size={"sm"}
                 className="flex-1 rounded-xl"
                 disabled={isMutating}
               >

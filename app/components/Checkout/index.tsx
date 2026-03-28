@@ -37,12 +37,12 @@ const mockCalculateShipping = async (
 };
 
 export default function Checkout() {
+  const navigate = useNavigate();
+  const { user, token } = useAuthStore();
+
   const { cart } = useCartStore();
   const { selectedCityId } = useCityStore();
-  const navigate = useNavigate();
   const { step, setStep } = useCheckoutStore();
-
-  const { user, token } = useAuthStore();
 
   const [deliveryMethod, setDeliveryMethod] = useState<"delivery" | "pickup">(
     "delivery",
@@ -204,20 +204,6 @@ export default function Checkout() {
     setCouponMessage("");
   };
 
-  if (isValidatingCart) {
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-[#F5F0E6] px-4">
-        <Icons.Refresh className="text-primary-dark mb-4 h-12 w-12 animate-spin" />
-        <Text
-          as="h2"
-          className="text-primary-dark text-xl font-bold tracking-widest uppercase"
-        >
-          Just a moment...
-        </Text>
-      </div>
-    );
-  }
-
   if (cart.length === 0) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-[#F5F0E6] px-4">
@@ -250,6 +236,17 @@ export default function Checkout() {
   // Main Render
   return (
     <div className="min-h-screen bg-[#F5F0E6] px-4 pt-12 pb-24 md:px-8">
+      {isValidatingCart && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#F5F0E6]/60 backdrop-blur-sm">
+          <Icons.Refresh className="text-primary-dark mb-4 h-12 w-12 animate-spin" />
+          <Text
+            as="h2"
+            className="text-primary-dark text-xl font-bold tracking-widest uppercase"
+          >
+            Checking Cart Availability...
+          </Text>
+        </div>
+      )}
       <div className="mx-auto flex max-w-6xl flex-col-reverse gap-0 md:flex-col md:gap-12 lg:flex-row">
         <div className="flex-1">
           <Text
@@ -274,6 +271,7 @@ export default function Checkout() {
                 <div className="space-y-4">
                   {user?.uid && (
                     <AddressManager
+                      token={token!}
                       userId={user.uid}
                       selectedAddressId={selectedAddressId}
                       setSelectedAddressId={setSelectedAddressId}

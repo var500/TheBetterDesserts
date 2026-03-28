@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import { Link } from "react-router";
 
 export const GiftingPromo = () => (
   <section
@@ -37,7 +38,7 @@ export const GiftingPromo = () => (
               <SwiperSlide key={index}>
                 {({ isActive }) => (
                   <div
-                    className={`border-primary-dark/5 aspect-[4/5] overflow-hidden rounded-2xl border bg-white shadow-xl transition-all duration-700 ease-out ${
+                    className={`border-primary-dark/5 aspect-4/5 overflow-hidden rounded-2xl border bg-white shadow-xl transition-all duration-700 ease-out ${
                       isActive
                         ? "scale-100 opacity-100"
                         : "scale-[0.85] opacity-40 blur-[2px]"
@@ -74,7 +75,7 @@ export const GiftingPromo = () => (
           <Text
             as={"span"}
             variant={"primary"}
-            className="text-5xl font-black tracking-wider normal-case md:text-7xl"
+            className="text-5xl font-black tracking-wider md:text-7xl"
           >
             Better
           </Text>
@@ -99,15 +100,17 @@ export const GiftingPromo = () => (
           just giving — it should be an experience.&quot;
         </Text>
 
-        <Button
-          variant="default"
-          className="group h-14 w-full rounded-full px-10 text-sm font-bold tracking-widest uppercase sm:w-auto"
-        >
-          Explore the Collection
-          <span className="ml-3 transition-transform group-hover:translate-x-2">
-            →
-          </span>
-        </Button>
+        <Link to="/gifting" className="w-full sm:w-auto">
+          <Button
+            variant="default"
+            className="group h-14 w-full rounded-full px-10 text-sm font-bold tracking-widest uppercase sm:w-auto"
+          >
+            Explore the Collection
+            <span className="ml-3 transition-transform group-hover:translate-x-2">
+              →
+            </span>
+          </Button>
+        </Link>
       </div>
     </div>
   </section>

@@ -134,6 +134,7 @@ export default function OrderSummary({
               {/* Price */}
               <Text
                 as="p"
+                variant={"primary"}
                 className="text-primary-dark shrink-0 text-sm font-bold"
               >
                 ₹{(item.base_price * item.quantity).toLocaleString()}
@@ -145,7 +146,7 @@ export default function OrderSummary({
         <div className="space-y-3 border-t border-gray-100 pt-4">
           <div className="text-primary-dark/70 flex justify-between">
             <Text as="p">Subtotal</Text>
-            <Text as="p" className="font-medium">
+            <Text as="p" className="font-medium" variant={"primary"}>
               ₹{subtotal.toLocaleString()}
             </Text>
           </div>
@@ -153,7 +154,7 @@ export default function OrderSummary({
           {appliedDiscountPercent > 0 && (
             <div className="flex justify-between text-green-600">
               <Text as="p">Discount ({appliedDiscountPercent}%)</Text>
-              <Text as="p" className="font-medium">
+              <Text as="p" className="font-medium" variant={"primary"}>
                 - ₹{discountAmount.toLocaleString()}
               </Text>
             </div>
@@ -171,7 +172,7 @@ export default function OrderSummary({
                   Calculating...
                 </Text>
               ) : shippingFee !== null ? (
-                <Text as="p" className="font-medium">
+                <Text as="p" className="font-medium" variant={"primary"}>
                   ₹{shippingFee.toLocaleString()}
                 </Text>
               ) : (

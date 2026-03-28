@@ -29,7 +29,7 @@ export const useCartStore = create<CartState>()(
           }
 
           const existing = state.cart.find((item) => item.id === product.id);
-          const maxAllowed = product.maxPerUser ?? 5;
+          const maxAllowed = product.maxPerUser ?? 10;
 
           if (existing) {
             if (existing.quantity >= maxAllowed) {
@@ -56,7 +56,7 @@ export const useCartStore = create<CartState>()(
         set((state) => ({
           cart: state.cart.map((item) => {
             if (item.id === id) {
-              const maxAllowed = item.maxPerUser ?? 5;
+              const maxAllowed = item.maxPerUser ?? 10;
 
               let newQuantity = item.quantity + delta;
               // Ensure they don't go below 1, and don't go above their maxPerUser

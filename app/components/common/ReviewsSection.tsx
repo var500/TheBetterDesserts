@@ -9,23 +9,30 @@ const REVIEWS = [
 
 export const ReviewsSection = () => (
   <section className="border-primary-dark/10 border-t bg-white px-4 py-24 text-center md:px-8">
-    <div className="mx-auto max-w-7xl">
+    <div className="mx-auto max-w-7xl text-center">
+      {/* Overline: Satoshi (Primary), Uppercase, heavily spaced */}
       <Text
-        as="h2"
-        className="text-primary-dark mb-4 text-3xl tracking-tight uppercase md:text-4xl"
+        as="span"
+        variant="primary"
+        className="text-primary-dark/70 mb-3 block text-xs font-bold tracking-[0.2em] uppercase md:text-sm"
       >
-        Real words from people,
-        <br className="md:hidden" />
-        <span className="block text-4xl normal-case italic md:ml-3 md:inline md:text-5xl">
-          who have tasted better{" "}
-        </span>
+        Real words from people
       </Text>
 
-      {/* Floating Badge (Unchanged) */}
+      {/* Main Hook: Playfair (Secondary), large, elegant italics */}
+      <Text
+        as="h2"
+        variant="secondary"
+        className="text-primary-dark mb-6 text-4xl italic md:text-6xl"
+      >
+        who have tasted better!
+      </Text>
 
+      {/* Body Text: Satoshi (Primary) for maximum readability */}
       <Text
         as="p"
-        className="text-primary-dark/70 mx-auto max-w-2xl text-base leading-relaxed font-light md:text-lg"
+        variant="primary"
+        className="text-primary-dark/80 mx-auto max-w-2xl text-base leading-relaxed md:text-lg"
       >
         We asked our customers what they think—and the responses were as sweet
         as our cookies. From flavor fanatics to dessert connoisseurs,
@@ -37,10 +44,7 @@ export const ReviewsSection = () => (
         <Text as="span" className="text-primary-dark font-bold">
           4.9/5
         </Text>
-        <Text
-          as="span"
-          className="text-primary-dark/80 text-xs whitespace-nowrap"
-        >
+        <Text as="span" className="text-primary-dark text-sm">
           (3k+ Desserts Delivered)
         </Text>
       </div>

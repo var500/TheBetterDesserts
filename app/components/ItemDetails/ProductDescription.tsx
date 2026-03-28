@@ -27,7 +27,6 @@ export default function ProductDescription({
         as="p"
         className="text-primary-dark/80 text-sm leading-relaxed whitespace-pre-line"
       >
-        {product.unitDescription ? `${product.unitDescription}\n\n` : ""}
         Indulge in our exquisite {product.name.toLowerCase()}. Made fresh to
         order using only the finest ingredients.
         {availableLocations.includes(Locations.PAN_INDIA)

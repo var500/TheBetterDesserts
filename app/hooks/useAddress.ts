@@ -6,12 +6,21 @@ import {
   fetchAddresses,
   updateAddress,
 } from "~/api/user";
+import { useAuthStore } from "~/store/authStore";
 
 export const useAddresses = (userId?: string | null) => {
+  const { token } = useAuthStore();
   return useQuery({
     queryKey: ["addresses", userId],
-    queryFn: () => fetchAddresses(userId as string),
-    enabled: !!userId,
+    queryFn: () => {
+      if (!token) {
+        throw new Error(
+          "Authentication token is missing. Please log in again.",
+        );
+      }
+      return fetchAddresses(token);
+    },
+    enabled: !!userId && !!token,
   });
 };
 
@@ -20,9 +29,9 @@ export const useAddAddress = () => {
 
   return useMutation({
     mutationFn: addAddress,
-    onSuccess: (newAddress, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["addresses", variables.userId],
+        queryKey: ["addresses"],
       });
     },
   });
@@ -32,9 +41,9 @@ export const useUpdateAddress = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: updateAddress,
-    onSuccess: (_, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["addresses", variables.userId],
+        queryKey: ["addresses"],
       });
     },
   });
@@ -44,9 +53,9 @@ export const useDeleteAddress = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteAddress,
-    onSuccess: (_, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["addresses", variables.userId],
+        queryKey: ["addresses"],
       });
     },
   });

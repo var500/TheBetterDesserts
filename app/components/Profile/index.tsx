@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import OrderCard from "./OrderCard";
 import { useProducts } from "~/hooks/useProducts";
 import { useOrderHistory, useReorder } from "~/hooks/useOrder";
-import { useUpdateProfile } from "~/hooks/useUser";
+import { useGetUser, useUpdateProfile } from "~/hooks/useUser";
 
 export default function MyAccountPage() {
   const { user } = useAuthStore();
@@ -17,25 +17,29 @@ export default function MyAccountPage() {
   const { handleReorder } = useReorder(currentCatalog);
   const { data: orderHistory = [], isLoading: isLoadingOrders } =
     useOrderHistory();
+  const { data: userData, isLoading: isLoadingUser } = useGetUser(user?.uid);
+  const dbUser = userData?.user;
 
   // Initialize the mutation
   const { mutate: updateProfile, isPending: isUpdating } = useUpdateProfile();
 
-  const profileData = useMemo(
-    () => ({
-      fname: user?.name?.split(" ")[0] || "",
-      lname: user?.name?.split(" ").slice(1).join(" ") || "",
-      phone_number: user?.phoneNumber || "",
-      dob_date: user?.dob || "",
-      wa_opt_in: true,
-    }),
-    [user],
-  );
+  const profileData = useMemo(() => {
+    const source = dbUser || user;
+    return {
+      fname: source?.fname || "",
+      lname: source?.lname || "",
+      phone_number: source?.phone_number || "",
+      email: source?.email || "",
+      dob_date: source?.dob_date || "",
+      wa_opt_in: source?.wa_opt_in ?? true,
+    };
+  }, [dbUser, user]);
 
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
     phone_number: "",
+    email: "",
     dob_date: "",
     wa_opt_in: true,
   });
@@ -45,6 +49,7 @@ export default function MyAccountPage() {
       setFormData({
         fname: profileData.fname || "",
         lname: profileData.lname || "",
+        email: profileData.email || "",
         phone_number: profileData.phone_number || "",
         dob_date: profileData.dob_date || "",
         wa_opt_in: profileData.wa_opt_in ?? true,
@@ -66,7 +71,7 @@ export default function MyAccountPage() {
     });
   };
 
-  if (isLoadingOrders || isLoadingProducts) {
+  if (isLoadingOrders || isLoadingProducts || isLoadingUser) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#F5F0E6]">
         <Text as="p" className="text-primary-dark text-xl font-bold">
@@ -77,8 +82,8 @@ export default function MyAccountPage() {
   }
 
   // Format the birthday for the read-only view
-  const formattedBirthday = user?.dob
-    ? new Date(user.dob).toLocaleDateString("en-US", {
+  const formattedBirthday = user?.dob_date
+    ? new Date(user.dob_date).toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric",
@@ -202,20 +207,35 @@ export default function MyAccountPage() {
                   placeholder="9999999999"
                 />
               </div>
+              <div>
+                <label className="text-primary-dark mb-2 block text-sm font-bold">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="focus:border-primary-dark w-full rounded-xl border border-gray-200 p-3 outline-none"
+                  placeholder="jane@example.com"
+                />
+              </div>
 
               {/* === CONDITIONAL BIRTHDAY FIELD === */}
               <div>
                 <label className="text-primary-dark mb-2 block text-sm font-bold">
                   Birthday
                 </label>
-                {!user?.dob ? (
+                {!user?.dob_date ? (
                   <input
                     type="date"
+                    disabled={true}
                     value={formData.dob_date}
                     onChange={(e) =>
                       setFormData({ ...formData, dob_date: e.target.value })
                     }
-                    className="focus:border-primary-dark w-full rounded-xl border border-gray-200 p-3 outline-none"
+                    className="focus:border-primary-dark w-full rounded-xl border border-gray-200 p-3 opacity-50 outline-none"
                   />
                 ) : (
                   <div className="w-full cursor-not-allowed rounded-xl border border-gray-100 bg-gray-50 p-3 text-gray-500 select-none">

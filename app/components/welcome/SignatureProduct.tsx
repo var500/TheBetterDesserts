@@ -31,7 +31,10 @@ export default function SignatureProduct({
         <div className="group relative mx-auto w-full max-w-sm">
           <div className="bg-primary-dark absolute inset-0 translate-x-4 translate-y-4 transform rounded-2xl transition-transform duration-500 group-hover:translate-x-6 group-hover:translate-y-6"></div>
 
-          <div className="relative aspect-square overflow-hidden rounded-2xl border-4 border-[#F5F0E6] bg-white shadow-xl">
+          <div
+            className="relative hidden aspect-square cursor-pointer overflow-hidden rounded-2xl border-4 border-[#F5F0E6] bg-white shadow-xl md:flex"
+            onClick={() => navigate(`/product/${item?.id}`)}
+          >
             <img
               src={imgSource}
               alt="The Signature Caszel"
@@ -74,6 +77,15 @@ export default function SignatureProduct({
             </Text>
           </Text>
 
+          <div className="relative mb-4 aspect-square overflow-hidden rounded-2xl border-4 border-[#F5F0E6] bg-white shadow-xl md:mb-0 md:hidden">
+            <img
+              src={imgSource}
+              alt="The Signature Caszel"
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          </div>
+
           <Text
             as="p"
             className="text-primary-dark/80 mb-8 max-w-md text-lg leading-relaxed font-light md:text-xl"
@@ -84,61 +96,61 @@ export default function SignatureProduct({
             chocolate.
           </Text>
 
-          <div className="flex flex-wrap items-center gap-8">
-            {/* Wrapper div to capture hover events even when button is disabled */}
-            <div
-              className="relative flex items-center"
-              onMouseEnter={() => setShowToast(true)}
-              onMouseLeave={() => setShowToast(false)}
-            >
-              <Button
-                disabled={isButtonDisabled}
-                onClick={() => navigate(`/product/${item?.id}`)}
-                variant="default"
-                className="group flex h-14 items-center gap-3 px-10 text-lg disabled:cursor-not-allowed disabled:opacity-50"
+          {selectedCityLabel !== Locations.GURGAON ? null : (
+            <div className="flex flex-wrap items-center gap-8">
+              {/* Wrapper div to capture hover events even when button is disabled */}
+              <div
+                className="relative flex items-center"
+                onMouseEnter={() => setShowToast(true)}
+                onMouseLeave={() => setShowToast(false)}
               >
-                {isLoading
-                  ? "Loading.."
-                  : selectedCityLabel === null
-                    ? "Select your location"
-                    : selectedCityLabel !== Locations.GURGAON
-                      ? "Not deliverable"
-                      : "Shop Now"}
+                <Button
+                  disabled={isButtonDisabled}
+                  onClick={() => navigate(`/product/${item?.id}`)}
+                  variant="default"
+                  className="group flex h-14 w-40 items-center gap-3 px-4 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:w-full md:px-10 md:text-lg"
+                >
+                  {isLoading
+                    ? "Loading.."
+                    : selectedCityLabel === null
+                      ? "Select your location"
+                      : selectedCityLabel !== Locations.GURGAON
+                        ? "Not deliverable"
+                        : "Shop Now"}
 
-                <Icons.ChevronRight className="transition-transform duration-300 group-hover:translate-x-2" />
-              </Button>
+                  <Icons.ChevronRight className="transition-transform duration-300 group-hover:translate-x-2" />
+                </Button>
 
-              {showToast && selectedCityLabel !== Locations.GURGAON && (
-                <div className="bg-primary-dark animate-fade-in-up pointer-events-none absolute -bottom-12 left-1/2 z-50 -translate-x-1/2 rounded-md px-4 py-2 text-xs font-bold whitespace-nowrap text-[#F5F0E6] shadow-lg">
-                  Available for delivery or pickup only in Gurgaon
-                  <div className="bg-primary-dark absolute -top-1 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45"></div>
+                {showToast && selectedCityLabel !== Locations.GURGAON && (
+                  <div className="bg-primary-dark animate-fade-in-up pointer-events-none absolute -bottom-12 left-1/2 z-50 -translate-x-1/2 rounded-md px-4 py-2 text-xs font-bold whitespace-nowrap text-[#F5F0E6] shadow-lg">
+                    Available for delivery or pickup only in Gurgaon
+                    <div className="bg-primary-dark absolute -top-1 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45"></div>
+                  </div>
+                )}
+              </div>
+
+              {isLoading ? (
+                <Icons.Refresh className="text-primary-dark h-3 w-3 animate-spin" />
+              ) : (
+                <div className="flex flex-col">
+                  <Text
+                    as="span"
+                    variant={"primary"}
+                    className="text-primary-dark text-2xl font-bold"
+                  >
+                    ₹ {item?.base_price}{" "}
+                  </Text>
+                  <Text
+                    as="span"
+                    variant={"primary"}
+                    className="text-primary-dark text-xs tracking-widest uppercase"
+                  >
+                    Pack of 3
+                  </Text>{" "}
                 </div>
               )}
             </div>
-
-            {isLoading ? (
-              <Icons.Refresh className="text-primary-dark h-3 w-3 animate-spin" />
-            ) : (
-              <div className="flex flex-col">
-                <Text
-                  as="span"
-                  variant={"primary"}
-                  className="text-primary-dark text-2xl font-bold"
-                >
-                  ₹ {item?.base_price}{" "}
-                  <Text as={"span"} className="text-sm font-thin md:text-base">
-                    +gst
-                  </Text>
-                </Text>
-                <Text
-                  as="span"
-                  className="text-primary-dark text-xs tracking-widest uppercase"
-                >
-                  Pack of 3
-                </Text>{" "}
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
     </section>

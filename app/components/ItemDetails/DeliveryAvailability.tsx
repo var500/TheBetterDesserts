@@ -24,7 +24,7 @@ export default function DeliveryAvailability({
     <div className="border-primary-dark/10 mb-8 rounded-3xl border bg-white p-6 shadow-sm">
       <Text
         as="h4"
-        className="text-primary-dark mb-1 text-base font-bold tracking-widest uppercase"
+        className="text-primary-dark mb-1 text-base font-bold tracking-widest"
       >
         Check Delivery Availability
       </Text>
@@ -49,6 +49,7 @@ export default function DeliveryAvailability({
         </div>
         <Button
           type="submit"
+          disabled={!pincode}
           variant="outline"
           className="text-primary-dark hover:border-primary-dark h-auto w-full rounded-2xl border-gray-200 px-3 py-3 text-sm font-bold tracking-widest uppercase md:w-fit md:px-6 md:py-4"
         >

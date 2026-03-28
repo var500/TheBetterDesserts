@@ -16,7 +16,7 @@ export const AuthModal = ({
 }: {
   isOpen: boolean;
   onClose: () => void;
-  user: { name: string; uid: string } | null;
+  user: { fname: string; uid: string } | null;
   onSignOut: () => void;
   onSignIn: (user: Partial<User>, token: string) => void;
 }) => {
@@ -146,7 +146,7 @@ export const AuthModal = ({
               </Text>
               <Text as="p" className="text-primary-dark/70 text-sm">
                 Logged in as:{" "}
-                {user.name ? (
+                {user.fname ? (
                   <span className="font-mono">
                     {user?.uid?.substring(0, 8)}...
                   </span>

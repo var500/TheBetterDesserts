@@ -96,7 +96,6 @@ export enum Locations {
 
 export interface Address {
   id: string;
-  user_id: string;
   first_name: string;
   last_name: string;
   phone_number: string;
@@ -149,6 +148,9 @@ export interface OtpVerifyResponse {
     uid: string;
     email: string;
     role: string;
+    fname: string;
+    lname: string;
+    dob_date: string;
   };
   message: string;
 }

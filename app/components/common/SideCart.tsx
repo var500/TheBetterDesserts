@@ -136,10 +136,10 @@ export const CartSidebar = () => {
                       <button
                         className="text-primary-dark px-3 py-1 transition-colors hover:bg-[#F5F0E6] disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-transparent"
                         onClick={() => updateQuantity(item.id, 1)}
-                        disabled={item.quantity >= (item.maxPerUser ?? 5)}
+                        disabled={item.quantity >= (item.maxPerUser ?? 10)}
                         title={
-                          item.quantity >= (item.maxPerUser ?? 5)
-                            ? `Limit of ${item.maxPerUser ?? 5} reached`
+                          item.quantity >= (item.maxPerUser ?? 10)
+                            ? `Limit of ${item.maxPerUser ?? 10} reached`
                             : undefined
                         }
                       >

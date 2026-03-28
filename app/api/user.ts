@@ -6,6 +6,7 @@ import type {
 } from "~/common/types";
 
 import { BACKEND_API_URL } from "~/lib/utils";
+import { type User } from "~/store/authStore";
 
 export const sendOtp = async (email: string) => {
   const response = await fetch(`${BACKEND_API_URL}/auth/otp/send`, {
@@ -35,8 +36,14 @@ export const verifyOtp = async ({
   return response.json();
 };
 
-export const fetchAddresses = async (userId: string): Promise<Address[]> => {
-  const response = await fetch(`${BACKEND_API_URL}/users/${userId}/addresses`);
+export const fetchAddresses = async (token: string): Promise<Address[]> => {
+  const response = await fetch(`${BACKEND_API_URL}/users/addresses`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
   if (!response.ok) {
     throw new Error("Failed to fetch addresses");
   }
@@ -44,15 +51,18 @@ export const fetchAddresses = async (userId: string): Promise<Address[]> => {
 };
 
 export const addAddress = async ({
-  userId,
+  token,
   data,
 }: {
-  userId: string;
+  token: string;
   data: AddAddressInput;
 }): Promise<Address> => {
-  const response = await fetch(`${BACKEND_API_URL}/users/${userId}/addresses`, {
+  const response = await fetch(`${BACKEND_API_URL}/users/addresses`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(data),
   });
 
@@ -63,19 +73,22 @@ export const addAddress = async ({
 };
 
 export const updateAddress = async ({
-  userId,
   addressId,
+  token,
   data,
 }: {
-  userId: string;
   addressId: string;
+  token: string;
   data: Partial<Address>;
 }) => {
   const response = await fetch(
-    `${BACKEND_API_URL}/users/${userId}/addresses/${addressId}`,
+    `${BACKEND_API_URL}/users/addresses/${addressId}`,
     {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify(data),
     },
   );
@@ -84,16 +97,20 @@ export const updateAddress = async ({
 };
 
 export const deleteAddress = async ({
-  userId,
+  token,
   addressId,
 }: {
-  userId: string;
+  token: string;
   addressId: string;
 }) => {
   const response = await fetch(
-    `${BACKEND_API_URL}/users/${userId}/addresses/${addressId}`,
+    `${BACKEND_API_URL}/users/addresses/${addressId}`,
     {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     },
   );
   if (!response.ok) throw new Error("Failed to delete address");
@@ -118,5 +135,21 @@ export const updateProfileApi = async (
     throw new Error(errorData.message || "Failed to update profile");
   }
 
+  return response.json();
+};
+
+export const getUser = async (
+  token: string,
+): Promise<{ message: string; user: User }> => {
+  const response = await fetch(`${BACKEND_API_URL}/users`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) {
+    throw new Error("Failed to fetch addresses");
+  }
   return response.json();
 };

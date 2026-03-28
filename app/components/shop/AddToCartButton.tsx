@@ -27,8 +27,8 @@ export function AddToCartButton({
   return (
     <Button
       variant={"rounded"}
-      size="sm-to-default"
-      className={`w-full rounded-xl text-xs transition-all duration-300 ${
+      size="sm"
+      className={`h-14 w-full rounded-xl text-sm transition-all duration-300 ${
         status === "success" ? "bg-green-600 text-white hover:bg-green-700" : ""
       }`}
       onClick={handleAddToCart}
