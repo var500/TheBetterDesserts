@@ -1,10 +1,14 @@
+import { useParams } from "react-router";
 import { Text } from "../ui/text";
 import { ProductCard } from "../welcome/ProductCard";
 import { useProducts } from "~/hooks/useProducts";
 
 export const YouMayAlsoLike = () => {
+  const { id: currentProductId } = useParams();
   const { data: products, isLoading, isError } = useProducts();
-  const bestsellers = products?.filter((item) => item.is_bestseller);
+  const bestsellers = products?.filter(
+    (item) => item.is_bestseller && item.id !== currentProductId,
+  );
 
   if (isLoading) {
     return (

@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import type { ProductCardProps } from "~/common/types";
 import { useCartStore } from "~/store/cartStore";
 
@@ -6,11 +7,16 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <div className="group flex flex-col">
       <div className="relative mb-3 aspect-square overflow-hidden rounded-lg bg-gray-100">
-        <img
-          src={product.image[0]}
-          alt={product.name}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
+        <Link
+          to={`/product/${product.id}`}
+          className="h-full w-full cursor-pointer"
+        >
+          <img
+            src={product.image[0]}
+            alt={product.name}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
+        </Link>
         <button
           onClick={(e) => {
             e.stopPropagation();
