@@ -25,7 +25,7 @@ export const BACKEND_API_URL =
 
 export const RAZORPAY_PUBLIC_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID;
 
-import type { Zone } from "~/common/types";
+import { OrderStatus, type Zone } from "~/common/types";
 
 export const getZoneFromPincode = (pincode: string): Zone => {
   // Fallback for empty/invalid pincodes
@@ -125,4 +125,24 @@ export const WhatsappLink = (message?: string) => {
     return link;
   }
   return `https://wa.me/${whatsappNumber}`;
+};
+
+export const getDeliveryStatusText = (status: string, dateString: string) => {
+  // If the date might be null/undefined, add a fallback check here!
+  const formattedDate = new Date(dateString).toLocaleDateString();
+
+  switch (status) {
+    case OrderStatus.DELIVERED:
+      return `Delivered on ${formattedDate}`;
+    case OrderStatus.OUT_FOR_DELIVERY:
+      return `Out for delivery today`;
+    case OrderStatus.CANCELLED:
+      return "Order Cancelled"; // We usually don't want to show an expected date if it's cancelled
+    case OrderStatus.BAKING:
+      return `Baking — Expected by ${formattedDate}`;
+    case OrderStatus.CONFIRMED:
+    case OrderStatus.PENDING:
+    default:
+      return `Expected Delivery: ${formattedDate}`;
+  }
 };

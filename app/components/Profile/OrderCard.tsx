@@ -2,7 +2,8 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Text } from "../ui/text";
 import { Button } from "../ui/button";
-import type { OrderDetailsResponse } from "~/common/types";
+import { type OrderDetailsResponse } from "~/common/types";
+import { getDeliveryStatusText } from "~/lib/utils";
 
 interface OrderCardProps {
   order: OrderDetailsResponse;
@@ -58,10 +59,20 @@ export default function OrderCard({ order, onReorder }: OrderCardProps) {
             </span>
           </div>
 
-          <Text as="p" className="text-primary-dark/60 text-sm">
+          <Text
+            as="p"
+            variant={"primary"}
+            className="text-primary-dark/60 text-sm"
+          >
             Placed on {new Date(order.created_at).toLocaleDateString()}
           </Text>
-
+          <Text
+            as="p"
+            variant={"primary"}
+            className="text-primary-dark/60 text-sm"
+          >
+            {getDeliveryStatusText(order.order_status, order.delivery_date)}
+          </Text>
           {/* Conditional Delivery Date */}
           {isDelivered && order.delivery_date && (
             <Text as="p" className="mt-1 text-sm font-semibold text-green-600">

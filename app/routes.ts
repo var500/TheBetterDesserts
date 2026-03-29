@@ -17,10 +17,10 @@ export default [
     route("/policies/shipping-policy", "./routes/Shipping.tsx"),
     route("/order-confirmation", "./routes/order-confirmation.tsx"),
     route("/product/:id", "./routes/ProductDetails.tsx"),
-    route("/admin/login", "./routes/AdminLogin.tsx"),
     route("/policies/refund-policy", "./routes/Refund.tsx"),
     route("/policies/privacy-policy", "./routes/Privacy.tsx"),
   ]),
+  route("/admin/login", "./routes/AdminLogin.tsx"),
 
   layout("./routes/AdminGuard.tsx", [
     route("/admin/dashboard", "./routes/AdminDashboard.tsx"),

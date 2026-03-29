@@ -1,5 +1,8 @@
 // api/orders.ts
-import type { OrderDetailsResponse } from "~/common/types";
+import type {
+  AdminOrderDetailsResponse,
+  OrderDetailsResponse,
+} from "~/common/types";
 import { BACKEND_API_URL } from "~/lib/utils";
 
 export const fetchOrderById = async (
@@ -16,6 +19,25 @@ export const fetchOrderById = async (
 
   if (!response.ok) {
     throw new Error("Failed to fetch order details");
+  }
+
+  return response.json();
+};
+
+export const fetchAdminOrderById = async (
+  id: string,
+  token: string,
+): Promise<AdminOrderDetailsResponse> => {
+  const response = await fetch(`${BACKEND_API_URL}/orders/admin/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch admin order details");
   }
 
   return response.json();
@@ -65,7 +87,7 @@ export const updateAdminOrderStatus = async (
   status: string,
   token: string,
 ) => {
-  const response = await fetch(`${BACKEND_API_URL}/orders/${id}/status`, {
+  const response = await fetch(`${BACKEND_API_URL}/orders/admin/${id}/status`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",

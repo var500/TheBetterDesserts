@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  fetchAdminOrderById,
   fetchAdminOrders,
   fetchOrderById,
   fetchShippingCost,
@@ -77,6 +78,23 @@ export const useOrderDetails = (orderId: string | undefined) => {
   });
 };
 
+export const useAdminOrderDetails = (orderId: string | undefined) => {
+  const { token } = useAuthStore();
+
+  return useQuery({
+    queryKey: ["adminOrder", orderId],
+    queryFn: () => {
+      if (!token) {
+        throw new Error(
+          "Authentication token is missing. Please log in again.",
+        );
+      }
+      return fetchAdminOrderById(orderId!, token);
+    },
+    enabled: !!orderId && !!token,
+  });
+};
+
 export const useOrderHistory = () => {
   const { token } = useAuthStore();
   return useQuery({
@@ -116,8 +134,9 @@ export const useUpdateOrderStatus = (token: string | null | undefined) => {
   return useMutation({
     mutationFn: ({ id, status }: { id: string; status: string }) =>
       updateAdminOrderStatus(id, status, token!),
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ["adminOrders"] });
+      queryClient.invalidateQueries({ queryKey: ["adminOrder", variables.id] });
       toast.success("Order status updated!");
     },
     onError: (error) => {

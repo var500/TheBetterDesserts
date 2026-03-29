@@ -15,9 +15,20 @@ export const adminLogin = async (credentials: {
   });
 
   if (!response.ok) {
-    const text = await response.text();
-    console.error("Server error raw text:", text);
-    throw new Error("Server responded with an error");
+    // 1. Try to parse the backend's custom JSON error
+    let errorMessage = "Server responded with an error";
+    try {
+      const errorData = await response.json();
+      // 2. Extract the "message" field if it exists
+      if (errorData && errorData.message) {
+        errorMessage = errorData.message;
+      }
+    } catch (parseError) {
+      console.error("Failed to parse error response as JSON", parseError);
+    }
+
+    // 3. Throw the actual message so React Query can catch it!
+    throw new Error(errorMessage);
   }
 
   return response.json();

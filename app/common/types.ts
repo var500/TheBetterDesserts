@@ -119,7 +119,7 @@ export interface OrderItem {
   product: Product;
 }
 
-export interface OrderDetailsResponse {
+export interface AdminOrderDetailsResponse {
   id: string;
   user_id: string;
   address_id: string | null;
@@ -141,6 +141,34 @@ export interface OrderDetailsResponse {
   items: OrderItem[];
   address: Address | null;
   user: UserSnippet | null;
+}
+
+export interface OrderListProduct {
+  id: string;
+  name: string;
+}
+
+export interface OrderListItem {
+  quantity: number;
+  product: OrderListProduct;
+}
+
+export const OrderStatus = {
+  PENDING: "PENDING",
+  CONFIRMED: "CONFIRMED",
+  BAKING: "BAKING",
+  OUT_FOR_DELIVERY: "OUT_FOR_DELIVERY",
+  DELIVERED: "DELIVERED",
+  CANCELLED: "CANCELLED",
+} as const;
+
+export interface OrderDetailsResponse {
+  id: string;
+  order_status: (typeof OrderStatus)[keyof typeof OrderStatus];
+  created_at: string;
+  delivery_date: string;
+  total_amount: number;
+  items: OrderListItem[];
 }
 
 export type AddAddressInput = Omit<Address, "id">;

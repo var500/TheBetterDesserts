@@ -5,7 +5,7 @@ import { Icons } from "../icons";
 import { Button } from "../ui/button";
 
 // Import your actual hooks from useOrder.ts
-import { useOrderDetails, useUpdateOrderStatus } from "~/hooks/useOrder";
+import { useAdminOrderDetails, useUpdateOrderStatus } from "~/hooks/useOrder";
 
 export default function Details() {
   const { id: orderId } = useParams();
@@ -13,7 +13,7 @@ export default function Details() {
   const { token } = useAuthStore();
 
   // 1. Fetch order details using your existing hook
-  const { data: order, isLoading } = useOrderDetails(orderId);
+  const { data: order, isLoading } = useAdminOrderDetails(orderId);
 
   // 2. Bring in the mutation to update the status
   const { mutate: updateStatus, isPending: isUpdating } =
@@ -109,7 +109,8 @@ export default function Details() {
             className="block rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50"
           >
             <option value="PENDING">Pending</option>
-            <option value="PROCESSING">Processing</option>
+            <option value="CONFIRMED">Confirmed</option>
+            <option value="BAKING">Baking</option>
             <option value="OUT_FOR_DELIVERY">Out for Delivery</option>
             <option value="DELIVERED">Delivered</option>
             <option value="CANCELLED">Cancelled</option>
