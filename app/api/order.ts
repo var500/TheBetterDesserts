@@ -80,3 +80,34 @@ export const updateAdminOrderStatus = async (
 
   return response.json();
 };
+
+export const fetchShippingCost = async (
+  deliveryPincode: string,
+  token: string,
+  totalWeightInKg?: number,
+  isHyperlocal: boolean = false,
+): Promise<{ shippingCost: number }> => {
+  console.log("isHyperlocal", isHyperlocal);
+  const endpoint = isHyperlocal
+    ? `${BACKEND_API_URL}/shipping/hyperlocal`
+    : `${BACKEND_API_URL}/shipping/calculate`;
+
+  const body = isHyperlocal
+    ? JSON.stringify({ deliveryPincode })
+    : JSON.stringify({ deliveryPincode, totalWeightInKg });
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to calculate shipping cost");
+  }
+
+  return response.json();
+};

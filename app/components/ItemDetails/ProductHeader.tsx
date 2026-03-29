@@ -4,12 +4,14 @@ interface ProductHeaderProps {
   name: string;
   unitDescription: string;
   price: number;
+  description: string;
 }
 
 export default function ProductHeader({
   name,
   price,
   unitDescription,
+  description,
 }: ProductHeaderProps) {
   return (
     <>
@@ -32,6 +34,13 @@ export default function ProductHeader({
         className="text-primary-dark text-sm leading-relaxed font-medium whitespace-pre-line"
       >
         {unitDescription ? `${unitDescription}\n\n` : ""}
+      </Text>
+      <Text
+        as="p"
+        variant={"primary"}
+        className="text-primary-dark mb-4 text-sm leading-relaxed font-medium whitespace-pre-line md:text-lg"
+      >
+        {description}
       </Text>
     </>
   );

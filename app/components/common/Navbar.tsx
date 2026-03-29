@@ -9,7 +9,7 @@ import { Button } from "../ui/button";
 // Removed cartCount from props!
 interface NavbarProps {
   onOpenSearch: () => void;
-  user: { fname: string } | null;
+  user: { role: string } | null;
   onAuthClick: () => void;
 }
 
@@ -105,7 +105,7 @@ export const Navbar = ({ onOpenSearch, user, onAuthClick }: NavbarProps) => {
 
         {/* Right Section: Icons */}
         <div className="text-primary-dark flex flex-1 items-center justify-end gap-4">
-          {user?.fname === "Admin" ? (
+          {user?.role === "ADMIN" ? (
             <Button
               variant={"rounded"}
               size={"sm"}

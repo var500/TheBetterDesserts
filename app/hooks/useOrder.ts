@@ -7,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   fetchAdminOrders,
   fetchOrderById,
+  fetchShippingCost,
   fetchUserOrders,
   updateAdminOrderStatus,
 } from "~/api/order";
@@ -124,5 +125,36 @@ export const useUpdateOrderStatus = (token: string | null | undefined) => {
           : "Failed to update order status.",
       );
     },
+  });
+};
+
+export const useGetShippingCost = (
+  deliveryPincode: string | undefined,
+  totalWeightInKg?: number,
+  isHyperlocal: boolean = false,
+) => {
+  const { token } = useAuthStore();
+
+  return useQuery({
+    queryKey: ["shippingCost", deliveryPincode, isHyperlocal],
+    queryFn: () => {
+      if (!token) {
+        throw new Error(
+          "Authentication token is missing. Please log in again.",
+        );
+      }
+      if (!deliveryPincode) {
+        throw new Error("Delivery pincode is missing.");
+      }
+
+      return fetchShippingCost(
+        deliveryPincode,
+        token,
+        totalWeightInKg,
+        isHyperlocal,
+      );
+    },
+    enabled: !!token && !!deliveryPincode,
+    retry: false,
   });
 };

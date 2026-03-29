@@ -4,7 +4,9 @@ export interface Product {
   id: string;
   name: string;
   base_price: number;
+  description: string;
   image: string[];
+  storage_instructions: string[];
   faq: { question: string; answer: string }[];
   ingredients: { name: string; description: string; id: string }[];
   unitDescription: string;
@@ -12,6 +14,7 @@ export interface Product {
   availableIn: Zone[];
   is_bestseller: boolean;
   isNewLaunch: boolean;
+  weight_grams: number;
   is_Active: boolean;
   maxPerUser: number;
   category: {
@@ -318,4 +321,10 @@ export interface IngredientsItem {
   name: string;
   id: string;
   description: string;
+}
+
+export interface ApiError extends Error {
+  response?: {
+    errors?: CartValidationError[];
+  };
 }

@@ -59,6 +59,13 @@ export default function Details() {
     }
   };
 
+  const itemsSubtotal = Number(order.total_items_cost) || 0;
+  const discountAmt = Number(order.discount_amount) || 0;
+  const deliveryAmt = Number(order.delivery_fee) || 0;
+
+  const taxableAmount = itemsSubtotal - discountAmt + deliveryAmt;
+  const gstAmount = taxableAmount * 0.05;
+
   return (
     <div className="mx-auto max-w-7xl space-y-8 px-4 pt-4 pb-10 sm:px-6 lg:px-8">
       {/* --- HEADER --- */}
@@ -242,18 +249,26 @@ export default function Details() {
           <div className="space-y-3 text-sm">
             <div className="flex justify-between text-gray-600">
               <span>Items Subtotal</span>
-              <span>{formatCurrency(order.total_items_cost)}</span>
+              <span>{formatCurrency(itemsSubtotal)}</span>
             </div>
-            <div className="flex justify-between text-gray-600">
-              <span>Delivery Fee</span>
-              <span>{formatCurrency(order.delivery_fee)}</span>
-            </div>
-            {Number(order.discount_amount) > 0 && (
+
+            {discountAmt > 0 && (
               <div className="flex justify-between text-green-600">
                 <span>Discount</span>
-                <span>-{formatCurrency(order.discount_amount)}</span>
+                <span>-{formatCurrency(discountAmt)}</span>
               </div>
             )}
+
+            <div className="flex justify-between text-gray-600">
+              <span>Delivery Fee</span>
+              <span>{formatCurrency(deliveryAmt)}</span>
+            </div>
+
+            <div className="flex justify-between text-gray-600">
+              <span>GST (5%)</span>
+              <span>{formatCurrency(gstAmount)}</span>
+            </div>
+
             <div className="mt-3 flex justify-between border-t pt-3 text-lg font-bold text-gray-900">
               <span>Grand Total</span>
               <span>{formatCurrency(order.total_amount)}</span>

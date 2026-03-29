@@ -13,7 +13,8 @@ import ImageGallery from "./ImageGallery";
 import ProductHeader from "./ProductHeader";
 import DeliveryAvailability from "./DeliveryAvailability";
 import CartActions from "./CartActions";
-import ProductDescription from "./ProductDescription";
+
+import ProductAccordion from "../Gifting/productAccordion";
 
 export default function Itemdetails({ product }: { product: Product }) {
   const navigate = useNavigate();
@@ -99,24 +100,32 @@ export default function Itemdetails({ product }: { product: Product }) {
     let isAvailable = false;
     let deliveryMessage = "";
 
-    // Pincode validation logic remains the same
-    if (
-      pincode.startsWith("12") &&
-      availableLocations.includes(Locations.GURGAON)
-    ) {
+    // 1. Define the postal boundaries accurately
+    const isGurgaon = pincode.startsWith("122");
+
+    // Delhi NCR covers Delhi, Faridabad, Ghaziabad, Noida, AND Gurgaon.
+    const isDelhiNCR =
+      pincode.startsWith("110") ||
+      pincode.startsWith("121") ||
+      pincode.startsWith("2010") ||
+      pincode.startsWith("2013") ||
+      isGurgaon; // Gurgaon is part of NCR, so it should qualify for NCR-level delivery if needed.
+
+    // 2. Route the delivery based on precision
+    if (isGurgaon && availableLocations.includes(Locations.GURGAON)) {
+      // Prioritize the hyper-local 2-hour Gurgaon delivery first
       isAvailable = true;
       setCity("gurgaon", Locations.GURGAON);
       deliveryMessage =
-        "Within 2 hours. (Delivery can be done within a 2 hours window.)";
-    } else if (
-      pincode.startsWith("11") &&
-      availableLocations.includes(Locations.DELHI_NCR)
-    ) {
+        "Within 2 hours. (Delivery can be done within a 2-hour window.)";
+    } else if (isDelhiNCR && availableLocations.includes(Locations.DELHI_NCR)) {
+      // Fallback to same-day NCR delivery
       isAvailable = true;
       setCity("delhi-ncr", Locations.DELHI_NCR);
       deliveryMessage =
         "Same-day delivery. (Estimate would be by end of the day or 3-5 hours.)";
     } else if (availableLocations.includes(Locations.PAN_INDIA)) {
+      // Final fallback for everywhere else in the country
       isAvailable = true;
       setCity("pan-india", Locations.PAN_INDIA);
       deliveryMessage =
@@ -142,7 +151,10 @@ export default function Itemdetails({ product }: { product: Product }) {
             name={product.name}
             price={product.base_price}
             unitDescription={product.unitDescription}
+            description={product.description}
           />
+
+          <ProductAccordion product={product} />
 
           <DeliveryAvailability
             pincode={pincode}
@@ -161,11 +173,6 @@ export default function Itemdetails({ product }: { product: Product }) {
             isPincodeValid={isPincodeValid}
             handleQuantityChange={handleQuantityChange}
             handleAddToCart={handleAddToCart}
-          />
-
-          <ProductDescription
-            product={product}
-            availableLocations={availableLocations}
           />
         </div>
       </div>

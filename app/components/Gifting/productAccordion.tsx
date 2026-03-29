@@ -1,36 +1,9 @@
 import React, { useState } from "react";
 import { Text } from "../ui/text";
+import type { Product } from "~/common/types";
 
-// 1. Define the accordion content
-const accordionData = [
-  {
-    id: "about",
-    title: "About",
-    content:
-      "Our hampers are carefully curated to bring you the finest selection of our handcrafted desserts. Every item is baked fresh to order using traditional methods.",
-  },
-  {
-    id: "ingredients",
-    title: "Ingredients",
-    content:
-      "We use only the finest ingredients: organic cacao, almond flour, and natural sweeteners. Absolutely no refined sugar, palm oil, or preservatives.",
-  },
-  {
-    id: "storage",
-    title: "Storage & Shelf Life",
-    content:
-      "Store in a cool, dry place. Best consumed within 10 days of delivery for maximum freshness. Do not refrigerate cookies.",
-  },
-  {
-    id: "allergens",
-    title: "Allergen Information",
-    content:
-      "Contains nuts and dairy. Manufactured in a facility that also processes wheat and soy.",
-  },
-];
-
-export default function ProductAccordion() {
-  // 2. Track which item is currently open (null means all are closed)
+export default function ProductAccordion({ product }: { product?: Product }) {
+  // Track which item is currently open (null means all are closed)
   const [openItem, setOpenItem] = useState<string | null>(null);
 
   const toggleItem = (id: string) => {
@@ -38,8 +11,50 @@ export default function ProductAccordion() {
     setOpenItem((prev) => (prev === id ? null : id));
   };
 
+  // Define the accordion content dynamically based on the product prop
+  const accordionData = [
+    {
+      id: "box",
+      title: "What's in the box?",
+
+      content:
+        product?.storage_instructions &&
+        product.storage_instructions.length > 0 ? (
+          <ul className="list-disc space-y-2 pl-4">
+            {product.storage_instructions.map((instruction, index) => (
+              <li key={index}>{instruction}</li>
+            ))}
+          </ul>
+        ) : (
+          "Store in a cool, dry place. Best consumed within 7 days of delivery for maximum freshness."
+        ),
+    },
+    {
+      id: "storage",
+      title: "Storage & Shelf Life",
+
+      content:
+        product?.storage_instructions &&
+        product.storage_instructions.length > 0 ? (
+          <ul className="list-disc space-y-2 pl-4">
+            {product.storage_instructions.map((instruction, index) => (
+              <li key={index}>{instruction}</li>
+            ))}
+          </ul>
+        ) : (
+          "Store in a cool, dry place. Best consumed within 7 days of delivery for maximum freshness."
+        ),
+    },
+    {
+      id: "allergens",
+      title: "Allergen Information",
+      content:
+        "Contains nuts and dairy. Manufactured in a facility that also processes wheat and soy.",
+    },
+  ];
+
   return (
-    <div className="border-primary-dark/20 bg-primary-light w-full border">
+    <div className="border-primary-dark/20 bg-primary-light mb-4 w-full border">
       {accordionData.map((item) => {
         const isOpen = openItem === item.id;
 
@@ -54,17 +69,17 @@ export default function ProductAccordion() {
               className="group hover:bg-primary-dark/5 flex w-full items-stretch justify-between text-left transition-colors"
               aria-expanded={isOpen}
             >
-              <div className="flex-1 py-5 pr-4 pl-6">
+              <div className="flex-1 py-3 pr-2 pl-3 md:py-5 md:pr-4 md:pl-6">
                 <Text
                   as="span"
                   variant="secondary"
-                  className="text-primary-dark text-xl tracking-wide md:text-2xl"
+                  className="text-primary-dark text-lg tracking-wide md:text-2xl"
                 >
                   {item.title}
                 </Text>
               </div>
 
-              {/* Icon Container with the specific left border from your screenshot */}
+              {/* Icon Container */}
               <div className="border-primary-dark/20 text-primary-dark group-hover:bg-primary-dark/10 flex w-16 items-center justify-center border-l transition-colors">
                 {isOpen ? (
                   // Minus icon
@@ -100,7 +115,7 @@ export default function ProductAccordion() {
               </div>
             </button>
 
-            {/* Accordion Content (Animated using CSS Grid) */}
+            {/* Accordion Content */}
             <div
               className={`grid transition-all duration-300 ease-in-out ${
                 isOpen
@@ -109,10 +124,11 @@ export default function ProductAccordion() {
               }`}
             >
               <div className="overflow-hidden">
+                {/* Changed from 'p' to 'div' because a 'p' tag cannot legally contain a 'ul' tag (which we use for storage) */}
                 <Text
-                  as="p"
+                  as="div"
                   variant="primary"
-                  className="px-6 pr-12 pb-6 text-base leading-relaxed text-gray-600"
+                  className="px-3 pr-12 pb-6 text-sm leading-relaxed text-gray-600 md:px-6 md:text-base"
                 >
                   {item.content}
                 </Text>

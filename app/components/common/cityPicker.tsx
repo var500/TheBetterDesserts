@@ -47,9 +47,9 @@ export const CityPicker = () => {
     ? AVAILABLE_LOCATIONS.find((loc) => loc.id === selectedCityId)?.label
     : "Select City";
 
-  if (location.pathname === "/checkout") {
-    return;
-  }
+  // if (location.pathname === "/checkout") {
+  //   return;
+  // }
 
   return (
     <div className="relative flex items-center" ref={dropdownRef}>

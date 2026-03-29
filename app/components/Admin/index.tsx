@@ -27,7 +27,7 @@ export default function AdminDashboard() {
   const navigate = useNavigate(); // <-- 2. Initialize navigate
 
   const [statusFilter, setStatusFilter] = useState("ALL");
-  const [dateFilter, setDateFilter] = useState("ALL");
+  const [dateFilter, setDateFilter] = useState(getFormattedDate(today));
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
@@ -164,7 +164,7 @@ export default function AdminDashboard() {
               {isLoading ? (
                 <tr>
                   <td
-                    colSpan={6}
+                    colSpan={7}
                     className="px-6 py-12 text-center text-gray-500"
                   >
                     <div className="flex animate-pulse flex-col items-center justify-center">
@@ -176,7 +176,7 @@ export default function AdminDashboard() {
               ) : orders.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={6}
+                    colSpan={7}
                     className="w-full px-6 py-12 text-center text-gray-500"
                   >
                     No orders found matching this filter.

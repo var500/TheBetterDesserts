@@ -35,7 +35,7 @@ export default function App() {
     products?.forEach((item) => {
       if (item.is_bestseller) result.bestsellers.push(item);
       if (item.isNewLaunch) result.newLaunch.push(item);
-      if (item.name === "Caszel") result.caszel = item;
+      if (item.name === "CASZEL") result.caszel = item;
     });
 
     return result;

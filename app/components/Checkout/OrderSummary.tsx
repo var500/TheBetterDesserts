@@ -185,7 +185,7 @@ export default function OrderSummary({
 
           <div className="text-primary-dark/70 flex justify-between pt-1">
             <Text as="p">GST (5%)</Text>
-            <Text as="p" className="font-medium">
+            <Text as="p" variant={"primary"} className="font-medium">
               ₹
               {gstAmount.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -199,7 +199,11 @@ export default function OrderSummary({
           <Text as="h3" className="text-primary-dark text-xl font-black">
             Total
           </Text>
-          <Text as="h3" className="text-primary-dark text-xl font-black">
+          <Text
+            as="h3"
+            variant={"primary"}
+            className="text-primary-dark text-xl font-black"
+          >
             ₹{total.toLocaleString()}
           </Text>
         </div>

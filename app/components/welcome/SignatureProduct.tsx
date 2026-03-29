@@ -2,7 +2,7 @@ import { useCityStore } from "~/store/useCityStore";
 import { Button } from "../ui/button";
 import { Text } from "../ui/text";
 import { Locations, type Product } from "~/common/types";
-import { useState } from "react";
+
 import { useNavigate } from "react-router";
 import { Icons } from "../icons";
 
@@ -14,7 +14,7 @@ export default function SignatureProduct({
   isLoading: boolean;
 }) {
   const { selectedCityLabel } = useCityStore();
-  const [showToast, setShowToast] = useState(false);
+
   const navigate = useNavigate();
 
   const imgSource = item
@@ -51,7 +51,8 @@ export default function SignatureProduct({
             </Text>
             <Text
               as="span"
-              className="text-primary-dark/50 text-xs whitespace-nowrap"
+              variant={"primary"}
+              className="text-primary-dark/50 text-xs font-semibold whitespace-nowrap"
             >
               (2k+ cravings satisfied)
             </Text>
@@ -99,56 +100,17 @@ export default function SignatureProduct({
           {selectedCityLabel !== Locations.GURGAON ? null : (
             <div className="flex flex-wrap items-center gap-8">
               {/* Wrapper div to capture hover events even when button is disabled */}
-              <div
-                className="relative flex items-center"
-                onMouseEnter={() => setShowToast(true)}
-                onMouseLeave={() => setShowToast(false)}
-              >
+              <div className="relative flex items-center">
                 <Button
                   disabled={isButtonDisabled}
                   onClick={() => navigate(`/product/${item?.id}`)}
                   variant="default"
                   className="group flex h-14 w-40 items-center gap-3 px-4 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:w-full md:px-10 md:text-lg"
                 >
-                  {isLoading
-                    ? "Loading.."
-                    : selectedCityLabel === null
-                      ? "Select your location"
-                      : selectedCityLabel !== Locations.GURGAON
-                        ? "Not deliverable"
-                        : "Shop Now"}
-
+                  Explore Now
                   <Icons.ChevronRight className="transition-transform duration-300 group-hover:translate-x-2" />
                 </Button>
-
-                {showToast && selectedCityLabel !== Locations.GURGAON && (
-                  <div className="bg-primary-dark animate-fade-in-up pointer-events-none absolute -bottom-12 left-1/2 z-50 -translate-x-1/2 rounded-md px-4 py-2 text-xs font-bold whitespace-nowrap text-[#F5F0E6] shadow-lg">
-                    Available for delivery or pickup only in Gurgaon
-                    <div className="bg-primary-dark absolute -top-1 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rotate-45"></div>
-                  </div>
-                )}
               </div>
-
-              {isLoading ? (
-                <Icons.Refresh className="text-primary-dark h-3 w-3 animate-spin" />
-              ) : (
-                <div className="flex flex-col">
-                  <Text
-                    as="span"
-                    variant={"primary"}
-                    className="text-primary-dark text-2xl font-bold"
-                  >
-                    ₹ {item?.base_price}{" "}
-                  </Text>
-                  <Text
-                    as="span"
-                    variant={"primary"}
-                    className="text-primary-dark text-xs tracking-widest uppercase"
-                  >
-                    Pack of 3
-                  </Text>{" "}
-                </div>
-              )}
             </div>
           )}
         </div>

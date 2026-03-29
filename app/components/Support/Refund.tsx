@@ -33,10 +33,16 @@ export default function Refund() {
           </li>
           <li className="mb-4">
             <Text>
-              In the event of unforeseen circumstances, Cinnamon Kitchen
+              In the event of unforeseen circumstances, The Better Desserts
               reserves the right to cancel any order and initiate a refund
               within 48 hours of fulfillment. Customers shall be notified in
               advance in such cases.
+            </Text>
+          </li>
+          <li className="mb-4">
+            <Text>
+              In the event of a payment discrepancy, the final transaction
+              status will be confirmed by our payment gateway partner, Razorpay.
             </Text>
           </li>
           <li className="mb-4">

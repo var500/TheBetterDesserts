@@ -2,7 +2,7 @@ import { Icons } from "../icons";
 import { Text } from "../ui/text";
 
 export const WhyChooseGifting = () => (
-  <section className="bg-white px-4 py-12 md:px-8 md:py-12">
+  <section className="border-primary-dark/20 border-b px-4 pb-6 md:px-8 md:pb-12">
     <div className="text-primary-dark mx-auto grid max-w-7xl grid-cols-1 gap-12 text-center sm:grid-cols-2 md:grid-cols-4 md:gap-8">
       {/* Feature 1 */}
       <div className="group flex flex-col items-center">

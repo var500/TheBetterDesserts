@@ -60,11 +60,11 @@ export const ProductCard = memo(
             </Link>
 
             {product.unitDescription && (
-              <div className="mt-2 mb-1 inline-flex w-max items-center">
+              <div className="mt-2 mb-1 inline-flex items-center">
                 <Text
                   as="span"
                   variant={"primary"}
-                  className="text-primary-dark text-[11px] font-semibold tracking-wider uppercase"
+                  className="text-primary-dark text-[11px] font-semibold tracking-wider"
                 >
                   {product.unitDescription}
                 </Text>

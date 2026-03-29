@@ -66,7 +66,7 @@ export default function Shipping() {
                   Shipping Charges
                 </Text>
                 <Text as="p" className="text-primary-dark/70 leading-relaxed">
-                  We offer free shipping on all orders above ₹999. For orders
+                  We offer free shipping on all orders above ₹2999. For orders
                   below this amount, a standard delivery fee suggested from our
                   delivery partner applies at checkout.
                 </Text>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useCartStore } from "~/store/cartStore";
 import { useCityStore } from "~/store/useCityStore";
 import { useNavigate } from "react-router";
@@ -21,27 +21,19 @@ import AddressManager from "./AddressManager";
 
 import { useCoupon } from "~/hooks/useCoupon";
 import { useValidateCart } from "~/hooks/useProducts";
-import type { CartValidationError } from "~/common/types";
-
-const mockCalculateShipping = async (
-  destinationPincode: string,
-): Promise<number> => {
-  return new Promise((resolve) =>
-    setTimeout(() => {
-      let distanceKm = 15;
-      if (destinationPincode.startsWith("11")) distanceKm = 35;
-      else if (!destinationPincode.startsWith("12")) distanceKm = 100;
-      resolve(distanceKm * 10);
-    }, 800),
-  );
-};
+import {
+  Locations,
+  type ApiError,
+  type CartValidationError,
+} from "~/common/types";
+import { useGetShippingCost } from "~/hooks/useOrder";
 
 export default function Checkout() {
   const navigate = useNavigate();
   const { user, token } = useAuthStore();
 
   const { cart } = useCartStore();
-  const { selectedCityId } = useCityStore();
+  const { selectedCityId, setCity } = useCityStore();
   const { step, setStep } = useCheckoutStore();
 
   const [deliveryMethod, setDeliveryMethod] = useState<"delivery" | "pickup">(
@@ -50,8 +42,7 @@ export default function Checkout() {
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(
     null,
   );
-  const [shippingFee, setShippingFee] = useState<number | null>(null);
-  const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
+
   const [scheduledDate, setScheduledDate] = useState("");
   const [scheduledSlot, setScheduledSlot] = useState("");
 
@@ -82,6 +73,55 @@ export default function Checkout() {
   const deliveryZone = selectedAddr
     ? getZoneFromPincode(selectedAddr.pin_code)
     : null;
+
+  useEffect(() => {
+    if (selectedAddr && deliveryMethod === "delivery") {
+      const currentPincode = selectedAddr.pin_code;
+
+      if (currentPincode.startsWith("12")) {
+        if (selectedCityId !== "gurgaon") {
+          setCity("gurgaon", Locations.GURGAON);
+        }
+      } else if (currentPincode.startsWith("11")) {
+        if (selectedCityId !== "delhi-ncr") {
+          setCity("delhi-ncr", Locations.DELHI_NCR);
+        }
+      } else {
+        if (selectedCityId !== "pan-india") {
+          setCity("pan-india", Locations.PAN_INDIA);
+        }
+      }
+    }
+  }, [selectedAddr, deliveryMethod, selectedCityId, setCity]);
+
+  const totalWeightInKg = useMemo(() => {
+    const totalGrams = cart.reduce((sum, item) => {
+      // Fallback to 500g if undefined.
+      const itemWeight = item.weight_grams || 500;
+      return sum + itemWeight * item.quantity;
+    }, 0);
+    return totalGrams / 1000;
+  }, [cart]);
+
+  const deliveryPincode =
+    deliveryMethod === "delivery" && selectedAddr
+      ? selectedAddr.pin_code
+      : undefined;
+
+  const isHyperlocalOrder = selectedCityId !== "pan-india";
+  console.log("Calculating shipping with params:", {
+    deliveryPincode,
+    totalWeightInKg,
+    isHyperlocalOrder,
+  });
+
+  const { data: shippingData, isFetching: isCalculatingShippingRaw } =
+    useGetShippingCost(deliveryPincode, totalWeightInKg, isHyperlocalOrder);
+
+  const isCalculatingShipping =
+    deliveryMethod === "delivery" && isCalculatingShippingRaw;
+  const shippingFee =
+    deliveryMethod === "pickup" ? 0 : (shippingData?.shippingCost ?? null);
 
   const isAddressDeliverable =
     selectedAddr && deliveryZone
@@ -126,14 +166,14 @@ export default function Checkout() {
     };
 
     validateCart(payload, {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onError: (err: any) => {
-        if (err?.response?.errors && err.response.errors.length > 0) {
-          err.response.errors.forEach((errorItem: CartValidationError) => {
+      onError: (err: unknown) => {
+        const apiError = err as ApiError;
+        if (apiError?.response?.errors && apiError.response.errors.length > 0) {
+          apiError.response.errors.forEach((errorItem: CartValidationError) => {
             toast.error(errorItem.message);
           });
-        } else if (err?.message) {
-          toast.error(err.message);
+        } else if (apiError?.message) {
+          toast.error(apiError.message);
         } else {
           toast.error("Some items in your cart are no longer available.");
         }
@@ -146,28 +186,6 @@ export default function Checkout() {
       setStep("DELIVERY_AND_PAYMENT");
     }
   }, [user?.uid, step, setStep]);
-
-  useEffect(() => {
-    const calculateShipping = async () => {
-      if (deliveryMethod === "pickup") {
-        setShippingFee(0);
-        return;
-      }
-      if (!selectedAddressId) {
-        setShippingFee(null);
-        return;
-      }
-
-      setIsCalculatingShipping(true);
-      const selectedAddr = addresses.find((a) => a.id === selectedAddressId);
-      if (selectedAddr) {
-        const cost = await mockCalculateShipping(selectedAddr.pin_code);
-        setShippingFee(cost);
-      }
-      setIsCalculatingShipping(false);
-    };
-    calculateShipping();
-  }, [selectedAddressId, addresses, deliveryMethod]);
 
   const { mutate: applyCoupon, isPending: isVerifyingCoupon } = useCoupon(
     (data) => {
@@ -233,7 +251,6 @@ export default function Checkout() {
     );
   }
 
-  // Main Render
   return (
     <div className="min-h-screen bg-[#F5F0E6] px-4 pt-12 pb-24 md:px-8">
       {isValidatingCart && (
@@ -284,8 +301,10 @@ export default function Checkout() {
                         variant={"primary"}
                         className="text-sm text-red-500"
                       >
-                        Sorry, one or more items in your cart cannot be
-                        delivered to {selectedAddr.pin_code}.
+                        To ensure your desserts arrive perfectly fresh, we
+                        unfortunately can&apos;t deliver to{" "}
+                        {selectedAddr.pin_code}. Please select a closer address
+                        or switch to in-store pickup
                       </Text>
                     </div>
                   )}

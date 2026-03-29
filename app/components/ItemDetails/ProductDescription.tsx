@@ -1,7 +1,6 @@
-import React from "react";
 import { Text } from "../ui/text";
 import { Icons } from "../icons";
-import { Locations, type Product, type Zone } from "~/common/types";
+import { type Product, type Zone } from "~/common/types";
 
 interface ProductDescriptionProps {
   product: Product;
@@ -10,7 +9,6 @@ interface ProductDescriptionProps {
 
 export default function ProductDescription({
   product,
-  availableLocations,
 }: ProductDescriptionProps) {
   return (
     <div className="border-primary-dark/10 border-t pt-6">
@@ -27,11 +25,7 @@ export default function ProductDescription({
         as="p"
         className="text-primary-dark/80 text-sm leading-relaxed whitespace-pre-line"
       >
-        Indulge in our exquisite {product.name.toLowerCase()}. Made fresh to
-        order using only the finest ingredients.
-        {availableLocations.includes(Locations.PAN_INDIA)
-          ? " Shipped securely anywhere in India."
-          : ""}
+        {product.description}
       </Text>
     </div>
   );
