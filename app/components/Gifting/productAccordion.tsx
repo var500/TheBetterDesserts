@@ -13,22 +13,22 @@ export default function ProductAccordion({ product }: { product?: Product }) {
 
   // Define the accordion content dynamically based on the product prop
   const accordionData = [
-    {
-      id: "box",
-      title: "What's in the box?",
+    // {
+    //   id: "box",
+    //   title: "What's in the box?",
 
-      content:
-        product?.storage_instructions &&
-        product.storage_instructions.length > 0 ? (
-          <ul className="list-disc space-y-2 pl-4">
-            {product.storage_instructions.map((instruction, index) => (
-              <li key={index}>{instruction}</li>
-            ))}
-          </ul>
-        ) : (
-          "Store in a cool, dry place. Best consumed within 7 days of delivery for maximum freshness."
-        ),
-    },
+    //   content:
+    //     product?.storage_instructions &&
+    //     product.storage_instructions.length > 0 ? (
+    //       <ul className="list-disc space-y-2 pl-4">
+    //         {product.storage_instructions.map((instruction, index) => (
+    //           <li key={index}>{instruction}</li>
+    //         ))}
+    //       </ul>
+    //     ) : (
+    //       "Store in a cool, dry place. Best consumed within 7 days of delivery for maximum freshness."
+    //     ),
+    // },
     {
       id: "storage",
       title: "Storage & Shelf Life",
