@@ -5,11 +5,12 @@ import { useCartStore } from "~/store/cartStore";
 import { CityPicker } from "./cityPicker";
 import { Link, useNavigate } from "react-router";
 import { Button } from "../ui/button";
+import type { User } from "~/store/authStore";
 
 // Removed cartCount from props!
 interface NavbarProps {
   onOpenSearch: () => void;
-  user: { role: string } | null;
+  user: User | null;
   onAuthClick: () => void;
 }
 

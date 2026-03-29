@@ -5,7 +5,7 @@ import { YouMayAlsoLike } from "~/components/common/ProductSuggestion";
 import { Icons } from "~/components/icons";
 import { Text } from "~/components/ui/text";
 import { Button } from "~/components/ui/button";
-import { Layout } from "~/components/Layout/Layout";
+
 import Itemdetails from "~/components/ItemDetails";
 import { useGetProductById } from "~/hooks/useProducts";
 import { ProductFAQ } from "~/components/common/Faqs";
@@ -32,7 +32,7 @@ export default function ProductDetails() {
   if (isError || !product) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-[#F5F0E6] px-4 text-center">
-        <Icons.Cookie className="text-primary-dark/20 mb-6 h-24 w-24" />
+        <Icons.cookie className="text-primary-dark/20 mb-6 h-24 w-24" />
         <Text as="h2" className="text-primary-dark mb-4 text-4xl md:text-5xl">
           Oops! That treat crumbled.
         </Text>
@@ -53,15 +53,13 @@ export default function ProductDetails() {
 
   // 3. SUCCESS STATE (Clean and Modular)
   return (
-    <Layout>
-      <div className="flex min-h-screen flex-col bg-[#F5F0E6]">
-        <Itemdetails product={product} />
-        {product.ingredients.length ? (
-          <ProductIngredients ingredients={product.ingredients} />
-        ) : null}
-        <ProductFAQ faqs={product.faq} />
-        <YouMayAlsoLike />
-      </div>
-    </Layout>
+    <div className="flex min-h-screen flex-col bg-[#F5F0E6]">
+      <Itemdetails product={product} />
+      {product.ingredients.length ? (
+        <ProductIngredients ingredients={product.ingredients} />
+      ) : null}
+      <ProductFAQ faqs={product.faq} />
+      <YouMayAlsoLike />
+    </div>
   );
 }

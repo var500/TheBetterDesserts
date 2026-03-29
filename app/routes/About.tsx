@@ -1,4 +1,3 @@
-import Layout from "~/components/Layout/Layout";
 import AboutUs from "~/components/About";
 
 export function meta() {
@@ -10,9 +9,5 @@ export function meta() {
 }
 
 export default function About() {
-  return (
-    <Layout>
-      <AboutUs />
-    </Layout>
-  );
+  return <AboutUs />;
 }

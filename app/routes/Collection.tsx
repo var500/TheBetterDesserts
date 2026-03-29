@@ -1,5 +1,3 @@
-import Layout from "~/components/Layout/Layout";
-
 import Collection from "~/components/shop";
 
 export function meta() {
@@ -11,9 +9,5 @@ export function meta() {
 }
 
 export default function Store() {
-  return (
-    <Layout>
-      <Collection />
-    </Layout>
-  );
+  return <Collection />;
 }

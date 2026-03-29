@@ -160,7 +160,10 @@ export const AuthModal = ({
             <div className="space-y-3">
               <Button
                 variant="outline"
-                onClick={() => navigate("/profile")}
+                onClick={() => {
+                  navigate("/my-account");
+                  onClose();
+                }}
                 className="flex h-12 w-full items-center justify-center gap-2 text-lg font-medium"
               >
                 Order History <Icons.ChevronRight className="h-4 w-4" />

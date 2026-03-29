@@ -103,7 +103,7 @@ export default function ProductsTable() {
             onClick={() => refetch()}
           >
             <Icons.Refresh className="h-4 w-4" />
-            <Text as={"span"} className="capitalize">
+            <Text as={"span"} variant={"primary"} className="uppercase">
               Refresh
             </Text>
           </Button>

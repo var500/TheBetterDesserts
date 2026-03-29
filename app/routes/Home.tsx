@@ -1,5 +1,4 @@
 import Welcome from "~/components/welcome";
-import Layout from "~/components/Layout/Layout";
 
 export function meta() {
   return [
@@ -10,9 +9,5 @@ export function meta() {
 }
 
 export default function Home() {
-  return (
-    <Layout>
-      <Welcome />
-    </Layout>
-  );
+  return <Welcome />;
 }

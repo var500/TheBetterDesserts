@@ -1,5 +1,3 @@
-import Layout from "~/components/Layout/Layout";
-
 import ContactUs from "~/components/Support/Contact";
 
 export function meta() {
@@ -11,9 +9,5 @@ export function meta() {
 }
 
 export default function Contact() {
-  return (
-    <Layout>
-      <ContactUs />
-    </Layout>
-  );
+  return <ContactUs />;
 }

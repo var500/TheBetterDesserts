@@ -1,5 +1,3 @@
-import Layout from "~/components/Layout/Layout";
-
 import Shipping from "~/components/Support/Shipping";
 
 export function meta() {
@@ -11,9 +9,5 @@ export function meta() {
 }
 
 export default function ShippingPolicy() {
-  return (
-    <Layout>
-      <Shipping />
-    </Layout>
-  );
+  return <Shipping />;
 }

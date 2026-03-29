@@ -6,7 +6,6 @@ import { useCityStore } from "~/store/useCityStore";
 import { Locations, type Product } from "~/common/types";
 
 import { toast } from "react-toastify";
-import { Icons } from "../icons";
 
 // Import sub-components
 import ImageGallery from "./ImageGallery";
@@ -14,7 +13,7 @@ import ProductHeader from "./ProductHeader";
 import DeliveryAvailability from "./DeliveryAvailability";
 import CartActions from "./CartActions";
 
-import ProductAccordion from "../Gifting/productAccordion";
+import ProductInfoAccordion from "../common/productAccordion";
 
 export default function Itemdetails({ product }: { product: Product }) {
   const navigate = useNavigate();
@@ -72,9 +71,10 @@ export default function Itemdetails({ product }: { product: Product }) {
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) addToCart(product, false);
     toast.success(`Added ${product.name} to your bag!`, {
-      icon: Icons.Cookie,
+      theme: "dark",
       style: {
         borderRadius: "16px",
+        overflow: "hidden",
         background: "#1A243F",
         color: "#F5F0E6",
         fontWeight: "bold",
@@ -154,7 +154,7 @@ export default function Itemdetails({ product }: { product: Product }) {
             description={product.description}
           />
 
-          <ProductAccordion product={product} />
+          <ProductInfoAccordion product={product} />
 
           <DeliveryAvailability
             pincode={pincode}

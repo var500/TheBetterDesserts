@@ -1,7 +1,5 @@
 import Checkout from "~/components/Checkout";
 
-import Layout from "~/components/Layout/Layout";
-
 export function meta() {
   return [
     { title: "The Better Desserts" },
@@ -11,9 +9,5 @@ export function meta() {
 }
 
 export default function CheckoutOrder() {
-  return (
-    <Layout>
-      <Checkout />
-    </Layout>
-  );
+  return <Checkout />;
 }
