@@ -8,7 +8,7 @@ export default function OrderConfirmation() {
 
   return (
     <div className="flex min-h-[80vh] flex-col items-center justify-center bg-[#F5F0E6] px-4 py-12">
-      <div className="border-primary-dark/5 animate-in zoom-in-95 w-full max-w-lg rounded-3xl border bg-white p-8 text-center shadow-sm duration-500 md:p-12">
+      <div className="border-primary-dark/15 shadow-primary-dark/5 animate-in zoom-in-95 w-full max-w-lg rounded-3xl border bg-white p-8 text-center shadow-xl duration-500 md:p-12">
         <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
           <Icons.Check className="h-10 w-10 text-green-600" />
         </div>
@@ -24,9 +24,9 @@ export default function OrderConfirmation() {
 
         <div className="flex flex-col gap-4 sm:flex-row">
           <Button
-            variant="outline"
+            variant="default"
             className="flex-1 rounded-xl py-6"
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/my-account")}
           >
             View Order
           </Button>

@@ -136,13 +136,21 @@ export default function Checkout() {
     0,
   );
 
+  const FREE_SHIPPING_THRESHOLD = 2999;
+  const isFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
+
   const discountedSubtotal = subtotal - backendDiscountAmount;
-  const currentShipping = shippingFee || 0;
+
+  // Override currentShipping to be 0 if they qualify for free shipping
+  const currentShipping =
+    deliveryMethod === "pickup" || isFreeShipping ? 0 : shippingFee || 0;
+
   const taxableAmount = discountedSubtotal + currentShipping;
-
   const gstAmount = taxableAmount * 0.05;
+  const exactTotal = taxableAmount + gstAmount;
+  const total = Math.round(exactTotal);
+  const roundOffAmount = Number((total - exactTotal).toFixed(2));
 
-  const total = taxableAmount + gstAmount;
   const { mutate: validateCart, isPending: isValidatingCart } =
     useValidateCart();
 
@@ -225,7 +233,7 @@ export default function Checkout() {
   if (cart.length === 0) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-[#F5F0E6] px-4">
-        <Icons.ShoppingBag className="text-primary-dark/20 mb-6 h-24 w-24" />
+        <Icons.cookie className="text-primary-dark/20 mb-6 h-24 w-24" />
         <Text
           as="h2"
           className="text-primary-dark mb-4 text-center text-4xl md:text-5xl"
@@ -351,6 +359,9 @@ export default function Checkout() {
           scheduledSlot={scheduledSlot}
           isAddressDeliverable={isAddressDeliverable}
           couponCode={appliedCouponCode}
+          isFreeShipping={isFreeShipping}
+          freeShippingThreshold={FREE_SHIPPING_THRESHOLD}
+          roundOffAmount={roundOffAmount}
         />
       </div>
     </div>

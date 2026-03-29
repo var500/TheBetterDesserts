@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { useCartStore } from "~/store/cartStore";
 import { useRazorpay, type CheckoutPayload } from "~/hooks/useRazorpay";
 import { useAuthStore } from "~/store/authStore";
+import { Icons } from "../icons";
 
 interface OrderSummaryProps {
   subtotal: number;
@@ -18,6 +19,9 @@ interface OrderSummaryProps {
   gstAmount: number;
   isAddressDeliverable: boolean;
   couponCode?: string | null;
+  isFreeShipping: boolean;
+  freeShippingThreshold: number;
+  roundOffAmount: number;
 }
 
 export default function OrderSummary({
@@ -34,11 +38,14 @@ export default function OrderSummary({
   scheduledSlot,
   couponCode,
   isAddressDeliverable,
+  isFreeShipping,
+  freeShippingThreshold,
+  roundOffAmount,
 }: OrderSummaryProps) {
   const { cart, removeFromCart } = useCartStore();
   const { user } = useAuthStore();
 
-  const { processPayment, isProcessing } = useRazorpay();
+  const { processPayment, isProcessing, isVerifying } = useRazorpay();
 
   const handleCheckoutClick = () => {
     if (!user?.uid || !selectedAddressId || !scheduledDate || !scheduledSlot)
@@ -87,13 +94,81 @@ export default function OrderSummary({
     tooltipMessage = "Calculating shipping...";
   }
 
+  const amountShort = freeShippingThreshold - subtotal;
+  const progressPercentage = Math.min(
+    (subtotal / freeShippingThreshold) * 100,
+    100,
+  );
+
   return (
     <div className="w-full lg:w-100">
+      {isVerifying && (
+        <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#F5F0E6]/80 backdrop-blur-sm">
+          <Icons.Loader className="text-primary-dark mb-6 h-12 w-12 animate-spin" />
+          <Text
+            as="h2"
+            className="text-primary-dark mb-2 px-4 text-center text-2xl font-bold tracking-widest uppercase"
+          >
+            Securing Your Payment...
+          </Text>
+          <Text
+            as="p"
+            className="text-primary-dark/70 px-4 text-center text-sm font-medium"
+          >
+            Please do not refresh or close this page.
+          </Text>
+        </div>
+      )}
       <div className="border-primary-dark/5 sticky top-24 mb-10 rounded-3xl border bg-white p-6 shadow-lg md:mb-0 md:p-8">
         <Text as="h2" className="text-primary-dark mb-6 text-2xl font-bold">
           Order Summary
         </Text>
 
+        {/* --- NEW FREE SHIPPING LOGIC --- */}
+        {deliveryMethod === "delivery" && (
+          <div className="mb-6 rounded-2xl border border-gray-100 bg-gray-50 p-4">
+            {/* If they have unlocked it, OR if they are within ₹1000 of unlocking it, show the progress bar */}
+            {isFreeShipping || amountShort <= 1000 ? (
+              <>
+                <div className="mb-2 flex items-center justify-between">
+                  <Text
+                    variant={"primary"}
+                    as="p"
+                    className="text-primary-dark text-sm font-semibold"
+                  >
+                    {isFreeShipping
+                      ? "🎉 You've unlocked FREE Delivery!"
+                      : `Add items worth ₹${amountShort.toLocaleString()} more for FREE Delivery`}
+                  </Text>
+                </div>
+                {/* Progress Bar Track */}
+                <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
+                  {/* Progress Bar Fill */}
+                  <div
+                    className={`h-full transition-all duration-500 ease-out ${
+                      isFreeShipping
+                        ? "bg-green-500"
+                        : "bg-primary-dark border-primary-dark border"
+                    }`}
+                    style={{ width: `${progressPercentage}%` }}
+                  />
+                </div>
+              </>
+            ) : (
+              /* If they are further away than ₹1000, just show a friendly helper text */
+              <div className="flex items-center justify-center text-center">
+                <Text
+                  variant={"primary"}
+                  as="p"
+                  className="text-primary-dark text-sm font-semibold"
+                >
+                  🚚 Free delivery on orders above ₹
+                  {freeShippingThreshold.toLocaleString()}
+                </Text>
+              </div>
+            )}
+          </div>
+        )}
         <div className="mb-6 max-h-75 space-y-4 overflow-y-auto pr-2">
           {cart.map((item) => (
             <div
@@ -171,6 +246,17 @@ export default function OrderSummary({
                 <Text as="p" className="animate-pulse text-xs">
                   Calculating...
                 </Text>
+              ) : isFreeShipping ? (
+                <div className="flex items-center gap-2">
+                  {shippingFee && (
+                    <Text as="span" className="text-xs line-through opacity-50">
+                      ₹{shippingFee.toLocaleString()}
+                    </Text>
+                  )}
+                  <Text as="p" className="font-bold text-green-600">
+                    FREE
+                  </Text>
+                </div>
               ) : shippingFee !== null ? (
                 <Text as="p" className="font-medium" variant={"primary"}>
                   ₹{shippingFee.toLocaleString()}
@@ -193,6 +279,17 @@ export default function OrderSummary({
               })}
             </Text>
           </div>
+          {roundOffAmount !== 0 && (
+            <div className="text-primary-dark/70 flex justify-between pt-1">
+              <Text as="p" variant={"primary"} className="text-xs">
+                Round Off
+              </Text>
+              <Text as="p" variant={"primary"} className="text-xs font-medium">
+                {roundOffAmount > 0 ? "+" : "-"} ₹
+                {Math.abs(roundOffAmount).toFixed(2)}
+              </Text>
+            </div>
+          )}
         </div>
 
         <div className="border-primary-dark/10 mt-4 flex items-center justify-between border-t pt-4">

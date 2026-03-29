@@ -85,7 +85,11 @@ export default function OrderCard({ order, onReorder }: OrderCardProps) {
         </div>
 
         <div className="border-primary-dark/10 flex w-full flex-col items-end gap-3 border-t pt-4 md:w-auto md:border-t-0 md:pt-0">
-          <Text as="p" className="text-primary-dark text-xl font-black">
+          <Text
+            as="p"
+            variant={"primary"}
+            className="text-primary-dark text-xl font-black"
+          >
             ₹{order.total_amount}
           </Text>
           <Button

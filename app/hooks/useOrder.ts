@@ -23,13 +23,15 @@ export const useReorder = (currentCatalogProducts: any[]) => {
     let outOfStockCount = 0;
 
     pastOrderItems.forEach((pastItem) => {
-      // Find the LIVE version of the product to check current stock
+      // FIX 1: Use pastItem.product.id (or pastItem.product_id) to match your API payload
       const liveProduct = currentCatalogProducts.find(
-        (p) => p.id === pastItem.productId,
+        (p) => p.id === (pastItem.product?.id || pastItem.product_id),
       );
 
-      // Check if it exists AND is in stock
-      if (liveProduct && liveProduct.in_stock) {
+      // FIX 2: Ensure you are checking the correct stock/active property.
+      // I am using 'is_active' based on your previous JSON, but change it to 'in_stock'
+      // ONLY if your catalog items actually have an 'in_stock' boolean.
+      if (liveProduct && liveProduct.is_active !== false) {
         // Add to cart with the quantity they previously ordered
         addToCart({ ...liveProduct, quantity: pastItem.quantity });
         addedCount++;
@@ -45,7 +47,7 @@ export const useReorder = (currentCatalogProducts: any[]) => {
 
     if (outOfStockCount > 0) {
       toast.warn(
-        `${outOfStockCount} item(s) are currently out of stock and were skipped.`,
+        `${outOfStockCount} item(s) are currently unavailable and were skipped.`,
       );
     }
 

@@ -60,9 +60,11 @@ export interface CheckoutPayload {
 
 export function useRazorpay() {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isVerifying, setIsVerifying] = useState(false);
   const navigate = useNavigate();
   const { clearCart } = useCartStore();
   const { user } = useAuthStore();
+
   const processPayment = async (payload: CheckoutPayload) => {
     setIsProcessing(true);
 
@@ -101,6 +103,7 @@ export function useRazorpay() {
 
         // 4. Handle Success -> Verify on Backend
         handler: async function (response: RazorpaySuccessResponse) {
+          setIsVerifying(true);
           try {
             // VERIFY THE SIGNATURE ON YOUR BACKEND
             const verifyResponse = await fetch(
@@ -128,13 +131,14 @@ export function useRazorpay() {
               "Payment verification failed. If money was deducted, it will be refunded.",
             );
           } finally {
+            setIsVerifying(false);
             setIsProcessing(false);
           }
         },
         prefill: {
-          name: user?.name ?? "Test User", // Ideally dynamically populated from your user state
+          name: user?.fname ?? "Test User", // Ideally dynamically populated from your user state
           email: user?.email ?? "test@example.com",
-          contact: user?.phoneNumber ?? "9999999999",
+          contact: user?.phone_number ?? "9999999999",
         },
         theme: {
           color: "#1A243F",
@@ -184,5 +188,5 @@ export function useRazorpay() {
     }
   };
 
-  return { processPayment, isProcessing };
+  return { processPayment, isProcessing, isVerifying };
 }

@@ -126,6 +126,7 @@ export default function MyAccountPage() {
               <div className="border-primary-dark/5 rounded-3xl border bg-white p-8 text-center">
                 <Text
                   as="h3"
+                  variant={"primary"}
                   className="text-primary-dark mb-2 text-xl font-bold"
                 >
                   No orders yet
