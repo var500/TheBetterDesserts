@@ -28,7 +28,7 @@ export function AddToCartButton({
     <Button
       variant={"rounded"}
       size="sm"
-      className={`h-14 w-full rounded-xl text-sm transition-all duration-300 ${
+      className={`h-14 w-full rounded-xl px-2 text-[10px] transition-all duration-300 md:text-sm ${
         status === "success" ? "bg-green-600 text-white hover:bg-green-700" : ""
       }`}
       onClick={handleAddToCart}
@@ -40,7 +40,7 @@ export function AddToCartButton({
         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
       )}
       {status === "success" && <Check className="mr-2 h-4 w-4" />}
-      {status === "idle" && <ShoppingCart className="mr-2 h-4 w-4" />}
+      {status === "idle" && <ShoppingCart className="h-5 w-5 md:mr-2" />}
 
       {!product.isAvailable
         ? "Sold Out"

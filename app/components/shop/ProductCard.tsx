@@ -48,7 +48,7 @@ export const ProductCard = memo(
           )}
         </Link>
 
-        <div className="flex flex-1 flex-col justify-between gap-4 p-4">
+        <div className="flex flex-1 flex-col justify-between gap-4 p-2 md:p-4">
           <div>
             <Link to={`/product/${product.id}`}>
               <Text
