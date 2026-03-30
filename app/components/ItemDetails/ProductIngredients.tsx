@@ -51,8 +51,8 @@ export function ProductIngredients({
   if (!ingredients || ingredients.length === 0) return null;
 
   return (
-    <section className="border-primary-dark/10 border-t bg-[#F5F0E6] px-4 py-16 md:px-8">
-      <div className="mx-auto max-w-5xl">
+    <section className="border-primary-dark/10 border-t bg-[#F5F0E6] py-16">
+      <div>
         <Text
           as="h2"
           variant="secondary"
@@ -62,7 +62,7 @@ export function ProductIngredients({
         </Text>
 
         {/* Swiper Carousel Integration */}
-        <div className="px-4 md:px-12">
+        <div>
           <Swiper
             modules={[Pagination]}
             navigation
@@ -73,19 +73,26 @@ export function ProductIngredients({
             breakpoints={{
               // Adjust these breakpoints based on your design needs
               640: {
-                slidesPerView: 3,
+                slidesPerView: 4,
                 spaceBetween: 30,
               },
-              768: {
-                slidesPerView: 4,
-                spaceBetween: 40,
-              },
-              1024: {
+              850: {
                 slidesPerView: 5,
                 spaceBetween: 40,
               },
+              1024: {
+                slidesPerView: 6,
+                spaceBetween: 40,
+              },
+              1150: {
+                slidesPerView: 7,
+                spaceBetween: 40,
+              },
             }}
-            className="pt-4 pb-12" // Padding bottom to make room for pagination dots
+            className="pt-4 pb-12"
+            style={{
+              paddingBottom: "60px",
+            }} // Padding bottom to make room for pagination dots
           >
             {ingredients.map((item, idx) => (
               <SwiperSlide key={item.id || idx} className="flex justify-center">
