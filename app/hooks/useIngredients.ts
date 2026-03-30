@@ -37,6 +37,7 @@ export const useCreateIngredient = () => {
     mutationFn: async (data: {
       name: string;
       description: string;
+      image: File | null;
     }): Promise<IngredientsItem> => {
       if (!token) {
         throw new Error(

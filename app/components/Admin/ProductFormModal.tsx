@@ -95,9 +95,14 @@ export default function ProductFormModal({
   const handleCreateNewIngredient = async (
     name: string,
     description: string,
+    imageFile: File | null,
   ) => {
     try {
-      const newIngredient = await createIngredient({ name, description });
+      const newIngredient = await createIngredient({
+        name,
+        description,
+        image: imageFile,
+      });
       return newIngredient.id;
     } catch (error) {
       console.error("Failed to create ingredient", error);

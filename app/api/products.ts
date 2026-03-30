@@ -156,13 +156,20 @@ export const createIngredients = async (
   payload: Omit<IngredientsItem, "id">,
   token: string,
 ): Promise<IngredientsItem> => {
+  const formData = new FormData();
+  formData.append("name", payload.name);
+  formData.append("description", payload.description);
+
+  if (payload.image) {
+    // 'image' must match the name in FileInterceptor('image') on the backend
+    formData.append("image", payload.image);
+  }
   const response = await fetch(`${BACKEND_API_URL}/ingredients`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify(payload),
+    body: formData,
   });
   if (!response.ok) throw new Error("Failed to fetch ingredients");
   return response.json();

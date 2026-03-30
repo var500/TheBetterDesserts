@@ -118,8 +118,9 @@ export default function Details() {
         </div>
       </div>
 
-      {/* --- TOP CARDS: CUSTOMER & ORDER INFO --- */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+      {/* --- TOP CARDS: CUSTOMER, ADDRESS & ORDER INFO --- */}
+      {/* Updated grid to 3 columns on large screens to fit the address nicely */}
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
           <h3 className="mb-4 border-b pb-2 text-lg font-semibold text-gray-900">
             Customer Details
@@ -151,6 +152,35 @@ export default function Details() {
             </p>
           </div>
         </div>
+
+        {/* NEW: Delivery Address Card */}
+        {order.address ? (
+          <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+            <h3 className="mb-4 border-b pb-2 text-lg font-semibold text-gray-900">
+              Delivery Address
+            </h3>
+            <div className="space-y-1 text-sm text-gray-600">
+              <p className="font-medium text-gray-900">
+                {order.address.first_name} {order.address.last_name}
+              </p>
+              <p>
+                {order.address.house_no}, {order.address.street_address}
+              </p>
+              <p>
+                {order.address.city}, {order.address.state}{" "}
+                {order.address.pin_code}
+              </p>
+              <p className="pt-2">
+                <strong className="text-gray-900">Phone:</strong> +91{" "}
+                {order.address.phone_number}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
+            <p className="text-sm font-medium text-gray-500">Store Pickup</p>
+          </div>
+        )}
 
         <div className="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
           <h3 className="mb-4 border-b pb-2 text-lg font-semibold text-gray-900">

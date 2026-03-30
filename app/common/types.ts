@@ -349,6 +349,7 @@ export interface IngredientsItem {
   name: string;
   id: string;
   description: string;
+  image: File | null;
 }
 
 export interface ApiError extends Error {

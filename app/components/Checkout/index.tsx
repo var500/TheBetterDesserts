@@ -108,12 +108,48 @@ export default function Checkout() {
       ? selectedAddr.pin_code
       : undefined;
 
-  const isHyperlocalOrder = selectedCityId !== "pan-india";
-  console.log("Calculating shipping with params:", {
-    deliveryPincode,
-    totalWeightInKg,
-    isHyperlocalOrder,
-  });
+  const isHyperlocalOrder = useMemo(() => {
+    if (deliveryMethod === "pickup") return true;
+    if (!selectedAddr) return selectedCityId !== "pan-india";
+
+    const pin = selectedAddr.pin_code;
+    return pin.startsWith("12") || pin.startsWith("11");
+  }, [selectedAddr, selectedCityId, deliveryMethod]);
+
+  const isPanIndia = selectedCityId === "pan-india";
+
+  const panIndiaDateObj = useMemo(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 5);
+    return d;
+  }, []);
+
+  const panIndiaEstimatedDateDisplay = useMemo(() => {
+    return panIndiaDateObj.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "short",
+      day: "numeric",
+    });
+  }, [panIndiaDateObj]);
+
+  // Auto-fill form data for Pan India so backend gets valid input
+  useEffect(() => {
+    if (deliveryMethod === "delivery" && isPanIndia) {
+      const localStr = new Date(
+        panIndiaDateObj.getTime() - panIndiaDateObj.getTimezoneOffset() * 60000,
+      )
+        .toISOString()
+        .split("T")[0];
+      setScheduledDate(localStr);
+      setScheduledSlot("Standard 3-5 Days");
+    }
+  }, [
+    deliveryMethod,
+    isPanIndia,
+    panIndiaDateObj,
+    setScheduledDate,
+    setScheduledSlot,
+  ]);
 
   const { data: shippingData, isFetching: isCalculatingShippingRaw } =
     useGetShippingCost(deliveryPincode, totalWeightInKg, isHyperlocalOrder);
@@ -321,8 +357,35 @@ export default function Checkout() {
                 <PickupDetails />
               )}
 
+              {deliveryMethod === "delivery" &&
+                isAddressDeliverable &&
+                isPanIndia && (
+                  <div className="border-primary-dark/5 animate-in fade-in slide-in-from-bottom-2 mb-8 rounded-3xl border bg-white p-6 shadow-sm md:p-8">
+                    <Text
+                      as="h2"
+                      className="text-primary-dark mb-2 text-2xl font-bold"
+                    >
+                      Standard Delivery
+                    </Text>
+                    <Text
+                      as="p"
+                      variant={"primary"}
+                      className="text-primary-dark/70"
+                    >
+                      Your order will be shipped via our delivery partners and
+                      is estimated to arrive by{" "}
+                      <span className="font-bold">
+                        {panIndiaEstimatedDateDisplay}
+                      </span>
+                      . (Usually 3-5 business days).
+                    </Text>
+                  </div>
+                )}
+
               {(deliveryMethod === "pickup" ||
-                (deliveryMethod === "delivery" && isAddressDeliverable)) && (
+                (deliveryMethod === "delivery" &&
+                  isAddressDeliverable &&
+                  !isPanIndia)) && (
                 <OrderSchedule
                   deliveryMethod={deliveryMethod}
                   scheduledDate={scheduledDate}

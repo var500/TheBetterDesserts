@@ -25,13 +25,11 @@ export default function OrderSchedule({
   scheduledSlot,
   setScheduledSlot,
 }: OrderScheduleProps) {
-  // 1. Get exact current time metrics
-  // Add this near your other hooks
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   const todayObj = new Date();
   const currentHour = todayObj.getHours();
 
-  // Adjusting for local timezone offset for string comparison
   const todayStr = new Date(
     todayObj.getTime() - todayObj.getTimezoneOffset() * 60000,
   )
@@ -40,7 +38,6 @@ export default function OrderSchedule({
 
   const isToday = scheduledDate === todayStr;
 
-  // 2. Dynamically generate the next 3 days for the UI buttons
   const dateOptions = useMemo(() => {
     const options = [];
     const baseDate = new Date();
@@ -49,7 +46,6 @@ export default function OrderSchedule({
       const targetDate = new Date(baseDate);
       targetDate.setDate(targetDate.getDate() + i);
 
-      // Get YYYY-MM-DD safely for local timezone
       const localStr = new Date(
         targetDate.getTime() - targetDate.getTimezoneOffset() * 60000,
       )
@@ -60,7 +56,6 @@ export default function OrderSchedule({
       if (i === 0) label = "Today";
       else if (i === 1) label = "Tomorrow";
       else {
-        // e.g., "Wed, 11 Mar"
         label = targetDate.toLocaleDateString("en-US", {
           weekday: "short",
           day: "numeric",
@@ -73,8 +68,9 @@ export default function OrderSchedule({
     return options;
   }, []);
 
-  // 3. Filter available slots based on the current hour + 2 buffer
+  // Filter available slots for DELIVERY (1 hour buffer)
   const availableSlots = useMemo(() => {
+    if (deliveryMethod !== "delivery") return [];
     if (!isToday) return TIME_SLOTS;
 
     return TIME_SLOTS.filter((slot) => {
@@ -85,18 +81,45 @@ export default function OrderSchedule({
       if (period === "PM" && hour !== 12) hour += 12;
       if (period === "AM" && hour === 12) hour = 0;
 
-      return hour >= currentHour + 2;
+      return hour >= currentHour + 1;
     });
-  }, [isToday, currentHour]);
+  }, [isToday, currentHour, deliveryMethod]);
 
-  // 4. Clear the slot if they change the date and previously selected slot is invalid
+  // Calculate flexible window for PICKUP (1 hour buffer until 9 PM)
+  const pickupWindow = useMemo(() => {
+    if (deliveryMethod !== "pickup") return null;
+    if (!isToday) return "10:00 AM - 09:00 PM";
+
+    let startHour = currentHour + 1;
+    if (startHour < 10) startHour = 10; // Store opens at 10 AM
+    if (startHour >= 21) return null; // Too late for pickup today (closes at 9 PM)
+
+    const period = startHour >= 12 ? "PM" : "AM";
+    const displayHour =
+      startHour > 12 ? startHour - 12 : startHour === 0 ? 12 : startHour;
+    const formattedHour = displayHour.toString().padStart(2, "0");
+
+    return `${formattedHour}:00 ${period} - 09:00 PM`;
+  }, [deliveryMethod, isToday, currentHour]);
+
+  // Auto-set the slot for Pickup so the parent state updates smoothly
   useEffect(() => {
-    if (scheduledSlot && !availableSlots.includes(scheduledSlot)) {
+    if (deliveryMethod === "pickup") {
+      if (pickupWindow) setScheduledSlot(pickupWindow);
+      else setScheduledSlot(""); // No slots left today
+    }
+  }, [deliveryMethod, pickupWindow, setScheduledSlot]);
+
+  useEffect(() => {
+    if (
+      deliveryMethod === "delivery" &&
+      scheduledSlot &&
+      !availableSlots.includes(scheduledSlot)
+    ) {
       setScheduledSlot("");
     }
-  }, [availableSlots, scheduledSlot, setScheduledSlot]);
+  }, [availableSlots, scheduledSlot, setScheduledSlot, deliveryMethod]);
 
-  // 5. Format the selected date for the success message
   const formattedFriendlyDate = useMemo(() => {
     if (!scheduledDate) return "";
     const [year, month, day] = scheduledDate.split("-").map(Number);
@@ -109,6 +132,11 @@ export default function OrderSchedule({
     });
   }, [scheduledDate]);
 
+  const isNoSlotsToday =
+    isToday &&
+    ((deliveryMethod === "delivery" && availableSlots.length === 0) ||
+      (deliveryMethod === "pickup" && !pickupWindow));
+
   return (
     <section className="border-primary-dark/5 animate-in fade-in slide-in-from-bottom-2 mb-8 rounded-3xl border bg-white p-6 shadow-sm md:p-8">
       <Text as="h2" className="text-primary-dark mb-2 text-2xl font-bold">
@@ -117,7 +145,7 @@ export default function OrderSchedule({
       <Text as="p" className="text-primary-dark/70 mb-6">
         {deliveryMethod === "delivery"
           ? "When would you like your order delivered?"
-          : "When will you come to pick up your order?"}
+          : "Choose a day to pick up your order."}
       </Text>
 
       <div className="flex flex-col gap-6">
@@ -141,83 +169,91 @@ export default function OrderSchedule({
           })}
         </div>
 
-        {/* Time Slot Picker */}
-        {/* Custom Theme Dropdown Picker */}
-        <div className="relative w-full max-w-80">
-          <button
-            type="button"
-            disabled={
-              !scheduledDate || (isToday && availableSlots.length === 0)
-            }
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            // Using onBlur to close the menu if the user clicks away
-            onBlur={() => setTimeout(() => setIsDropdownOpen(false), 200)}
-            className="text-primary-dark focus:border-primary-dark flex w-full cursor-pointer items-center justify-between rounded-2xl border border-gray-200 bg-white p-4 text-base font-bold transition-all outline-none disabled:cursor-not-allowed disabled:bg-gray-50 disabled:opacity-60"
-          >
-            <span>
-              {!scheduledDate
-                ? "Select a date first"
-                : isToday && availableSlots.length === 0
-                  ? "No slots left for today"
-                  : scheduledSlot || "Select a time slot"}
-            </span>
-
-            {/* Custom Chevron that rotates when open */}
-            <svg
-              width="12"
-              height="8"
-              viewBox="0 0 12 8"
-              fill="none"
-              className={`text-primary-dark/50 transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`}
-              xmlns="http://www.w3.org/2000/svg"
+        {/* DELIVERY: Time Slot Dropdown */}
+        {deliveryMethod === "delivery" && (
+          <div className="relative w-full max-w-80">
+            <button
+              type="button"
+              disabled={!scheduledDate || isNoSlotsToday}
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              onBlur={() => setTimeout(() => setIsDropdownOpen(false), 200)}
+              className="text-primary-dark focus:border-primary-dark flex w-full cursor-pointer items-center justify-between rounded-2xl border border-gray-200 bg-white p-4 text-base font-bold transition-all outline-none disabled:cursor-not-allowed disabled:bg-gray-50 disabled:opacity-60"
             >
-              <path
-                d="M1 1.5L6 6.5L11 1.5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+              <span>
+                {!scheduledDate
+                  ? "Select a date first"
+                  : isNoSlotsToday
+                    ? "No slots left for today"
+                    : scheduledSlot || "Select a time slot"}
+              </span>
+              <svg
+                width="12"
+                height="8"
+                viewBox="0 0 12 8"
+                fill="none"
+                className={`text-primary-dark/50 transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 1.5L6 6.5L11 1.5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
 
-          {/* The Custom Dropdown Menu */}
-          {isDropdownOpen && availableSlots.length > 0 && (
-            <ul className="bg-primary-light text-primary-dark border-primary-dark/10 animate-in fade-in slide-in-from-top-2 absolute top-full left-0 z-20 mt-2 w-full overflow-hidden rounded-2xl border shadow-xl duration-200">
-              {availableSlots.map((slot) => (
-                <li
-                  key={slot}
-                  onClick={() => {
-                    setScheduledSlot(slot);
-                    setIsDropdownOpen(false);
-                  }}
-                  className={`cursor-pointer p-4 text-base font-bold transition-colors ${
-                    scheduledSlot === slot
-                      ? "bg-primary-dark/10" // Slight highlight for the currently selected item
-                      : "hover:bg-primary-dark hover:text-white"
-                  }`}
-                >
-                  {slot}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+            {isDropdownOpen && availableSlots.length > 0 && (
+              <ul className="bg-primary-light text-primary-dark border-primary-dark/10 animate-in fade-in slide-in-from-top-2 absolute top-full left-0 z-20 mt-2 w-full overflow-hidden rounded-2xl border shadow-xl duration-200">
+                {availableSlots.map((slot) => (
+                  <li
+                    key={slot}
+                    onClick={() => {
+                      setScheduledSlot(slot);
+                      setIsDropdownOpen(false);
+                    }}
+                    className={`cursor-pointer p-4 text-base font-bold transition-colors ${
+                      scheduledSlot === slot
+                        ? "bg-primary-dark/10"
+                        : "hover:bg-primary-dark hover:text-white"
+                    }`}
+                  >
+                    {slot}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {/* PICKUP: Static Information Box */}
+        {deliveryMethod === "pickup" && scheduledDate && !isNoSlotsToday && (
+          <div className="w-full max-w-80 rounded-2xl border border-gray-200 bg-gray-50 p-4">
+            <Text
+              as="p"
+              className="text-primary-dark/60 text-xs font-bold tracking-wider uppercase"
+            >
+              Pickup Window
+            </Text>
+            <Text as="p" className="text-primary-dark mt-1 text-base font-bold">
+              {pickupWindow}
+            </Text>
+          </div>
+        )}
       </div>
 
-      {/* Suggestion message if no slots are available today */}
-      {isToday && availableSlots.length === 0 && (
+      {isNoSlotsToday && (
         <Text
           as="p"
           className="animate-in fade-in mt-4 text-sm font-medium text-red-500"
         >
-          No more {deliveryMethod} slots available for today. Please select
-          tomorrow to view the earliest available times.
+          No more {deliveryMethod} times available for today. Please select
+          tomorrow.
         </Text>
       )}
 
-      {/* Confirmation Success Message */}
-      {scheduledDate && scheduledSlot && (
+      {scheduledDate && scheduledSlot && !isNoSlotsToday && (
         <div className="animate-in fade-in slide-in-from-top-2 mt-6 flex items-start gap-3 rounded-2xl border border-green-100 bg-green-50/50 p-4">
           <svg
             className="mt-0.5 h-5 w-5 shrink-0 text-green-600"

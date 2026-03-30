@@ -1,16 +1,55 @@
+import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
 import { Text } from "~/components/ui/text";
 
-// Temporary static data until backend is ready
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
+// 1. Updated Interface to include the image path
+interface Ingredient {
+  id: string;
+  name: string;
+  description?: string;
+  image_url?: string; // Assuming this is a URL to the ingredient image
+}
+
+// 2. The Ingredients Badge Component
+export function IngredientsBadge({
+  path,
+  label,
+}: {
+  path?: string;
+  label: string;
+}) {
+  return (
+    <div className="flex flex-col items-center gap-3">
+      <img
+        src={
+          path
+            ? path
+            : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1920px-No-Image-Placeholder.svg.png"
+        }
+        alt={label} // Fixed: made alt text dynamic instead of hardcoded
+        className="h-28 w-28 rounded-full border-4 border-white object-cover shadow-lg md:h-36 md:w-36"
+      />
+      <span className="text-primary-dark text-center text-lg font-bold">
+        {label}
+      </span>
+    </div>
+  );
+}
+
+// 3. The Main Component
 export function ProductIngredients({
   ingredients,
 }: {
-  ingredients: {
-    name: string;
-    description: string;
-    id: string;
-  }[];
+  ingredients: Ingredient[];
 }) {
+  if (!ingredients || ingredients.length === 0) return null;
+
   return (
     <section className="border-primary-dark/10 border-t bg-[#F5F0E6] px-4 py-16 md:px-8">
       <div className="mx-auto max-w-5xl">
@@ -22,25 +61,38 @@ export function ProductIngredients({
           What&apos;s Inside
         </Text>
 
-        <div className="grid grid-cols-1 gap-x-16 gap-y-12 md:grid-cols-2">
-          {ingredients &&
-            ingredients.map((ingredient, idx) => (
-              <div key={idx} className="flex flex-col gap-3">
-                <Text
-                  as="h3"
-                  variant="secondary"
-                  className="text-primary-dark text-2xl tracking-wide"
-                >
-                  {ingredient.name}
-                </Text>
-                <Text
-                  as="p"
-                  className="text-primary-dark/80 text-[1.05rem] leading-relaxed font-light"
-                >
-                  {ingredient.description}
-                </Text>
-              </div>
+        {/* Swiper Carousel Integration */}
+        <div className="px-4 md:px-12">
+          <Swiper
+            modules={[Pagination]}
+            navigation
+            pagination={{ clickable: true }}
+            spaceBetween={20}
+            loop={true}
+            slidesPerView={2} // Default for mobile
+            breakpoints={{
+              // Adjust these breakpoints based on your design needs
+              640: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+              768: {
+                slidesPerView: 4,
+                spaceBetween: 40,
+              },
+              1024: {
+                slidesPerView: 5,
+                spaceBetween: 40,
+              },
+            }}
+            className="pt-4 pb-12" // Padding bottom to make room for pagination dots
+          >
+            {ingredients.map((item, idx) => (
+              <SwiperSlide key={item.id || idx} className="flex justify-center">
+                <IngredientsBadge path={item.image_url} label={item.name} />
+              </SwiperSlide>
             ))}
+          </Swiper>
         </div>
       </div>
     </section>

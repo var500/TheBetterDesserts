@@ -1,21 +1,26 @@
-import React, { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, useCallback, useRef } from "react";
 import { Icons } from "../icons";
 import { Button } from "../ui/button";
+import Cropper from "react-easy-crop";
+import { getCroppedImg } from "~/lib/utils";
+import { toast } from "react-toastify";
 
 export interface Ingredient {
   id: string;
   name: string;
   description?: string;
+  image_url?: string;
 }
 
 interface IngredientSelectorProps {
   availableIngredients: Ingredient[];
   selectedIngredientIds: string[];
   onChange: (newSelectedIds: string[]) => void;
-  // 👇 New prop to handle API creation
   onCreateNew: (
     name: string,
     description: string,
+    image: File | null,
   ) => Promise<string | undefined>;
 }
 
@@ -26,11 +31,22 @@ export default function IngredientSelector({
   onCreateNew,
 }: IngredientSelectorProps) {
   const [searchTerm, setSearchTerm] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // States for creating a new ingredient
   const [isCreating, setIsCreating] = useState(false);
   const [newDesc, setNewDesc] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // --- CROPPER STATE ---
+  const [cropImageSrc, setCropImageSrc] = useState<string | null>(null);
+  const [cropFileName, setCropFileName] = useState("");
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<any>(null);
+  const [isCropping, setIsCropping] = useState(false);
 
   const handleSelect = (id: string) => {
     if (!selectedIngredientIds.includes(id)) {
@@ -43,22 +59,82 @@ export default function IngredientSelector({
     onChange(selectedIngredientIds.filter((id) => id !== idToRemove));
   };
 
+  const resetForm = () => {
+    setIsCreating(false);
+    setSearchTerm("");
+    setNewDesc("");
+    setImageFile(null);
+    if (imagePreviewUrl) URL.revokeObjectURL(imagePreviewUrl);
+    setImagePreviewUrl(null);
+  };
+
   const handleCreateSubmit = async () => {
     if (!searchTerm || !newDesc) return;
     setIsSubmitting(true);
 
-    // Call the parent function to hit the API, which should return the new ID
-    const newId = await onCreateNew(searchTerm, newDesc);
+    const newId = await onCreateNew(searchTerm, newDesc, imageFile);
 
     if (newId) {
       onChange([...selectedIngredientIds, newId]);
-      setIsCreating(false);
-      setSearchTerm("");
-      setNewDesc("");
+      resetForm();
     }
     setIsSubmitting(false);
   };
 
+  // --- CROPPER LOGIC ---
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setCropFileName(file.name);
+      setCropImageSrc(URL.createObjectURL(file));
+    }
+    // Clear input so the same file can be selected again if needed
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  };
+
+  const handleCropComplete = useCallback(
+    (_croppedArea: any, croppedAreaPixels: any) => {
+      setCroppedAreaPixels(croppedAreaPixels);
+    },
+    [],
+  );
+
+  const saveCroppedImage = async () => {
+    if (!cropImageSrc || !croppedAreaPixels) return;
+    setIsCropping(true);
+
+    try {
+      const croppedFile = await getCroppedImg(
+        cropImageSrc,
+        croppedAreaPixels,
+        cropFileName,
+      );
+
+      if (croppedFile) {
+        setImageFile(croppedFile);
+        // Create a preview URL for the cropped image to show in the form
+        if (imagePreviewUrl) URL.revokeObjectURL(imagePreviewUrl);
+        setImagePreviewUrl(URL.createObjectURL(croppedFile));
+      }
+
+      cancelCropping();
+    } catch (e) {
+      toast.error("Failed to crop image.");
+      console.error((e as Error).message);
+    } finally {
+      setIsCropping(false);
+    }
+  };
+
+  const cancelCropping = () => {
+    if (cropImageSrc) URL.revokeObjectURL(cropImageSrc);
+    setCropImageSrc(null);
+    setCropFileName("");
+    setCrop({ x: 0, y: 0 });
+    setZoom(1);
+  };
+
+  // --- FILTERING ---
   const filteredAvailable = availableIngredients.filter(
     (ing) =>
       !selectedIngredientIds.includes(ing.id) &&
@@ -69,7 +145,6 @@ export default function IngredientSelector({
     selectedIngredientIds.includes(ing.id),
   );
 
-  // Check if the exact search term already exists to decide whether to show the "Create" button
   const exactMatchExists = availableIngredients.some(
     (ing) => ing.name.toLowerCase() === searchTerm.toLowerCase(),
   );
@@ -113,7 +188,7 @@ export default function IngredientSelector({
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded border border-gray-300 px-3 py-1.5 text-sm"
+              className="w-full rounded border border-gray-300 px-3 py-1.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -124,18 +199,55 @@ export default function IngredientSelector({
               value={newDesc}
               onChange={(e) => setNewDesc(e.target.value)}
               placeholder="E.g., Crunchy and nutrient-rich..."
-              className="w-full rounded border border-gray-300 px-3 py-1.5 text-sm"
+              className="w-full rounded border border-gray-300 px-3 py-1.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
             />
           </div>
+
+          {/* Image Upload / Preview Area */}
+          <div>
+            <label className="text-xs text-gray-600">
+              Ingredient Image (1:1 Ratio)
+            </label>
+            {imagePreviewUrl ? (
+              <div className="mt-1 flex items-start gap-4">
+                <img
+                  src={imagePreviewUrl}
+                  alt="Cropped Preview"
+                  className="h-16 w-16 rounded-md border border-gray-300 object-cover shadow-sm"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setImageFile(null);
+                    URL.revokeObjectURL(imagePreviewUrl);
+                    setImagePreviewUrl(null);
+                  }}
+                  className="text-red-500"
+                >
+                  Remove Image
+                </Button>
+              </div>
+            ) : (
+              <div className="mt-1">
+                <input
+                  type="file"
+                  accept="image/*"
+                  ref={fileInputRef}
+                  onChange={handleFileChange}
+                  className="w-full cursor-pointer rounded border border-gray-300 bg-white px-3 py-1.5 text-sm"
+                />
+              </div>
+            )}
+          </div>
+
           <div className="flex justify-end gap-2 pt-1">
             <Button
               type="button"
               variant="outline"
               size="sm"
-              onClick={() => {
-                setIsCreating(false);
-                setSearchTerm("");
-              }}
+              onClick={resetForm}
             >
               Cancel
             </Button>
@@ -172,7 +284,6 @@ export default function IngredientSelector({
                 </li>
               ))}
 
-              {/* TRIGGER TO CREATE NEW IF NO EXACT MATCH */}
               {!exactMatchExists && (
                 <li
                   onClick={() => setIsCreating(true)}
@@ -185,6 +296,68 @@ export default function IngredientSelector({
               )}
             </ul>
           )}
+        </div>
+      )}
+
+      {/* Cropping Modal Overlay */}
+      {cropImageSrc && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/80 p-4">
+          <div className="flex w-full max-w-lg flex-col overflow-hidden rounded-xl bg-white shadow-2xl">
+            <div className="flex items-center justify-between border-b bg-gray-50 p-4">
+              <h3 className="font-semibold text-gray-800">
+                Crop Ingredient Image
+              </h3>
+              <button
+                onClick={cancelCropping}
+                className="font-bold text-gray-500 hover:text-red-500"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="relative h-[300px] w-full bg-gray-100 sm:h-[400px]">
+              <Cropper
+                image={cropImageSrc}
+                crop={crop}
+                zoom={zoom}
+                aspect={1} // 1:1 Aspect ratio locked
+                onCropChange={setCrop}
+                onCropComplete={handleCropComplete}
+                onZoomChange={setZoom}
+              />
+            </div>
+
+            <div className="flex items-center justify-between gap-4 border-t bg-white p-4">
+              <input
+                type="range"
+                value={zoom}
+                min={1}
+                max={3}
+                step={0.1}
+                onChange={(e) => setZoom(Number(e.target.value))}
+                className="w-1/2 accent-blue-600"
+              />
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  type="button"
+                  size={"sm"}
+                  className="max-w-24 rounded-md border-none bg-red-500 text-white"
+                  onClick={cancelCropping}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={saveCroppedImage}
+                  disabled={isCropping}
+                  size={"sm"}
+                  className="rounded-md border-none bg-blue-600 text-white hover:bg-blue-700"
+                >
+                  {isCropping ? "Saving..." : "Apply Crop"}
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -109,7 +109,6 @@ export const fetchShippingCost = async (
   totalWeightInKg?: number,
   isHyperlocal: boolean = false,
 ): Promise<{ shippingCost: number }> => {
-  console.log("isHyperlocal", isHyperlocal);
   const endpoint = isHyperlocal
     ? `${BACKEND_API_URL}/shipping/hyperlocal`
     : `${BACKEND_API_URL}/shipping/calculate`;
