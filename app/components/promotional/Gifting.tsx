@@ -14,7 +14,7 @@ export const GiftingPromo = () => {
   return (
     <section
       id="gifting-promo"
-      className="border-primary-dark/20 flex min-h-screen flex-col justify-center border-t bg-[#F5F0E6] px-6 py-16 md:px-12 lg:py-0"
+      className="flex min-h-screen flex-col justify-center bg-[#F5F0E6] px-6 py-16 md:px-12 lg:py-0"
     >
       <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
         {/* Left Side: Swiper Showcase */}

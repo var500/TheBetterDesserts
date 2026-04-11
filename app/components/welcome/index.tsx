@@ -1,5 +1,4 @@
 import { Hero } from "../welcome/Hero";
-import { FeaturesBanner } from "../welcome/FeaturesBanner";
 import { SweetnessSlider } from "../welcome/Slider";
 import Bestseller from "../welcome/Bestseller";
 
@@ -46,8 +45,7 @@ export default function App() {
       <main className="pb-0">
         <Hero newLaunchProducts={newLaunch} />
         {!selectedCityId ? <LocationSelector /> : null}
-        <FeaturesBanner />
-        <SignatureProduct item={caszel} isLoading={isLoading} />
+
         {bestsellers && (
           <Bestseller
             bestsellers={bestsellers}
@@ -55,10 +53,11 @@ export default function App() {
             isLoading={isLoading}
           />
         )}
+        <SignatureProduct item={caszel} isLoading={isLoading} />
         <BetterIngredients />
-        <GiftingPromo />
-        <WhyChooseGifting />
         <SweetnessSlider />
+        <WhyChooseGifting />
+        <GiftingPromo />
         <ProductFAQ faqs={HomeFAQs} />
         <ReviewsSection />
       </main>

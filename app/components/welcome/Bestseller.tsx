@@ -37,19 +37,19 @@ export default function Bestseller({
   }
 
   return (
-    <section className="border-primary-dark/10 border-b bg-[#F5F0E6] px-4 py-24 md:px-8 md:py-32">
+    <section className="bg-[#F5F0E6] px-4 pt-12 md:px-8 md:pt-24 md:pb-12">
       <div className="mx-auto flex max-w-7xl flex-col items-center">
-        <div className="mb-16 text-center md:mb-20">
+        <div className="mb-12 text-center md:mb-20">
           <Text
             as="h2"
             variant={"secondary"}
-            className="text-primary-dark mb-1 text-3xl md:text-4xl"
+            className="text-primary-dark mb-1 text-2xl md:text-4xl"
           >
             Our
           </Text>
           <Text
             as="h3"
-            className="text-primary-dark text-4xl tracking-[0.15em] uppercase md:text-5xl"
+            className="text-primary-dark text-3xl tracking-[0.15em] uppercase md:text-5xl"
           >
             Bestsellers
           </Text>
@@ -64,12 +64,12 @@ export default function Bestseller({
               ))}
         </div>
 
-        <div className="mt-16 md:mt-20">
+        <div className="mt-16">
           <Button
             variant="outline"
             onClick={() => navigate("/collection")}
             size="lg"
-            className="hover:bg-primary-dark px-12 font-bold tracking-wider transition-all duration-300 hover:text-[#F5F0E6]"
+            className="hover:bg-primary-dark px-12 py-4 font-bold tracking-wider transition-all duration-300 hover:text-[#F5F0E6]"
           >
             View More
           </Button>

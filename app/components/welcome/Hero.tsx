@@ -4,12 +4,10 @@ import { Pagination, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import { Text } from "../ui/text";
 import Badge from "../ui/badge";
-import { Link } from "react-router";
 import { useNavigate } from "react-router";
-import { Icons } from "../icons";
 import type { Product } from "~/common/types";
 
 export const Hero = ({
@@ -38,72 +36,35 @@ export const Hero = ({
       >
         {/* SLIDE 1: Main Brand Logo */}
         <SwiperSlide className="bg-primary-dark relative overflow-hidden">
-          <div className="relative z-10 flex h-full w-full flex-col items-center justify-around py-6 text-center select-none">
+          <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-6 px-4 py-8 text-center text-white select-none">
             <img
               src="/brand/betterDesserts.jpeg"
               alt="Brand Logo"
-              // Standardized mobile image size
-              className="h-90 w-90 object-contain md:h-[70%] md:w-[70%]"
+              className="h-56 w-56 rounded-lg object-contain md:h-[55%] md:w-[55%]"
             />
+
+            <div className="flex flex-col items-center gap-2">
+              <h2 className="text-2xl font-bold tracking-wide md:text-4xl">
+                India&apos;s Finest Clean Dessert Brand
+              </h2>
+              <p className="text-xs font-medium tracking-wider text-gray-200 uppercase md:text-sm">
+                Refined Sugar Free{" "}
+                <span className="mx-1 opacity-50 md:mx-2">|</span>
+                Refined Flour Free{" "}
+                <span className="mx-1 opacity-50 md:mx-2">|</span>
+                Palm Oil Free
+              </p>
+            </div>
+
+            {/* Call to Action */}
             <Button
               variant={"light"}
               size={"sm-to-default"}
               onClick={() => navigate("/collection")}
+              className="mt-2"
             >
               Shop Now
             </Button>
-          </div>
-        </SwiperSlide>
-
-        {/* SLIDE 2: What Makes Us Better (USPs) */}
-        <SwiperSlide>
-          {/* Changed px-12 to px-6 on mobile, adjusted flex direction so image stays prominent */}
-          <div className="bg-primary-dark flex h-full w-full flex-col-reverse items-center justify-center gap-6 px-6 pb-8 md:flex-row md:gap-10 md:px-24 md:pb-0">
-            <div className="flex w-full flex-col justify-center text-center text-[#F5F0E6] md:text-left">
-              <Text
-                variant={"secondary"}
-                as={"h2"}
-                className="text-3xl leading-tight md:text-6xl"
-              >
-                What makes us
-              </Text>
-              <Text
-                as={"span"}
-                variant={"secondary"}
-                className="mb-6 text-3xl md:mb-8 md:text-6xl"
-              >
-                Better?
-              </Text>
-
-              {/* Centered list on mobile, left-aligned on desktop */}
-              <ul className="font-playfair mx-auto inline-block w-fit space-y-2 text-left text-base font-light md:mx-0 md:space-y-4 md:text-2xl">
-                <li className="flex items-center gap-3">
-                  <Icons.X className="h-4 w-4 text-red-400 md:h-6 md:w-6" /> No
-                  White Sugar
-                </li>
-                <li className="flex items-center gap-3">
-                  <Icons.X className="h-4 w-4 text-red-400 md:h-6 md:w-6" /> No
-                  Maida
-                </li>
-                <li className="flex items-center gap-3">
-                  <Icons.X className="h-4 w-4 text-red-400 md:h-6 md:w-6" /> No
-                  Palm Oil
-                </li>
-                <li className="flex items-center gap-3">
-                  <Icons.Check className="h-4 w-4 text-green-400 md:h-6 md:w-6" />{" "}
-                  100% Eggless
-                </li>
-              </ul>
-            </div>
-
-            {/* Image Section - reduced height on mobile */}
-            <div className="relative mt-4 h-48 w-full overflow-hidden rounded-t-full rounded-b-xl shadow-2xl sm:h-56 md:mt-0 md:h-[70%] md:w-5/12">
-              <img
-                src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=1065&auto=format&fit=crop"
-                alt="Almond flour and oats"
-                className="h-full w-full object-cover"
-              />
-            </div>
           </div>
         </SwiperSlide>
 
@@ -201,63 +162,6 @@ export const Hero = ({
               </div>
             </SwiperSlide>
           ))}
-
-        {/* SLIDE 5: Gurgaon cleanest dessert branch */}
-        <SwiperSlide>
-          <div className="flex h-full w-full flex-col-reverse items-center justify-center gap-6 px-6 pb-8 md:flex-row md:gap-10 md:px-24 md:pb-0">
-            {/* Image Section - reduced height for mobile */}
-            <div className="relative mt-4 h-48 w-full overflow-hidden rounded-xl shadow-2xl sm:h-56 md:mt-0 md:h-[70%] md:w-1/2 md:rounded-2xl">
-              <img
-                src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=987&auto=format&fit=crop"
-                alt="Clean Dessert Kitchen Gurgaon"
-                className="h-full w-full object-cover"
-              />
-            </div>
-
-            {/* Content Section */}
-            <div className="text-primary-dark flex w-full flex-col justify-center text-center md:w-1/2 md:text-left">
-              <Text
-                as={"h2"}
-                className="font-playfair text-3xl leading-[1.1] md:text-6xl lg:text-7xl"
-              >
-                Gurgaon’s
-              </Text>
-              <Text
-                as={"h2"}
-                className="font-playfair text-3xl leading-[1.1] md:text-6xl lg:text-7xl"
-              >
-                Cleanest Dessert
-              </Text>
-              <Text
-                as={"h2"}
-                className="font-playfair mb-4 text-3xl leading-[1.1] md:mb-6 md:text-6xl lg:text-7xl"
-              >
-                Brand
-              </Text>
-
-              <Text
-                as={"p"}
-                className="mx-auto mb-6 max-w-md text-sm font-light opacity-90 md:mx-0 md:mb-8 md:text-lg lg:text-xl"
-              >
-                Experience desserts crafted in a spotless, hygienic environment.
-                Every treat is prepared with premium ingredients, strict quality
-                standards, and unmatched cleanliness.
-              </Text>
-
-              <Link
-                target="_blank"
-                to="https://maps.app.goo.gl/NSTsiZrJoZM26rJL7"
-                className={buttonVariants({
-                  variant: "default",
-                  size: "sm-to-default",
-                  className: "mx-auto w-fit px-8 md:mx-0",
-                })}
-              >
-                Visit Us
-              </Link>
-            </div>
-          </div>
-        </SwiperSlide>
       </Swiper>
     </section>
   );

@@ -24,7 +24,7 @@ export default function SignatureProduct({
   const isButtonDisabled = isLoading || selectedCityLabel !== Locations.GURGAON;
 
   return (
-    <section className="relative flex min-h-[80vh] justify-center overflow-hidden bg-[#F5F0E6] px-4 py-20 md:px-8">
+    <section className="relative flex min-h-[80vh] justify-center overflow-hidden bg-[#F5F0E6] px-4 md:px-8">
       <div className="bg-primary-dark/5 absolute top-0 right-0 z-0 h-full w-1/3 rounded-l-full"></div>
 
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center gap-16 md:flex-row lg:gap-24">
@@ -89,7 +89,7 @@ export default function SignatureProduct({
 
           <Text
             as="p"
-            className="text-primary-dark/80 mb-8 max-w-md text-lg leading-relaxed font-light md:text-xl"
+            className="text-primary-dark/80 max-w-md py-6 text-lg leading-relaxed font-light md:text-xl"
           >
             Caszel is our signature gourmet chocolate–nut dessert featuring a
             nourishing base of amaranth, quinoa, and dates, layered with smooth
@@ -99,13 +99,12 @@ export default function SignatureProduct({
 
           {selectedCityLabel !== Locations.GURGAON ? null : (
             <div className="flex flex-wrap items-center gap-8">
-              {/* Wrapper div to capture hover events even when button is disabled */}
               <div className="relative flex items-center">
                 <Button
                   disabled={isButtonDisabled}
                   onClick={() => navigate(`/product/${item?.id}`)}
                   variant="default"
-                  className="group flex h-14 w-40 items-center gap-3 px-4 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:w-full md:px-10 md:text-lg"
+                  className="group flex h-14 w-full items-center gap-3 px-4 text-xs disabled:cursor-not-allowed disabled:opacity-50 md:px-10 md:text-lg"
                 >
                   Explore Now
                   <Icons.ChevronRight className="transition-transform duration-300 group-hover:translate-x-2" />

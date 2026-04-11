@@ -70,7 +70,7 @@ export const SweetnessSlider = () => {
   ];
 
   return (
-    <section className="overflow-hidden py-24 text-center">
+    <section className="overflow-hidden text-center md:py-24">
       <Text
         as="h3"
         variant="secondary"
@@ -104,6 +104,7 @@ export const SweetnessSlider = () => {
             {
               "--swiper-navigation-color": "#1A243F",
               "--swiper-navigation-size": "2rem",
+              paddingBottom: "40px",
             } as React.CSSProperties
           }
         >
